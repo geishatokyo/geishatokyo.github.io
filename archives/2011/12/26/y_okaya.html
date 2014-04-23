@@ -1,0 +1,409 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog - Play frameworkで動的にリンクを作る(for scala)</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <article> 
+    <h1>Play frameworkで動的にリンクを作る(for scala) </h1>
+    <span>Posted on 2011-12-26
+      by <a href="../../../authors/y_okaya.html">y_okaya</a>
+    </span>
+    <p>こんにちは。GTEエソヅニアの岡谷です。</p>
+
+<p>クリスマスはPlay framework(Ver1.2.4)とアツい夜を過ごしたので、その時得た<br/>
+Tipsをご紹介します。弊社ではScalaが最大勢力のメジャー言語なので、Play frameworkでも<br/>
+scalaを使ってみようと検証中です。</p>
+
+<p>動的にリンクを作りたいケースがあり、テンプレートに実装していたのですが、Java版で書くと<br/>
+下記のようなことをScala版でもしようとしました。</p>
+<pre class="highlight html">　<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"@{Application.show(_post.id)}"</span><span class="nt">&gt;&lt;span&gt;</span>link<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+</pre>
+
+<p>参考URL：<a href="http://www.playframework.org/documentation/1.0.1/guide4" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.playframework.org']);">Playframework  tutorial(Java)</a></p>
+
+<p>このコードはJava版とScala版のリファレンスを見ると、Scala版にはサンプルコードがないのですが、<br/>
+見る限りそのまんま使えそうに見えます。</p>
+
+<p>参考URL：<a href="http://scala.playframework.org/documentation/scala-0.9.1/templates" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://scala.playframework.org']);">Scala templates</a></p>
+
+<p>しかしながら、Scala版でそのまんま使おうとしたところ使えませんでした。<br/>
+Application.showのリンク先がこのコードの部分でレンダリングされてしまうのです。</p>
+
+<p>あれー、と思ってplay-scalaのソースをまさぐってみたら下記のコードを見つけました。</p>
+
+<p>views.object in ScalaTemplate.scala</p>
+<pre class="highlight scala">        <span class="k">def</span> <span class="n">a</span><span class="o">(</span><span class="n">action</span><span class="k">:</span> <span class="o">=&gt;</span> <span class="nc">Any</span><span class="o">)(</span><span class="n">body</span><span class="k">:</span> <span class="o">=&gt;</span> <span class="nc">Html</span><span class="o">)</span> <span class="k">=</span> <span class="nc">Html</span> <span class="o">{</span>
+            <span class="k">var</span> <span class="n">actionDef</span> <span class="k">=</span> <span class="k">new</span> <span class="n">play</span><span class="o">.</span><span class="n">mvc</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="nc">ScalaAction</span><span class="o">(</span><span class="n">action</span><span class="o">).</span><span class="n">actionDefinition</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">actionDef</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">"GET"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="s">"""&lt;a href=""""</span> <span class="o">+</span> <span class="n">actionDef</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s">""""&gt;"""</span> <span class="o">+</span> <span class="n">body</span> <span class="o">+</span> <span class="s">"""&lt;/a&gt;"""</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">val</span> <span class="n">uuid</span> <span class="k">=</span> <span class="n">play</span><span class="o">.</span><span class="n">libs</span><span class="o">.</span><span class="nc">Codec</span><span class="o">.</span><span class="nc">UUID</span>
+                <span class="s">"""&lt;a href="javascript:document.getElementById('"""</span> <span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span> <span class="s">"""').submit()"&gt;"""</span> <span class="o">+</span> <span class="n">body</span> <span class="o">+</span> <span class="s">"""&lt;/a&gt;&lt;form id=""""</span> <span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span> <span class="s">"""" action=""""</span> <span class="o">+</span> <span class="n">actionDef</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s">"""" method=""""</span> <span class="o">+</span> <span class="n">actionDef</span><span class="o">.</span><span class="n">method</span> <span class="o">+</span> <span class="s">""""&gt;&lt;/form&gt;"""</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+</pre>
+
+<p>この機能を使えばうまくいきそうです。<br/>
+書いてみるとこんな感じですね。</p>
+<pre class="highlight html">  @a(Application.show(_post.id)){
+    <span class="nt">&lt;span&gt;</span>link<span class="nt">&lt;/span&gt;</span>
+  }
+</pre>
+
+<p>動かしてみるときちんと動きました。</p>
+
+<p>以上、Play framework(for scala)で動的リンクを作るためのちょっとしたTipsでした。</p>
+                            
+
+    <h2>Tags</h2>
+      <a href="../../../tags/scala.html">Scala</a>
+      <a href="../../../tags/tips.html">Tips</a>
+      <a href="../../../tags/play-framework.html">play framework</a>
+  </article>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2014/04/10/takezoux2.html">ScalaとRubyどっちがいいの？</a> <span>2014-04-10</span></li>
+                  <li><a href="../../../2014/03/08/takezoux2.html">3分で掴むScalaのコツ</a> <span>2014-03-08</span></li>
+                  <li><a href="../../../2013/12/08/takezoux2.html">ScalaのParserCombinator実践入門＋</a> <span>2013-12-08</span></li>
+                  <li><a href="../../../2013/06/21/takezoux2.html">UnityでWebSocketを使ってチャット -Playと一緒-</a> <span>2013-06-21</span></li>
+                  <li><a href="../../../2013/01/30/k_ryoko.html">GTE Git branching model</a> <span>2013-01-30</span></li>
+                  <li><a href="../../../2012/12/19/takezoux2.html">scala 2.10のreflectionでorg.apache.commons.beanutils.PropertyUtilsっぽいものを作ってみた</a> <span>2012-12-19</span></li>
+                  <li><a href="../../../2012/09/05/yyuu.html">rbenv – ruby + python => pyenv</a> <span>2012-09-05</span></li>
+                  <li><a href="../../../2012/08/02/takezoux2.html">Scala勉強会 in 本郷始めました。</a> <span>2012-08-02</span></li>
+                  <li><a href="../../../2012/07/31/kohashi.html">enchant.jsでjsファイルを必要なときにロードする</a> <span>2012-07-31</span></li>
+                  <li><a href="../../../2012/07/30/takezoux2.html">javaのExceptionのコストについて</a> <span>2012-07-30</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2014.html">2014 (2)</a></li>
+                  <li><a href="../../../2013.html">2013 (3)</a></li>
+                  <li><a href="../../../2012.html">2012 (10)</a></li>
+                  <li><a href="../../../2011.html">2011 (11)</a></li>
+                  <li><a href="../../../2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../../tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../../tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../../tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../../tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../../tags/android.html">Android (3)</a></li>
+                      <li><a href="../../../tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../../tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../../tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../../tags/git.html">git (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../../tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../../tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../../tags/python.html">Python (1)</a></li>
+                      <li><a href="../../../tags/c.html">C# (1)</a></li>
+                      <li><a href="../../../tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../../tags/css.html">css (1)</a></li>
+                      <li><a href="../../../tags/java.html">Java (2)</a></li>
+                      <li><a href="../../../tags/jetty.html">jetty (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../../authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../../authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../../authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../../authors/ta2.html">ta2</a></li>
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../../authors/arikui.html">arikui</a></li>
+                      <li><a href="../../../authors/yamauchi.html">yamauchi</a></li>
+                      <li><a href="../../../authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../../authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

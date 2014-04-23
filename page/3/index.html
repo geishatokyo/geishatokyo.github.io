@@ -1,0 +1,1249 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <p>Page 3 of 3</p>
+    <p><a href="../2/">Previous page</a></p>
+
+  <h1><a href="../../archives/2011/09/23/takezoux2.html">play-scalaをscala 2.9.1でビルドする</a></h1>
+  <span>Posted on 2011-09-23
+    by <a href="../../archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p><em>この記事は2011/09/21頃に書きました。play-scalaの1.0では、scala 2.9.1 に上がるらしいので、将来的には自前でビルドする必要性はなくなっていると思われます。</em></p>
+
+<p>現在、弊社では Play framework の導入について検討を進めています。<br/>
+これまで開発してきたアプリケーションについては Scala 2.9.x 系統をメインで使用していたのですが、play-scalaのビルドはScala 2.8.1で行われているため、社内のライブラリが使用できないという問題にぶち当たりました。<br/>
+そこで、Scala 2.9.x 向けに play-scalaをビルドし直そうとしたのですが、思いのほか手こずったのでその手順を書いておきます。</p>
+
+<h2>事前準備</h2>
+
+<ul>
+<li>scala 2.9.1</li>
+<li>git</li>
+<li>sbt 0.10.x</li>
+<li>sbt 0.7.x</li>
+<li>ant</li>
+</ul>
+
+<p>が必要です。事前に全てを準備しておいてください。</p>
+
+<h2>1. githubから依存ライブラリとplay-scalaのソースコードをcloneしてくる。</h2>
+
+<p>xsbt<br/>
+<a href="https://github.com/harrah/xsbt" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">https://github.com/harrah/xsbt</a></p>
+
+<p>sbinary<br/>
+<a href="https://github.com/DRMacIver/sbinary" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">https://github.com/DRMacIver/sbinary</a></p>
+
+<p>sjson<br/>
+<a href="https://github.com/debasishg/sjson" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">https://github.com/debasishg/sjson</a></p>
+
+<p>play-scala<br/>
+<a href="https://github.com/playframework/play-scala" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">https://github.com/playframework/play-scala</a></p>
+
+<h2>2. sbtの0.11ブランチ、sbinary,sjsonをビルドする</h2>
+
+<h3>sbt</h3>
+
+<p>sbt 0.10.1は、Scala 2.8.1でビルドされているので、そのままでは使用できません。<br/>
+0.11ブランチでは、Scala 2.9.1になっているのでそのブランチに切り替えてビルドをする必要があります。</p>
+<pre class="highlight plaintext">&gt; git checkout 0.11
+
+&gt; sbt_0.10.x
+@ sbt console
+&gt; update
+&gt; package
+</pre>
+
+<h3>sbinary</h3>
+
+<p>masterでビルドすればOKです。</p>
+<pre class="highlight plaintext">&gt; sbt_0.10.x
+@sbt console
+&gt; update
+&gt; ++ 2.9.1 package // scala2.9.1でビルド
+</pre>
+
+<h3>sjson</h3>
+
+<p>これもmasterでビルドすればOKです。</p>
+<pre class="highlight plaintext">&gt; sbt_0.7.x
+@sbt console
+&gt; update
+&gt; package
+</pre>
+
+<h2>3. play-scalaの依存ライブラリを置き換え</h2>
+
+<h3>3.1 libフォルダ内の “*_2.8.1-0.9.10.jar”と名前の付いているjarファイルを新しくビルドしたsbtのjarファイルに置き換える。</h3>
+
+<p>私の環境では、sbtのビルドで、”*_2.9.1-0.11.0-RC1.jar”と名前の付いたjarファイルが作成されたので、それを全てlibフォルダ内へ入れて、古い”*_2.8.1-0.9.10.jar”のファイルを全て削除しました。<br/>
+ちなみに、30 個弱のjarファイルを入れ替える必要があるので頑張ってください。</p>
+
+<h3>3.2 libフォルダ内のsjson,sbinaryのjarファイルを置き換える</h3>
+
+<p>同様に、libフォルダ内のsjson_2.8.1-0.13.jar,sbinary_2.8.1-0.4.0.jarも、先ほどビルドしたscala2.9.1のjarファイルに置き換えてください。微妙な罠として、sbinaryのjarファイルは、$sbinary/core/target/scala-2.9.1.finalフォルダの中に入っています。$sbinary/target/scala-2.9.1.final/sbinary-parent_2.9.1-0.4.0.jarのほうは違うので気をつけてください。</p>
+
+<h3>3.3 libフォルダ内のscala-compiler.jar,scala-library.jarをScala 2.9.1のものに置き換える</h3>
+
+<p>はじめに入っているものは、Scala 2.8.1のjarファイルなので、<br/>
+$SCALA2_9_1_HOME/libに入っている同名のjarファイルをコピーしてきてください。</p>
+
+<h3>3.4 dlibフォルダのcompiler-interface-bin-0.9.10.jarを置き換える</h3>
+
+<p>こちらのフォルダの中のjarファイルも同様に、先程ビルドした sbt のjarファイルへ置き換えておいてください。</p>
+
+<h2>4. ソースコードの修正</h2>
+
+<p>4箇所の修正が必要です。</p>
+
+<h3>4.1 sbtの Scala バージョンを変更</h3>
+
+<p>src-compiler/ScalaCompiler.scala 32行目を変更します。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">scalaProvider</span> <span class="k">=</span> <span class="n">sbt</span><span class="o">.</span><span class="n">getScala</span><span class="o">(</span><span class="s">"2.9.1"</span><span class="o">)</span>
+</pre>
+
+<h3>4.2 SbtCompiler.inputsの引数の変更に対応</h3>
+
+<p>src-compiler/ScalaCompiler.scala 53行目を変更します。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">inputs</span> <span class="k">=</span> <span class="nc">SbtCompiler</span><span class="o">.</span><span class="n">inputs</span><span class="o">(</span><span class="n">classpath</span><span class="o">,</span> <span class="n">sources</span><span class="o">,</span> <span class="n">output</span><span class="o">,</span> <span class="nc">Nil</span><span class="cm">/*Seq("-verbose")*/</span><span class="o">,</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">"-g"</span><span class="o">),</span> <span class="mi">1</span><span class="o">,</span> <span class="n">order</span><span class="o">)(</span><span class="n">compilers</span><span class="o">,</span> <span class="nc">SbtLogger</span><span class="o">)</span>
+</pre>
+
+<p>を</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">inputs</span> <span class="k">=</span> <span class="nc">SbtCompiler</span><span class="o">.</span><span class="n">inputs</span><span class="o">(</span><span class="n">classpath</span><span class="o">,</span> <span class="n">sources</span><span class="o">,</span> <span class="n">output</span><span class="o">,</span> <span class="nc">Nil</span><span class="cm">/*Seq("-verbose")*/</span><span class="o">,</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">"-g"</span><span class="o">),</span><span class="nc">_root_</span><span class="o">.</span><span class="n">sbt</span><span class="o">.</span><span class="n">inc</span><span class="o">.</span><span class="nc">Locate</span><span class="o">.</span><span class="n">definesClass</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="n">order</span><span class="o">)(</span><span class="n">compilers</span><span class="o">,</span><span class="nc">SbtLogger</span><span class="o">)</span>
+</pre>
+
+<p>に書き換えてください。</p>
+
+<h3>4.3 compiler-interface-srcの変更</h3>
+
+<p>src-compiler/ScalaCompiler.scala 203行目を変更します。</p>
+<pre class="highlight scala"><span class="k">case</span> <span class="s">"compiler-interface-bin_2.8.1.final"</span> <span class="k">=&gt;</span> <span class="nc">Array</span><span class="o">(</span><span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">libs</span><span class="o">,</span> <span class="s">"../dlib/compiler-interface-bin-0.9.10.jar"</span><span class="o">))</span>
+</pre>
+
+<p>を</p>
+<pre class="highlight scala"><span class="k">case</span> <span class="s">"compiler-interface-bin_2.9.1.final"</span> <span class="k">=&gt;</span> <span class="nc">Array</span><span class="o">(</span><span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">libs</span><span class="o">,</span> <span class="s">"../dlib/compiler-interface-bin-0.11.0-RC1.jar"</span><span class="o">))</span>
+</pre>
+
+<p>に書き換えてください。書き換えるのはScalaのバージョンと、先ほど3.4でdlibフォルダへ入れたjarファイルの名前です。</p>
+
+<h3>4.4 xsbti.ScalaProviderの追加されたメソッドを追加</h3>
+
+<p>新しく、addToComponentと、componentLocationのメソッドが追加されています。この2つのメソッドを実装します。<br/>
+src-compiler/ScalaCompiler.scala 212行目あたりに、以下のコードを挿入してください。使用されてはいないようなので、適当に例外を投げておけば大丈夫そうです。</p>
+<pre class="highlight scala">
+                    <span class="k">def</span> <span class="n">addToComponent</span><span class="o">(</span> <span class="n">componentID</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">components</span> <span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">File</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+                        <span class="k">throw</span> <span class="k">new</span> <span class="nc">Exception</span><span class="o">(</span><span class="s">"Not implemented"</span><span class="o">)</span>
+                    <span class="o">}</span>
+                    <span class="k">def</span> <span class="n">componentLocation</span><span class="o">(</span><span class="n">id</span> <span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+                        <span class="k">throw</span> <span class="k">new</span> <span class="nc">Exception</span><span class="o">(</span><span class="s">"Not implemented"</span><span class="o">)</span>
+                    <span class="o">}</span>
+</pre>
+
+<h2>5. ビルド</h2>
+
+<p>以上で完了です。あとは</p>
+<pre class="highlight plaintext">ant -Dplay.path=/path/to/your/play/framework/installation
+</pre>
+
+<p>を実行すると、libフォルダにplay-scala.jarとplay-scala-compiler.jarが作成されます。</p>
+
+<h2>6. おまけ</h2>
+
+<p>いろいろめんどくさい人は、上で説明した修正内容を適用した fork を作成したので<a href="https://github.com/takezoux2/play-scala" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">こちらのレポジトリ</a>をcloneしてビルドして使ってみてください。</p>
+
+  <hr/>
+  <h1><a href="../../archives/2011/09/16/yyuu.html">jetty-nosql-memcached のご紹介</a></h1>
+  <span>Posted on 2011-09-16
+    by <a href="../../archives/authors/yyuu.html">yyuu</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>yyuu です。前回投稿してから随分と間が空いてしまいました。前回は node.js について書いた気がしますが、続きも書かないままに今回は Java、というか <a href="http://www.eclipse.org/jetty/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.eclipse.org']);">Jetty</a> についてのお話です。</p>
+
+<p>通常、Jetty で動くアプリケーションのセッションデータは org.eclipse.jetty.server.session.HashSessionManager と呼ばれるセッションマネージャの実装により JVM のヒープ中に保持されます。一台のサーバからなる小規模な環境であればこれでも問題ありませんが、複数台の JVM からなるクラスタなどで障害ノードからセッションのフェイルオーバーを行ないたい場合には、JVM ヒープの外部にセッションデータを保存したうえでクラスタのメンバー間で共有する必要があります。</p>
+
+<p>このような用途に向けて、Jetty には標準で org.eclipse.jetty.server.session.JDBCSessionManager という実装が含まれています。これはその名の通り JDBC 経由で RDBMS にセッションデータを保存してしまおうというシロモノです。原理的には、参照および更新が十分に高速な RDBMS があればこのセッションマネージャを使ってクラスタを構成させることもできるはずですが、現実的には MySQL などではセッションデータのような不定長の BLOB データを高速に処理することは難しいです。</p>
+
+<p>そんなわけで、このような場面でこその NoSQL だろうということでセッションデータを memcached に保存するための <a href="https://github.com/yyuu/jetty-nosql-memcached" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">MemcachedSessionManager</a> というものを実装してみました。これはその名の通り memcached 上にセッションを保存するセッションマネージャの実装です。memcached の get/set/add/delete などの基本的なコマンドのみを用いて実装しているため、オリジナルの memcached 以外にも <a href="http://fallabs.com/kyototycoon/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://fallabs.com']);">Kyoto Tycoon</a> など多くの memcached 互換サーバで動作することも期待できます。</p>
+
+<p>以下の URL でビルド済みの jar ファイルを配布しているので、こちらを Jetty の ./lib/ext 以下に投入することで MemcachedSessionManager を使用することができるようになります。</p>
+
+<ul>
+<li><a href="https://github.com/downloads/yyuu/jetty-nosql-memcached/jetty-nosql-memcached-0.0.2.jar" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">jetty-nosql-memcached-0.0.2.jar</a></li>
+<li><a href="https://github.com/downloads/yyuu/jetty-nosql-memcached/jetty-nosql-memcached-0.0.2-jar-with-dependencies.jar" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">jetty-nosql-memcached-0.0.2-jar-with-dependencies.jar (依存パッケージ込み)</a></li>
+</ul>
+
+<p>次回は、設定編として <a href="https://github.com/yyuu/jetty-nosql-memcached" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">MemcachedSessionManager</a> 用の Jetty の設定について解説しようと思います。</p>
+
+  <hr/>
+  <h1><a href="../../archives/2011/09/08/ta2.html">いろいろなものを解析してみよう(その１)</a></h1>
+  <span>Posted on 2011-09-08
+    by <a href="../../archives/authors/ta2.html">ta2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>決済系のシステムエンジニア、低レイヤのソフトウェアプログラマを経て、現職では芸者東京エンターテインメントでアプリケーションエンジニアとして働いています、 ta2 と申します。今回は、直近の業務にはほとんど関係しないものの、奥が深いプログラムの解析をテーマにしてみようと思います。</p>
+
+<p>私自身はそれほど解析に詳しいわけではありませんが、プログラムの解析で必要なのは、その解析で何を達成したいのかが重要だと思います。プログラムの解析に限った話ではないですが。</p>
+
+<p>そもそも、プログラムの解析を始めたのは、ゲーム中で流れる音楽をゲームプログラムを起動しなくても、個人的に自由に聞きたいということがきっかけです。</p>
+
+<p><span style="color: red; font-weight: bold;">注意！　一般的には、プログラムの解析では、リスクを伴いますので、あくまで自己責任にてお願いします。</span></p>
+
+<ol>
+<li style="color: red; font-weight: bold;">法的リスク。ソフトウェア使用許諾契約書などにリバース・エンジニアリングを禁止する条項があり、その内容に同意した場合に、プログラムの解析をすると、問題となる場合があります。</li>
+<li style="color: red; font-weight: bold;">解析にともなうリスク。実行内容を変更するツールを用いるため、実行プログラムが予想しない動作を引き起こす可能性があります。対解析ツール用に防御機構を備えているソフトウェアもあります。</li>
+</ol>
+
+<p>とはいっても、解析は非常に有用です。例えば以下のようなことに役立つのではないかと考えています。</p>
+
+<ul>
+<li>外部のモジュールとの関係や動作の仕組みを実際に理解する</li>
+<li>暗号化アルゴリズムで、メモリの内容を嗅ぎ回られるリスクが最小限になっているかどうかの判定</li>
+</ul>
+
+<p>今回は、自作の Windows(x86) プログラムを解析してみることとします。</p>
+
+<h2>使用するツール</h2>
+
+<p>以下に紹介するツールは、Windows 7 SP1 x64 での動作を確認しました。 wow64環境で動作しています。</p>
+
+<ul>
+<li>バイナリエディタ。私の場合は、<span style="font-family: 'Times New Roman', serif;"><a href="http://www.vector.co.jp/vpack/filearea/win/util/bin/edit/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.vector.co.jp']);">Stirling</a></span>というツールを使います。<a href="/images/2011/09/binary_editor.jpg"><img class="alignnone size-full wp-image-35585" title="binary_editor" src="/images/2011/09/binary_editor.jpg" alt="" width="749" height="578"/></a></li>
+<li><a href="http://www.ollydbg.de/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.ollydbg.de']);">OllyDbg</a>。Windows(x86)で、 C/C++ で作成されたプログラムを強力に解析できるツール。レジスタの内容や、スタック、メモリの内容をのぞけます。対象とするスレッドやモジュールも簡単に切り替えることができます。C# のプログラムを解析することはできないようです。また、x64 native の Windows プログラムも解析できないようです。バージョン2.0 では、様々な機能が追加されているようですが、Windows 7 や x64 上の環境ではあまりテストしてないようです。
+<p>次に OllyDbg の画面の説明を簡単にします。</p>
+<ol>
+<li>逆アセンブルコードの表示。プログラムが実行される様子が追えます。Visual Studio や、 Eclipse などの開発環境と似たような感覚で使用できます。ブレイクポイントを置いたり、実行内容を変更したり、ステップ実行できたりします。</li>
+<li>CPU のレジスタの情報表示。実際にどのような値が演算されているか確認できます。</li>
+<li>メモリ内容の一部が表示されます。ASCII や UNICODE として表示させることが出来ます。</li>
+<li>スタック内容の表示。</li>
+</ol>
+</li>
+<div id="attachment_35713" class="wp-caption alignleft" style="width: 650px"><a href="/images/2011/09/ollydbg.jpg"><img class="size-large wp-image-35713" title="ollydbg" src="/images/2011/09/ollydbg-1024x819.jpg" alt="ollydbg" width="640" height="511"/></a><p class="wp-caption-text">OllyDbg の画面</p></div></ul>
+<h2>解析の目標</h2>
+<p>先ほどダウンロードしていただいたファイルを解凍すると、コンソールプログラム本体「encryptedTexts.exe」と、暗号化済みテキスト「secret.txt」が展開されます。展開された「secret.txt」を復号し、メッセージを見つけることが目標です。</p>
+<h2>解析の手順（前半）</h2>
+<ol>
+<li>先ほどダウンロードしていただいたファイルを解凍し、バイナリエディタで、「secret.txt」を開いてみます。先頭に後述するマジックナンバーが書かれています。今はこういう感じでファイルがセーブされている程度の理解で問題ありません。</li>
+<li>OllyDbg を起動します。Windows Vista や、Windows 7 では、「管理者として実行」を選んで起動してください。</li>
+<li>OllyDbg の EncryptedTexts.exe を実行します。</li>
+<li>OllyDbg が注目しているスレッドを”main”、モジュールを”encryptedTexts.exe” に切り替えます。</li>
+</ol>
+<p> </p>
+<p/><div id="attachment_43393" class="wp-caption aligncenter" style="width: 663px"><a href="/images/2011/09/secret.jpg"><img class="size-full wp-image-43393" title="secret.txt の中身" src="/images/2011/09/secret.jpg" alt="secret.txt" width="653" height="170"/></a><p class="wp-caption-text">secret.txt の中身</p></div>
+<p> </p>
+<p> </p>
+<p lang="ja-JP">このあとどうやって解析を進めればいいでしょうか？私の場合は以下のような方法でプログラムを解析しています。</p>
+<p> </p>
+<h2>方法</h2>
+<ul>
+<li>頻繁に呼び出される箇所を探す。ループ回数がやたら多い、関数呼び出しの多いところを探す。音声データのロードや画像データのロードだと、頻繁に呼び出される関数は、ReadFile 系の関数だと推測ことができます。</li>
+<li>”all referenced text strings” で、プログラムが参照している文字列が見えるので、「マジックナンバー」や、意図を持った文字列がないかどうか確認する。</li>
+</ul>
+
+<h2>解析の手順（後半）</h2>
+
+<p>今回の例の場合は、プログラムを参照している文字列を表示させます。すると、文字列の中に 「/decrypt」という、以下にもコマンドのスイッチみたいな表現が見つかります。</p>
+
+<div id="attachment_43649" class="wp-caption aligncenter" style="width: 698px"><a href="/images/2011/09/all-referenced-texts.jpg"><img src="/images/2011/09/all-referenced-texts.jpg" alt="all-referenced-texts" title="all-referenced-texts" width="688" height="473" class="size-full wp-image-43649"/></a><p class="wp-caption-text">参照されたテキスト文字列</p></div>
+
+<p>そこで、プログラムを引数付き(/decrypt のスイッチつき)で再スタートさせてみます。すると、以下のように、復号後の文字列が表示されます。これで目的の文字列が得られたため、解析終了です。</p>
+
+<div id="attachment_43777" class="wp-caption aligncenter" style="width: 687px"><a href="/images/2011/09/plain.jpg"><img src="/images/2011/09/plain.jpg" alt="plain" title="plain" width="677" height="492" class="size-full wp-image-43777"/></a><p class="wp-caption-text">復号されたテキスト</p></div>
+
+<p><em>マジックナンバーとは？</em>拡張子ogg のファイルをバイナリエディタなどでのぞくと、先頭に “OggS” という文字列が書かれています。また、ビットマップ画像ファイルでは、マジックナンバーは、”BM”に設定されています。メモリ上で、これらのマジックナンバーを探すことで、データ本体に辿りつけることもあります。ファイルフォーマットをよく知っておくことが、データ本体にたどり着く近道です。</p>
+
+<h2>おまけ</h2>
+
+<p>実はこの記事を書くために、secret.txt を自作する必要がありました。そのために、広く知られている、RC4 互換のArcFour アルゴリズムを利用して、暗号化を実現しています。初期化キーはプログラムに埋め込まれています。興味のある方は、ここから zip ファイルをダウンロードして、実際に暗号化・復号を確かめることも出来ます。また、「secret.txt」のフォーマットは、次の画像のようにヘッダ部(マジックナンバー：GteT、データ部のテキスト長： 1D 00 00 00)、データ部になっています。</p>
+
+<div id="attachment_43521" class="wp-caption aligncenter" style="width: 663px"><a href="/images/2011/09/secret-format.jpg"><img src="/images/2011/09/secret-format.jpg" alt="secret-format" title="secret-format" width="653" height="170" class="size-full wp-image-43521"/></a><p class="wp-caption-text">secret.txt のフォーマット</p></div>
+
+<p>解析の様子を実際に確かめてみたい方は、zip で固めたデータ、<a href="/images/2011/09/encryptedTexts.zip" onclick="javascript:_gaq.push(['_trackEvent','download','/images/2011/09/encryptedTexts.zip']);">encryptedTexts</a> をダウンロードして試してみてください。その際、もしかすると、<a href="http://www.microsoft.com/downloads/ja-jp/details.aspx?familyid=a7b7a05e-6de6-4d3a-a423-37bf0912db84&amp;displaylang=ja-nec" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.microsoft.com']);">Microsoft Visual C++ 2010 再頒布可能パッケージ (x86)</a>などが必要となるかもしれません。なお、注意で書いた防御機構は実装していません。自由に解析していただいて結構です。
+</p>
+
+<p>※プログラムは、本業の合間を見つけて作ったので、大半のエラーチェックやフォーマットを真面目に考えて実装しているわけではありません。したがって、今回の例程度よりも文字列長が長い文字のエンコード・デコードはうまく動作しないしない場合がありますので、あらかじめご了承ください。
+</p>
+
+<h2>私の次回の執筆テーマ</h2>
+
+<p>Wireshark で、パケットをキャプチャして、ダウンロードされるファイルのデータを取得してみるような内容にしようかと考えています。</p>
+                            
+
+  <hr/>
+  <h1><a href="../../archives/2011/08/02/takezoux2.html">Apache SolrをMaven2から実行する</a></h1>
+  <span>Posted on 2011-08-02
+    by <a href="../../archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h1>1. はじめに</h1>
+
+<h2>1.1 Apache Solrとは</h2>
+
+<p><a href="http://lucene.apache.org/solr/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">Apache Solr</a>とはApacheプロジェクトのJavaで書かれた全文検索エンジンです。全文検索機能を実装した<a href="http://lucene.apache.org/java/docs/index.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">Apache Lucene</a>の上に、Webインターフェイスやらクラスタリング機能やら色々な機能を追加したアプリケーションになります。</p>
+
+<h2>1.2 なぜMaven2?</h2>
+
+<p>SubversionやGitなどを使って複数人でソース共有するときに、全ての依存したJarを登録しちゃうとSolrの開発に関係ない人も20MB以上のjarをDLすることになり捗らないよね?<br/>
+しかも、ちょっと拡張したい時も依存関係が増えるとその管理めんどくさいよね?<br/>
+ということでMaven使ってHappyになりましょうというのが今回の記事の趣旨です。<br/>
+ただし、初期設定はちょっと面倒かも。。。</p>
+
+<h1>2. Get Started</h1>
+
+<h2>2.1 環境</h2>
+
+<p>Java,<a href="http://maven.apache.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maven.apache.org']);">Maven 2.x</a>がすでに準備できていることが前提です。<br/>
+OSはWindows7で検証していますが、基本JavaなのでUnix系のOSでも問題なく実行できると思います。</p>
+
+<h2>2.2 Mavenプロジェクトの作成</h2>
+
+<p>まず、以下のコマンドを実行しプロジェクトの作成を行います。</p>
+<pre class="highlight plaintext">mvn archetype:generate -DgroupId=com.geishatokyo -DartifactId=solrwithmaven -DarchetypeArtifactId=maven-archetype-quickstart
+</pre>
+
+<p>goupId,artifactIdは各自で変更してください。</p>
+
+<h2>2.3 pom.xmlの編集</h2>
+
+<ul>
+<li>packagingをwarに変更</li>
+<li>依存関係にSolrの追加</li>
+<li>buildにJettyサーバーを設定</li>
+</ul>
+
+<p>を行います。packagingは初期はjarに設定されているので、warに変更するだけです。</p>
+
+<p>変更する部分のみ。</p>
+<pre class="highlight plaintext">   &lt;packaging&gt;war&lt;/packaging&gt;
+   &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.solr&lt;/groupId&gt;
+            &lt;artifactId&gt;solr&lt;/artifactId&gt;
+            &lt;version&gt;3.3.0&lt;/version&gt;
+            &lt;type&gt;war&lt;/type&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.1.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;webResources&gt;
+                        &lt;resource&gt;
+                            &lt;!-- this is relative to the pom.xml directory --&gt;
+                            &lt;directory&gt;src/main/resources2&lt;/directory&gt;
+                        &lt;/resource&gt;
+                    &lt;/webResources&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-jetty-plugin&lt;/artifactId&gt;
+                &lt;version&gt;6.1.25&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;systemProperties&gt;
+                        &lt;systemProperty&gt;
+                            &lt;name&gt;solr.solr.home&lt;/name&gt;
+                            &lt;value&gt;target/${artifactId}-${version}/solr&lt;/value&gt;
+                        &lt;/systemProperty&gt;
+                    &lt;/systemProperties&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+</pre>
+
+<h2>2.4 必要なコンフィグファイルのコピー</h2>
+
+<p>/src/main/resources2/solr/confフォルダを作成し、そこに必要な全てのコンフィグファイルを置いて下さい。<br/>
+コンフィグファイルは、<a href="http://lucene.apache.org/solr/#getstarted" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">こちら</a>からDLできるSolrのひな形に含まれているもの(example/solr/conf以下のファイル)をまるまるコピーしてくるのが一番楽です。</p>
+
+<p>また、/src/test/javaフォルダ以下のファイルは今回は必要ないので、削除しておいてください。</p>
+
+<h1>3. 実行</h1>
+<pre class="highlight plaintext">    mvn jetty:run-exploded
+</pre>
+
+<p>を実行するだけで起動できます。<br/>
+起動が完了したら、<a href="http://localhost:8080/solrwithmaven/admin/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','']);">http://localhost:8080/solrwithmaven/admin/</a>へアクセスしてください。</p>
+
+<h1>4. おまけ</h1>
+
+<h2>4.1 pomの設定ってなに？</h2>
+
+<h3>maven-war-plugin</h3>
+
+<p>サーバーへの配布形式の際に使用するwarファイルへ固める際の設定を少々変更しています。<br/>
+Solrのsolr.solr.home=./solr/にデフォルトで設定されているので、warにした際にコンフィグファイルがデフォルトのパスに置かれる用にしています。<br/>
+きちんとした説明は<a href="http://maven.apache.org/plugins/maven-war-plugin/examples/adding-filtering-webresources.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maven.apache.org']);">こちら</a>を参考にしてください。</p>
+
+<h3>maven-jetty-plugin</h3>
+
+<p>軽量Servletコンテナです。これを設定しておくと、簡単にWebアプリケーションを起動できます。<br/>
+また、通常時にはコンフィグファイルがコピーされる場所がSolrのデフォルトHomeと違うため、その設定を上書きして変更しています。</p>
+
+  <hr/>
+  <h1><a href="../../archives/2011/07/12/y_okaya.html">CoronaSDKを使ってみるその1</a></h1>
+  <span>Posted on 2011-07-12
+    by <a href="../../archives/authors/y_okaya.html">y_okaya</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>こんにちは。GTEエソヅニアの岡谷です。</p>
+
+<p>iPhone関連のライブラリは色々と出ていますが、今回は<a href="http://www.anscamobile.com/corona/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.anscamobile.com']);">CoronaSDK</a>というものを使ってみようと思います。</p>
+
+<p>Luaでスクリプトを書くというイカしたライブラリで、GLベースということも相まって非常に高速らしいです。<br/>
+詳しい説明については<a href="http://j-corona-group.jimdo.com/corona%E3%81%A8%E3%81%AF/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://j-corona-group.jimdo.com']);">こちら</a>をご参照ください。</p>
+
+<p>簡単なゲームっぽいものを作りたいなーと思った時に知るべき要素として下記がぱっと思いつきます。</p>
+
+<ul>
+<li>画像描画の方法</li>
+<li>タッチの検出方法</li>
+<li>当たり判定の仕方</li>
+</ul>
+
+<p>画像描画に関してはそれがないと要素として成り立たないので、適当に調べれば見つかります。<br/>
+色々調べてみると画面遷移を行うテンプレートがあったので、<a href="http://developer.anscamobile.com/code/director-class-10" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://developer.anscamobile.com']);">そちら</a>へのリンクを張っておきます。<br/>
+上記リンク先のテンプレートで、画像の描画とタッチの検出、ついでに画面遷移までクリアになりました。</p>
+
+<p>あとは当たり判定なのですが、coronaSDKにはBox2Dというライブラリが内包されています。<br/>
+コイツは物理ライブラリで、重力係数や摩擦係数、反発係数とかを設定してやれば勝手によしなに<br/>
+やってくれるこれまたイカしたもの、らしいです。</p>
+
+<p>コイツを使ってあたり判定を実装します。<br/>
+coronaSDK上はPhysicsというモジュールになっているのでソイツを少しばかりいじってみました。</p>
+
+<p>一言で当たり判定と言っても、色々あるのですが、下記の二種類で網羅できるでしょう。</p>
+
+<ul>
+<li>移動できるできないの判定のみ</li>
+<li>当たり判定時に任意の動作をする</li>
+</ul>
+
+<p>今回は<strong>移動できるできないの判定のみ</strong>について、サラッとコードを書いてみます。</p>
+<pre class="highlight scala"><span class="n">local</span> <span class="n">physics</span> <span class="k">=</span> <span class="n">require</span><span class="o">(</span><span class="s">"physics"</span><span class="o">)</span>
+<span class="n">physics</span><span class="o">.</span><span class="n">start</span><span class="o">()</span>
+
+<span class="o">--</span> <span class="n">ボールの設定</span>
+<span class="o">--</span> <span class="n">density</span><span class="err">・・・</span><span class="n">密度</span><span class="err">、　</span><span class="n">friction</span><span class="err">・・・</span><span class="n">摩擦係数</span><span class="err">、</span><span class="n">bounce</span> <span class="err">・・・</span><span class="n">反発係数</span>
+<span class="n">local</span> <span class="n">ballProperty</span> <span class="k">=</span> <span class="o">{</span><span class="n">density</span> <span class="k">=</span> <span class="mf">1.0</span><span class="o">,</span> <span class="n">friction</span> <span class="k">=</span> <span class="mf">0.3</span><span class="o">,</span> <span class="n">bounce</span> <span class="k">=</span> <span class="mf">0.2</span><span class="o">,</span> <span class="n">filter</span> <span class="k">=</span> <span class="o">{</span><span class="n">categoryBits</span> <span class="k">=</span> <span class="mi">4</span><span class="o">,</span> <span class="n">maskBits</span> <span class="k">=</span> <span class="mi">3</span><span class="o">}}</span>
+<span class="n">local</span> <span class="n">ball</span> <span class="k">=</span> <span class="n">display</span><span class="o">.</span><span class="n">newCircle</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span><span class="mi">100</span><span class="o">,</span><span class="mi">50</span><span class="o">)</span>
+<span class="n">ball</span><span class="k">:</span><span class="kt">setFillColor</span><span class="o">(</span><span class="err">128</span><span class="o">,</span><span class="err">128</span><span class="o">,</span><span class="mi">128</span><span class="o">)</span>
+
+<span class="o">--</span> <span class="n">動くものとして物理エンジンに登録</span>
+<span class="n">physics</span><span class="o">.</span><span class="n">addBody</span><span class="o">(</span><span class="n">ball</span><span class="o">,</span><span class="s">"dynamic"</span><span class="o">,</span><span class="n">ballProperty</span><span class="o">)</span>
+
+<span class="o">--</span> <span class="n">地面の設定</span>
+<span class="n">local</span> <span class="n">horizonProperty</span> <span class="k">=</span> <span class="o">{</span><span class="n">density</span> <span class="k">=</span> <span class="mf">1.0</span><span class="o">,</span> <span class="n">friction</span> <span class="k">=</span> <span class="mf">0.3</span><span class="o">,</span> <span class="n">bounce</span> <span class="k">=</span> <span class="mf">0.2</span><span class="o">,</span> <span class="n">filter</span> <span class="k">=</span> <span class="o">{</span><span class="n">categoryBits</span> <span class="k">=</span> <span class="mi">1</span><span class="o">,</span> <span class="n">maskBits</span> <span class="k">=</span> <span class="mi">4</span><span class="o">}}</span>
+<span class="n">local</span> <span class="n">horizon</span> <span class="k">=</span> <span class="n">display</span><span class="o">.</span><span class="n">newRect</span><span class="o">(</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">479</span><span class="o">,</span> <span class="mi">320</span><span class="o">,</span> <span class="mi">1</span> <span class="o">)</span>
+<span class="n">horizon</span><span class="k">:</span><span class="kt">setFillColor</span><span class="o">(</span> <span class="err">0</span><span class="o">,</span> <span class="err">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="o">--</span> <span class="n">見えないようにしておく</span>
+
+<span class="o">--</span> <span class="n">動かないものとして物理エンジンに登録</span>
+<span class="n">physics</span><span class="o">.</span><span class="n">addBody</span><span class="o">(</span><span class="n">horizon</span><span class="o">,</span><span class="s">"static"</span><span class="o">,</span><span class="n">horizonProperty</span> <span class="o">)</span>
+
+<span class="o">--</span> <span class="n">壁の設定</span>
+<span class="n">local</span> <span class="n">wallProperty</span> <span class="k">=</span> <span class="o">{</span><span class="n">density</span> <span class="k">=</span> <span class="mf">1.0</span><span class="o">,</span> <span class="n">friction</span> <span class="k">=</span> <span class="mf">0.3</span><span class="o">,</span> <span class="n">bounce</span> <span class="k">=</span> <span class="mf">0.2</span><span class="o">,</span> <span class="n">filter</span> <span class="k">=</span> <span class="o">{</span><span class="n">categoryBits</span> <span class="k">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">maskBits</span> <span class="k">=</span> <span class="mi">4</span><span class="o">}}</span>
+
+<span class="n">local</span> <span class="n">wallLeft</span> <span class="k">=</span> <span class="n">display</span><span class="o">.</span><span class="n">newRect</span><span class="o">(</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">480</span> <span class="o">)</span>
+<span class="n">wallLeft</span><span class="k">:</span><span class="kt">setFillColor</span><span class="o">(</span> <span class="err">0</span><span class="o">,</span> <span class="err">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span>
+<span class="n">physics</span><span class="o">.</span><span class="n">addBody</span><span class="o">(</span> <span class="n">wallLeft</span><span class="o">,</span> <span class="s">"static"</span><span class="o">,</span> <span class="n">wallProperty</span> <span class="o">)</span>
+
+<span class="n">local</span> <span class="n">wallRight</span> <span class="k">=</span> <span class="n">display</span><span class="o">.</span><span class="n">newRect</span><span class="o">(</span> <span class="mi">319</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">480</span> <span class="o">)</span>
+<span class="n">wallRight</span><span class="k">:</span><span class="kt">setFillColor</span><span class="o">(</span> <span class="err">0</span><span class="o">,</span> <span class="err">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span>
+<span class="n">physics</span><span class="o">.</span><span class="n">addBody</span><span class="o">(</span> <span class="n">wallRight</span><span class="o">,</span> <span class="s">"static"</span><span class="o">,</span> <span class="n">wallProperty</span> <span class="o">)</span>
+</pre>
+
+<p>デフォルトで重力定数が設定されているので、上記コードを実行するとボールが落ちてくる表現が再生されます。</p>
+
+<p><img src="/images/2011/07/bounce.gif" alt="バウンド"/></p>
+
+<p>サラッと書きましたが、ちょっぴり理解しづらい部分はありますでしょうか。<br/>
+一般的にプロパティに設定している下記の値が特に理解しづらいポイントかと思います。</p>
+<pre class="highlight scala"><span class="n">filter</span> <span class="k">=</span> <span class="o">{</span><span class="n">categoryBits</span> <span class="k">=</span> <span class="mi">1</span><span class="o">,</span> <span class="n">maskBits</span> <span class="k">=</span> <span class="mi">4</span><span class="o">}</span>
+<span class="n">filter</span> <span class="k">=</span> <span class="o">{</span><span class="n">categoryBits</span> <span class="k">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">maskBits</span> <span class="k">=</span> <span class="mi">4</span><span class="o">}</span>
+<span class="n">filter</span> <span class="k">=</span> <span class="o">{</span><span class="n">categoryBits</span> <span class="k">=</span> <span class="mi">4</span><span class="o">,</span> <span class="n">maskBits</span> <span class="k">=</span> <span class="mi">3</span><span class="o">}</span>
+</pre>
+
+<p>上記の値は、当たり判定を行う対象を指定する部分になります。<br/>
+categoryBits は自身のカテゴリを指すBit値、maskBitsは当たる対象を指すBit値になります。<br/>
+例えば</p>
+
+<p><code>scala{categoryBits = 1, maskBits = 4}</code>
+<p>であれば、自身は<strong>1</strong>というカテゴリでコイツに当れるのはカテゴリが<strong>4</strong>のものだけになります。<br/>
+ややこしいのは</p>
+<code>scala{categoryBits = 4, maskBits = 3}</code>
+<p>で、自身は<strong>4</strong>というカテゴリでコイツに当れるのは<strong>3</strong>となっていますが、<br/>
+コイツはbit値なので、カテゴリが<strong>1</strong>と<strong>2</strong>のものになります。</p>
+<p>またこのbitの設定値ですが、相互に指定しあう必要があるようです。<br/>
+どういうことかというと</p>
+<code>scala
+filter = {categoryBits = 1, maskBits = 0}
+filter = {categoryBits = 4, maskBits = 3}
+</code>
+<p>や</p>
+<code>scala
+filter = {categoryBits = 1, maskBits = 4}
+filter = {categoryBits = 4, maskBits = 0}
+</code>
+<p>のような片側のみ指定しているようなコードでは当たり判定が発生しません。</p>
+<p>そんなこんなで壁にぶつかるだけの判定は、特に自分で物理演算を組むことなく<br/>
+非常にリーズナブルなコードで実現できました。</p>
+<p>次回は当たり判定時に任意のコードを実行する方法を紹介したいと思います。</p></p>
+
+  <hr/>
+  <h1><a href="../../archives/2011/06/29/yyuu.html">nvmによるnode.js開発環境の構築</a></h1>
+  <span>Posted on 2011-06-29
+    by <a href="../../archives/authors/yyuu.html">yyuu</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>お初にお目にかかります。yyuu と申します。芸者東京では主にインフラエンジニアと呼ばれるような職務を担当しております。今回は、ここしばらく流行っている node.js について書かせて頂きます。</p>
+
+<p>node.js とは、サーバサイド JavaScript の処理系の一つで、イベントループに基づいて非同期的に処理を実行できる処理系として人気を集めています。node.js の開発は現時点でも非常に活発に行なわれており、2011/6/27 の時点では v0.4.8 がリリースされています。</p>
+
+<p>システム管理者としては、本来であれば、言語処理系はディストリビューションのパッケージ管理システム経由で導入したいものだと思います。しかし、node.js のように開発が活発な処理系を使う場合には、ディストリビューションに収録された時点でバージョンが陳腐化してしまっていることも少なくありません。このような問題を解決するため、node.js で開発を行なう場合には、以下に挙げるようなツールを使って自らビルドした node.js のバイナリを管理することが多いです。</p>
+
+<div>
+<dl>
+<dt><a href="https://github.com/isaacs/nave" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">nave</a></dt>
+<dd>node.js 向けのパッケージ管理システムとして有名な <a href="http://npmjs.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://npmjs.org']);">npm</a> の開発者の人が作ったもの。bash 関数として実装されている。</dd>
+<dt><a href="https://github.com/creationix/nvm" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">nvm</a></dt>
+<dd>nave 同様に bash 関数として実装されている。node.js 本体と同時に npm も導入してくれる。</dd>
+</dl>
+</div>
+
+<p>一般的にどちらがよく使われているのかはよく分からなかったのですが、基本的な機能としてはどちらもほぼ同じようであるように思われたので <a href="http://npmjs.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://npmjs.org']);">npm</a> のインストールも自動でやってくれる <a href="https://github.com/creationix/nvm" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">nvm</a> を使うことにしました。面倒くさがりですみません。</p>
+
+<p>基本的な導入手順は nvm の README に書かれている通り非常にシンプルです。以下の 2 つのコマンドを実行することで、ユーザ向けの nvm 実行環境を作成することができます。</p>
+
+<pre><code>## レポジトリを~/.nvm にクローンしてくる
+$ git clone git://github.com/creationix/nvm.git ~/.nvm
+## nvm の bash 関数を現在のセッションに読み込ませる
+$ . ~/.nvm/nvm.sh
+</code></pre>
+
+<p>利用可能な node.js のバージョンを調べたうえで、最新版をビルドしてから利用できるようにします。</p>
+
+<pre><code>$ nvm ls
+v0.4.8
+stable:     v0.4.8
+latest:     v0.4.8
+current:    v0.2.6
+# use 'nvm sync' to update from nodejs.org
+$ nvm install v0.4.8
+(... 省略 ...)
+## 先ほどインストールした node.js v0.4.8 を使用する
+$ nvm use v0.4.8
+Now using node v0.4.8
+$ which node
+/home/yyuu/.nvm/v0.4.8/bin/node
+</code></pre>
+
+<p>これで最新版の node.js を実行できる環境を作ることができました。ぶっちゃけ、私がわざわざチュートリアルを作るまでもない程度に簡単すぎて涙が出そうです。</p>
+
+<p>このまま終わるのも簡単すぎてアレなので、node.js 本家の master ブランチから最新の HEAD を取得してきてビルドできるように nvm を少しだけ修正してみました。以下の通り実行することで最新版の nvm ソースを取得してビルドすることができるようになります。</p>
+
+<pre><code>$ nvm ls
+v0.4.8
+stable:     v0.4.8
+latest:     v0.4.8
+current:    v0.4.8
+master:     master
+# use 'nvm sync' to update from nodejs.org
+## node.js の master ブランチをビルドする
+$ nvm install master
+(... 省略 ...)
+$ nvm use master
+Now using node master </code></pre>
+
+<p>上記の nvm への修正は <a href="https://github.com/yyuu/nvm" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">github</a> で公開していますので、興味があれば使って頂けるとうれしいです。</p>
+
+<p>次回は、Capistrano による node.js アプリケーションのデプロイについて書いてみるつもりです。</p>
+
+  <hr/>
+  <h1><a href="../../archives/2010/10/08/takezoux2.html">Scala web framework Scalatraを使ってみる</a></h1>
+  <span>Posted on 2010-10-08
+    by <a href="../../archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>超簡易Scala Web Frameworkの紹介です。</p>
+
+<p><a href="http://www.scalatra.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scalatra.org']);">Scalatra</a><br/>
+A tiny, Sinatra-like web framework for Scala</p>
+
+<p>とりあえず、高機能なものはいらないから、サクッとプロトとか作りたいってときとかにはかなりよさそうです。</p>
+
+<p>他の紹介サイトでは、だいたいScalatraServletが使われているけど、<br/>
+ServletFilterとして実行したい場合は、ScalatraServletの代わりにScalatraFilterを継承すればOKです。</p>
+
+<p>以下超シンプルなサンプルコード</p>
+<pre class="highlight scala"><span class="k">import</span> <span class="nn">org.scalatra.ScalatraFilter</span>
+
+<span class="k">class</span> <span class="nc">ScalatraApp</span> <span class="k">extends</span> <span class="nc">ScalatraFilter</span><span class="o">{</span>
+
+  <span class="n">before</span><span class="o">{</span>
+    <span class="n">contentType</span><span class="o">=</span><span class="s">"text/html"</span>
+  <span class="o">}</span>
+  <span class="n">get</span><span class="o">(</span><span class="s">"/index.html"</span><span class="o">)</span> <span class="o">{</span>
+    <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;</span><span class="n">hello</span> <span class="n">to</span> <span class="nc">Scalatra</span> <span class="n">web</span> <span class="n">page</span><span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"top.html"</span><span class="o">&gt;</span><span class="n">トップへ</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+  <span class="o">}</span>
+
+  <span class="n">get</span><span class="o">(</span><span class="s">"/top.html"</span><span class="o">)</span> <span class="o">{</span>
+    <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;</span><span class="nc">This</span> <span class="n">is</span> <span class="n">top</span> <span class="n">page</span><span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"room/bob"</span><span class="o">&gt;</span><span class="nc">Bobさんの部屋へ</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"room/tom"</span><span class="o">&gt;</span><span class="nc">Tomさんの部屋へ</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+  <span class="o">}</span>
+
+  <span class="n">get</span><span class="o">(</span><span class="s">"/room/:name"</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;{</span><span class="n">params</span><span class="o">(</span><span class="s">"name"</span><span class="o">)}</span><span class="n">さんの部屋</span><span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+<p>ついでのMavenのPOMファイルのほうもさらしておきます。<br/>
+このpom.xmlを使ってもらえれば、<br/>
+mvn jetty:run<br/>
+で即実行可能です。(web.xmlの設定は各自お忘れなく)</p>
+<pre class="highlight xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>sample<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>ScalatraSample<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;inceptionYear&gt;</span>2008<span class="nt">&lt;/inceptionYear&gt;</span>
+  <span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;scala.version&gt;</span>2.8.0<span class="nt">&lt;/scala.version&gt;</span>
+  <span class="nt">&lt;/properties&gt;</span>
+
+  <span class="nt">&lt;repositories&gt;</span>
+    <span class="nt">&lt;repository&gt;</span>
+      <span class="nt">&lt;id&gt;</span>scala-tools.org<span class="nt">&lt;/id&gt;</span>
+      <span class="nt">&lt;name&gt;</span>Scala-Tools Maven2 Repository<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;url&gt;</span>http://scala-tools.org/repo-releases<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;/repository&gt;</span>
+    <span class="nt">&lt;repository&gt;</span>
+    <span class="nt">&lt;id&gt;</span>sonatype-nexus-snapshots<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;name&gt;</span>Sonatype Nexus Releases<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;url&gt;</span>https://oss.sonatype.org/content/repositories/releases<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;releases&gt;</span>
+      <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+    <span class="nt">&lt;/releases&gt;</span>
+    <span class="nt">&lt;snapshots&gt;</span>
+      <span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
+    <span class="nt">&lt;/snapshots&gt;</span>
+  <span class="nt">&lt;/repository&gt;</span>
+  <span class="nt">&lt;repository&gt;</span>
+    <span class="nt">&lt;id&gt;</span>sonatype-nexus-snapshots<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;name&gt;</span>Sonatype Nexus Snapshots<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;url&gt;</span>https://oss.sonatype.org/content/repositories/snapshots<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;releases&gt;</span>
+      <span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
+    <span class="nt">&lt;/releases&gt;</span>
+    <span class="nt">&lt;snapshots&gt;</span>
+      <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+    <span class="nt">&lt;/snapshots&gt;</span>
+  <span class="nt">&lt;/repository&gt;</span>
+
+  <span class="nt">&lt;/repositories&gt;</span>
+
+  <span class="nt">&lt;pluginRepositories&gt;</span>
+    <span class="nt">&lt;pluginRepository&gt;</span>
+      <span class="nt">&lt;id&gt;</span>scala-tools.org<span class="nt">&lt;/id&gt;</span>
+      <span class="nt">&lt;name&gt;</span>Scala-Tools Maven2 Repository<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;url&gt;</span>http://scala-tools.org/repo-releases<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;/pluginRepository&gt;</span>
+  <span class="nt">&lt;/pluginRepositories&gt;</span>
+
+  <span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.scala-lang<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>scala-library<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>${scala.version}<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>4.4<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.specs<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>specs<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>1.2.5<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+   <span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.scalatra<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>scalatra_${scala.version}<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.0.0.M1<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>javax.servlet<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>servlet-api<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>2.5<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>3.8.1<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+
+  <span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;sourceDirectory&gt;</span>src/main/scala<span class="nt">&lt;/sourceDirectory&gt;</span>
+    <span class="nt">&lt;testSourceDirectory&gt;</span>src/test/scala<span class="nt">&lt;/testSourceDirectory&gt;</span>
+    <span class="nt">&lt;plugins&gt;</span>
+      <span class="nt">&lt;plugin&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.scala-tools<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>maven-scala-plugin<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;executions&gt;</span>
+          <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+              <span class="nt">&lt;goal&gt;</span>compile<span class="nt">&lt;/goal&gt;</span>
+              <span class="nt">&lt;goal&gt;</span>testCompile<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+          <span class="nt">&lt;/execution&gt;</span>
+        <span class="nt">&lt;/executions&gt;</span>
+        <span class="nt">&lt;configuration&gt;</span>
+          <span class="nt">&lt;scalaVersion&gt;</span>${scala.version}<span class="nt">&lt;/scalaVersion&gt;</span>
+          <span class="nt">&lt;args&gt;</span>
+            <span class="nt">&lt;arg&gt;</span>-target:jvm-1.5<span class="nt">&lt;/arg&gt;</span>
+          <span class="nt">&lt;/args&gt;</span>
+        <span class="nt">&lt;/configuration&gt;</span>
+      <span class="nt">&lt;/plugin&gt;</span>
+      <span class="nt">&lt;plugin&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.mortbay.jetty<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>maven-jetty-plugin<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;configuration&gt;</span>
+                <span class="nt">&lt;scanIntervalSeconds&gt;</span>10<span class="nt">&lt;/scanIntervalSeconds&gt;</span>
+                <span class="nt">&lt;stopKey&gt;</span>foo<span class="nt">&lt;/stopKey&gt;</span>
+                <span class="nt">&lt;stopPort&gt;</span>9999<span class="nt">&lt;/stopPort&gt;</span>
+        <span class="nt">&lt;/configuration&gt;</span>
+      <span class="nt">&lt;/plugin&gt;</span>
+
+      <span class="nt">&lt;plugin&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>maven-eclipse-plugin<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;configuration&gt;</span>
+          <span class="nt">&lt;downloadSources&gt;</span>true<span class="nt">&lt;/downloadSources&gt;</span>
+          <span class="nt">&lt;buildcommands&gt;</span>
+            <span class="nt">&lt;buildcommand&gt;</span>ch.epfl.lamp.sdt.core.scalabuilder<span class="nt">&lt;/buildcommand&gt;</span>
+          <span class="nt">&lt;/buildcommands&gt;</span>
+          <span class="nt">&lt;additionalProjectnatures&gt;</span>
+            <span class="nt">&lt;projectnature&gt;</span>ch.epfl.lamp.sdt.core.scalanature<span class="nt">&lt;/projectnature&gt;</span>
+          <span class="nt">&lt;/additionalProjectnatures&gt;</span>
+          <span class="nt">&lt;classpathContainers&gt;</span>
+            <span class="nt">&lt;classpathContainer&gt;</span>org.eclipse.jdt.launching.JRE_CONTAINER<span class="nt">&lt;/classpathContainer&gt;</span>
+            <span class="nt">&lt;classpathContainer&gt;</span>ch.epfl.lamp.sdt.launching.SCALA_CONTAINER<span class="nt">&lt;/classpathContainer&gt;</span>
+          <span class="nt">&lt;/classpathContainers&gt;</span>
+        <span class="nt">&lt;/configuration&gt;</span>
+      <span class="nt">&lt;/plugin&gt;</span>
+    <span class="nt">&lt;/plugins&gt;</span>
+  <span class="nt">&lt;/build&gt;</span>
+  <span class="nt">&lt;reporting&gt;</span>
+    <span class="nt">&lt;plugins&gt;</span>
+      <span class="nt">&lt;plugin&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.scala-tools<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>maven-scala-plugin<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;configuration&gt;</span>
+          <span class="nt">&lt;scalaVersion&gt;</span>${scala.version}<span class="nt">&lt;/scalaVersion&gt;</span>
+        <span class="nt">&lt;/configuration&gt;</span>
+      <span class="nt">&lt;/plugin&gt;</span>
+    <span class="nt">&lt;/plugins&gt;</span>
+  <span class="nt">&lt;/reporting&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</pre>
+
+<p>もう少しいろいろな使い方を知りたい人は、<a href="http://www.infoq.com/news/2010/10/scalatra" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.infoq.com']);">ここ</a>とかを参考にしてください。</p>
+
+  <hr/>
+  <h1><a href="../../archives/2010/10/07/takezoux2.html">JavaのObject.hashCodeは結構衝突する件</a></h1>
+  <span>Posted on 2010-10-07
+    by <a href="../../archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>Hash値の計算手抜きしてObject.hashCode使ってたけど、どうも衝突が発生している疑惑があったので、確かめてみました。結果としては、かなり衝突するということがわかりました。きちんとMD5とかSHAとか使ったほうがいいですねｗ</p>
+
+<h3>テスト</h3>
+
+<p>ランダムな20~30文字の小文字アルファベットの文字列からhashCodeを計算し、Hash値の衝突数を調べる</p>
+
+<h3>テストに使ったコード</h3>
+<pre class="highlight scala"><span class="k">import</span> <span class="nn">java.util.Random</span>
+
+<span class="k">object</span> <span class="nc">Main</span><span class="o">{</span>
+
+    <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span> <span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+
+        <span class="k">var</span> <span class="n">m</span> <span class="k">:</span> <span class="kt">Map</span><span class="o">[</span><span class="kt">Int</span>,<span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">()</span>
+        <span class="k">var</span> <span class="n">conflict</span> <span class="k">=</span> <span class="mi">0</span>
+
+        <span class="k">def</span> <span class="n">check</span> <span class="k">=</span> <span class="o">{</span>
+            <span class="k">val</span> <span class="n">s</span> <span class="k">=</span> <span class="n">randomString</span>
+            <span class="k">val</span> <span class="n">hashCode</span> <span class="k">=</span> <span class="n">s</span><span class="o">.</span><span class="n">hashCode</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">m</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="n">hashCode</span><span class="o">)){</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">m</span><span class="o">(</span><span class="n">hashCode</span><span class="o">)</span> <span class="o">!=</span> <span class="n">s</span><span class="o">){</span>
+                    <span class="n">println</span><span class="o">(</span><span class="s">"Find same hashCode: "</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="s">" and "</span> <span class="o">+</span> <span class="n">m</span><span class="o">(</span><span class="n">hashCode</span><span class="o">))</span>
+                    <span class="n">conflict</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="o">}</span>
+            <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                <span class="n">m</span> <span class="k">=</span> <span class="n">m</span> <span class="o">+(</span> <span class="n">hashCode</span> <span class="o">-&gt;</span> <span class="n">s</span><span class="o">)</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">val</span> <span class="n">repeat</span> <span class="k">=</span> <span class="k">if</span><span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">args</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="n">toInt</span> <span class="k">else</span> <span class="mi">100</span>
+
+        <span class="o">(</span><span class="mi">0</span> <span class="n">until</span> <span class="n">repeat</span><span class="o">).</span><span class="n">foreach</span><span class="o">(</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="n">check</span><span class="o">)</span>
+
+        <span class="n">println</span><span class="o">(</span><span class="s">"%s / %s conflics"</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="n">conflict</span><span class="o">,</span><span class="n">repeat</span><span class="o">))</span>
+
+    <span class="o">}</span>
+    <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Random</span>
+    <span class="k">def</span> <span class="n">randomString</span> <span class="k">=</span> <span class="o">{</span>
+        <span class="k">val</span> <span class="n">chars</span> <span class="k">=</span> <span class="n">r</span><span class="o">.</span><span class="n">nextInt</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span> <span class="o">+</span> <span class="mi">20</span>
+        <span class="o">(</span><span class="mi">0</span> <span class="n">to</span> <span class="n">chars</span><span class="o">).</span><span class="n">foldLeft</span><span class="o">(</span><span class="s">""</span><span class="o">)(</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span><span class="n">i</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span> <span class="n">s</span> <span class="o">+</span> <span class="o">(</span><span class="sc">'a'</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">nextInt</span><span class="o">(</span><span class="mi">26</span><span class="o">)).</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">Char</span><span class="o">]})</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<h3>実行結果</h3>
+
+<div class="Console">
+<p>>scala Main 100000<br/>
+0 / 100000 conflics</p>
+<p>>scala Main 100000<br/>
+Find same hashCode: uzaiwypnpcglgjkmfuquogkil and exxjmayuwoperjewrffssstxj<br/>
+Find same hashCode: zxucborhherxalztzlzzdccikx and zcaofzchrqfmpyxkodxnx<br/>
+2 / 100000 conflics</p>
+<p>>scala Main 100000<br/>
+Find same hashCode: krjrsrqyhyejdcrouwmphppwiph and mwjaeywvamrxcyvwzdmlnm<br/>
+1 / 100000 conflics</p>
+<p>>scala Main 200000<br/>
+Find same hashCode: qmwgtgphfadgpuqwdjvbcfwqtdxkt and adwaorxslxsojnkrcxvnchvh<br/>
+Find same hashCode: dncdgmwvrbuzvlhexgawrqqcs and bcutmsquxuawdsvhnicygxzijmsf<br/>
+Find same hashCode: njnokarumjoqgoelirwjeuzkqfj and smavuvcorkdkbjeywqpvmvcnsan<br/>
+Find same hashCode: cyylhuovroawzitfxbellruqam and yznsmzvgcqzwfbgewbupblsuicflzo<br/>
+4 / 200000 conflics
+</p></div>
+
+  <hr/>
+  <h1><a href="../../archives/2010/10/05/takezoux2.html">Mavenで、依存ライブラリのjarを含んだ実行可能なjarを生成する方法</a></h1>
+  <span>Posted on 2010-10-05
+    by <a href="../../archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>Mavenでpackageを用いて、依存関係のjarを含んだ実行可能なjarファイルを作成する方法の紹介です。</p>
+
+<p>以下をPOMに設定しておくと、</p>
+
+<pre>mvn package</pre>
+
+<p>を実行するだけでよくなります。</p>
+
+<p>POMサンプル</p>
+<pre class="highlight xml">    <span class="nt">&lt;plugins&gt;</span>
+        <span class="nt">&lt;plugin&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>maven-assembly-plugin<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;configuration&gt;</span>
+          <span class="nt">&lt;descriptorRefs&gt;</span>
+                <span class="c">&lt;!-- ここはこのままでOK --&gt;</span>
+                <span class="nt">&lt;descriptorRef&gt;</span>jar-with-dependencies<span class="nt">&lt;/descriptorRef&gt;</span>
+          <span class="nt">&lt;/descriptorRefs&gt;</span>
+            <span class="nt">&lt;archive&gt;</span>
+              <span class="nt">&lt;manifest&gt;</span>
+                <span class="c">&lt;!-- ここにmain関数のあるクラスを指定。これがManifest.ｍｆに設定されます --&gt;</span>
+                <span class="nt">&lt;mainClass&gt;</span>full.package.of.MainClass<span class="nt">&lt;/mainClass&gt;</span>
+              <span class="nt">&lt;/manifest&gt;</span>
+            <span class="nt">&lt;/archive&gt;</span>
+        <span class="nt">&lt;/configuration&gt;</span>
+            <span class="nt">&lt;executions&gt;</span>
+              <span class="c">&lt;!-- ここでpackageのPhaseで実行されるように設定している--&gt;</span>
+              <span class="nt">&lt;execution&gt;</span>
+                <span class="nt">&lt;id&gt;</span>make-assembly<span class="nt">&lt;/id&gt;</span> <span class="c">&lt;!-- this is used for inheritance merges --&gt;</span>
+                <span class="nt">&lt;phase&gt;</span>package<span class="nt">&lt;/phase&gt;</span> <span class="c">&lt;!-- append to the packaging phase. --&gt;</span>
+                <span class="nt">&lt;goals&gt;</span>
+                  <span class="nt">&lt;goal&gt;</span>single<span class="nt">&lt;/goal&gt;</span> <span class="c">&lt;!-- goals == mojos --&gt;</span>
+                <span class="nt">&lt;/goals&gt;</span>
+              <span class="nt">&lt;/execution&gt;</span>
+            <span class="nt">&lt;/executions&gt;</span>
+        <span class="nt">&lt;/plugin&gt;</span>
+    <span class="nt">&lt;/plugins&gt;</span>
+</pre>
+
+<p>詳しくは<br/>
+<a href="http://maven.apache.org/plugins/maven-assembly-plugin/usage.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maven.apache.org']);">http://maven.apache.org/plugins/maven-assembly-plugin/usage.html</a><br/>
+を参照してください。</p>
+
+  <hr/>
+
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../archives/2014/04/10/takezoux2.html">ScalaとRubyどっちがいいの？</a> <span>2014-04-10</span></li>
+                  <li><a href="../../archives/2014/03/08/takezoux2.html">3分で掴むScalaのコツ</a> <span>2014-03-08</span></li>
+                  <li><a href="../../archives/2013/12/08/takezoux2.html">ScalaのParserCombinator実践入門＋</a> <span>2013-12-08</span></li>
+                  <li><a href="../../archives/2013/06/21/takezoux2.html">UnityでWebSocketを使ってチャット -Playと一緒-</a> <span>2013-06-21</span></li>
+                  <li><a href="../../archives/2013/01/30/k_ryoko.html">GTE Git branching model</a> <span>2013-01-30</span></li>
+                  <li><a href="../../archives/2012/12/19/takezoux2.html">scala 2.10のreflectionでorg.apache.commons.beanutils.PropertyUtilsっぽいものを作ってみた</a> <span>2012-12-19</span></li>
+                  <li><a href="../../archives/2012/09/05/yyuu.html">rbenv – ruby + python => pyenv</a> <span>2012-09-05</span></li>
+                  <li><a href="../../archives/2012/08/02/takezoux2.html">Scala勉強会 in 本郷始めました。</a> <span>2012-08-02</span></li>
+                  <li><a href="../../archives/2012/07/31/kohashi.html">enchant.jsでjsファイルを必要なときにロードする</a> <span>2012-07-31</span></li>
+                  <li><a href="../../archives/2012/07/30/takezoux2.html">javaのExceptionのコストについて</a> <span>2012-07-30</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../archives/2014.html">2014 (2)</a></li>
+                  <li><a href="../../archives/2013.html">2013 (3)</a></li>
+                  <li><a href="../../archives/2012.html">2012 (10)</a></li>
+                  <li><a href="../../archives/2011.html">2011 (11)</a></li>
+                  <li><a href="../../archives/2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../archives/tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../archives/tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../archives/tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../archives/tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../archives/tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../archives/tags/android.html">Android (3)</a></li>
+                      <li><a href="../../archives/tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../archives/tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../archives/tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../archives/tags/git.html">git (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../archives/tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../archives/tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../archives/tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../archives/tags/python.html">Python (1)</a></li>
+                      <li><a href="../../archives/tags/c.html">C# (1)</a></li>
+                      <li><a href="../../archives/tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../archives/tags/css.html">css (1)</a></li>
+                      <li><a href="../../archives/tags/java.html">Java (2)</a></li>
+                      <li><a href="../../archives/tags/jetty.html">jetty (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../archives/authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../archives/authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../archives/authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../archives/authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../archives/authors/ta2.html">ta2</a></li>
+                      <li><a href="../../archives/authors/y_okaya.html">y_okaya</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../archives/authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../archives/authors/arikui.html">arikui</a></li>
+                      <li><a href="../../archives/authors/yamauchi.html">yamauchi</a></li>
+                      <li><a href="../../archives/authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../archives/authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

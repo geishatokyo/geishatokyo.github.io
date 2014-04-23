@@ -1,0 +1,448 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog - いろいろなものを解析してみよう(その１)</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <article> 
+    <h1>いろいろなものを解析してみよう(その１) </h1>
+    <span>Posted on 2011-09-08
+      by <a href="../../../authors/ta2.html">ta2</a>
+    </span>
+    <p>決済系のシステムエンジニア、低レイヤのソフトウェアプログラマを経て、現職では芸者東京エンターテインメントでアプリケーションエンジニアとして働いています、 ta2 と申します。今回は、直近の業務にはほとんど関係しないものの、奥が深いプログラムの解析をテーマにしてみようと思います。</p>
+
+<p>私自身はそれほど解析に詳しいわけではありませんが、プログラムの解析で必要なのは、その解析で何を達成したいのかが重要だと思います。プログラムの解析に限った話ではないですが。</p>
+
+<p>そもそも、プログラムの解析を始めたのは、ゲーム中で流れる音楽をゲームプログラムを起動しなくても、個人的に自由に聞きたいということがきっかけです。</p>
+
+<p><span style="color: red; font-weight: bold;">注意！　一般的には、プログラムの解析では、リスクを伴いますので、あくまで自己責任にてお願いします。</span></p>
+
+<ol>
+<li style="color: red; font-weight: bold;">法的リスク。ソフトウェア使用許諾契約書などにリバース・エンジニアリングを禁止する条項があり、その内容に同意した場合に、プログラムの解析をすると、問題となる場合があります。</li>
+<li style="color: red; font-weight: bold;">解析にともなうリスク。実行内容を変更するツールを用いるため、実行プログラムが予想しない動作を引き起こす可能性があります。対解析ツール用に防御機構を備えているソフトウェアもあります。</li>
+</ol>
+
+<p>とはいっても、解析は非常に有用です。例えば以下のようなことに役立つのではないかと考えています。</p>
+
+<ul>
+<li>外部のモジュールとの関係や動作の仕組みを実際に理解する</li>
+<li>暗号化アルゴリズムで、メモリの内容を嗅ぎ回られるリスクが最小限になっているかどうかの判定</li>
+</ul>
+
+<p>今回は、自作の Windows(x86) プログラムを解析してみることとします。</p>
+
+<h2>使用するツール</h2>
+
+<p>以下に紹介するツールは、Windows 7 SP1 x64 での動作を確認しました。 wow64環境で動作しています。</p>
+
+<ul>
+<li>バイナリエディタ。私の場合は、<span style="font-family: 'Times New Roman', serif;"><a href="http://www.vector.co.jp/vpack/filearea/win/util/bin/edit/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.vector.co.jp']);">Stirling</a></span>というツールを使います。<a href="/images/2011/09/binary_editor.jpg"><img class="alignnone size-full wp-image-35585" title="binary_editor" src="/images/2011/09/binary_editor.jpg" alt="" width="749" height="578"/></a></li>
+<li><a href="http://www.ollydbg.de/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.ollydbg.de']);">OllyDbg</a>。Windows(x86)で、 C/C++ で作成されたプログラムを強力に解析できるツール。レジスタの内容や、スタック、メモリの内容をのぞけます。対象とするスレッドやモジュールも簡単に切り替えることができます。C# のプログラムを解析することはできないようです。また、x64 native の Windows プログラムも解析できないようです。バージョン2.0 では、様々な機能が追加されているようですが、Windows 7 や x64 上の環境ではあまりテストしてないようです。
+<p>次に OllyDbg の画面の説明を簡単にします。</p>
+<ol>
+<li>逆アセンブルコードの表示。プログラムが実行される様子が追えます。Visual Studio や、 Eclipse などの開発環境と似たような感覚で使用できます。ブレイクポイントを置いたり、実行内容を変更したり、ステップ実行できたりします。</li>
+<li>CPU のレジスタの情報表示。実際にどのような値が演算されているか確認できます。</li>
+<li>メモリ内容の一部が表示されます。ASCII や UNICODE として表示させることが出来ます。</li>
+<li>スタック内容の表示。</li>
+</ol>
+</li>
+<div id="attachment_35713" class="wp-caption alignleft" style="width: 650px"><a href="/images/2011/09/ollydbg.jpg"><img class="size-large wp-image-35713" title="ollydbg" src="/images/2011/09/ollydbg-1024x819.jpg" alt="ollydbg" width="640" height="511"/></a><p class="wp-caption-text">OllyDbg の画面</p></div></ul>
+<h2>解析の目標</h2>
+<p>先ほどダウンロードしていただいたファイルを解凍すると、コンソールプログラム本体「encryptedTexts.exe」と、暗号化済みテキスト「secret.txt」が展開されます。展開された「secret.txt」を復号し、メッセージを見つけることが目標です。</p>
+<h2>解析の手順（前半）</h2>
+<ol>
+<li>先ほどダウンロードしていただいたファイルを解凍し、バイナリエディタで、「secret.txt」を開いてみます。先頭に後述するマジックナンバーが書かれています。今はこういう感じでファイルがセーブされている程度の理解で問題ありません。</li>
+<li>OllyDbg を起動します。Windows Vista や、Windows 7 では、「管理者として実行」を選んで起動してください。</li>
+<li>OllyDbg の EncryptedTexts.exe を実行します。</li>
+<li>OllyDbg が注目しているスレッドを”main”、モジュールを”encryptedTexts.exe” に切り替えます。</li>
+</ol>
+<p> </p>
+<p/><div id="attachment_43393" class="wp-caption aligncenter" style="width: 663px"><a href="/images/2011/09/secret.jpg"><img class="size-full wp-image-43393" title="secret.txt の中身" src="/images/2011/09/secret.jpg" alt="secret.txt" width="653" height="170"/></a><p class="wp-caption-text">secret.txt の中身</p></div>
+<p> </p>
+<p> </p>
+<p lang="ja-JP">このあとどうやって解析を進めればいいでしょうか？私の場合は以下のような方法でプログラムを解析しています。</p>
+<p> </p>
+<h2>方法</h2>
+<ul>
+<li>頻繁に呼び出される箇所を探す。ループ回数がやたら多い、関数呼び出しの多いところを探す。音声データのロードや画像データのロードだと、頻繁に呼び出される関数は、ReadFile 系の関数だと推測ことができます。</li>
+<li>”all referenced text strings” で、プログラムが参照している文字列が見えるので、「マジックナンバー」や、意図を持った文字列がないかどうか確認する。</li>
+</ul>
+
+<h2>解析の手順（後半）</h2>
+
+<p>今回の例の場合は、プログラムを参照している文字列を表示させます。すると、文字列の中に 「/decrypt」という、以下にもコマンドのスイッチみたいな表現が見つかります。</p>
+
+<div id="attachment_43649" class="wp-caption aligncenter" style="width: 698px"><a href="/images/2011/09/all-referenced-texts.jpg"><img src="/images/2011/09/all-referenced-texts.jpg" alt="all-referenced-texts" title="all-referenced-texts" width="688" height="473" class="size-full wp-image-43649"/></a><p class="wp-caption-text">参照されたテキスト文字列</p></div>
+
+<p>そこで、プログラムを引数付き(/decrypt のスイッチつき)で再スタートさせてみます。すると、以下のように、復号後の文字列が表示されます。これで目的の文字列が得られたため、解析終了です。</p>
+
+<div id="attachment_43777" class="wp-caption aligncenter" style="width: 687px"><a href="/images/2011/09/plain.jpg"><img src="/images/2011/09/plain.jpg" alt="plain" title="plain" width="677" height="492" class="size-full wp-image-43777"/></a><p class="wp-caption-text">復号されたテキスト</p></div>
+
+<p><em>マジックナンバーとは？</em>拡張子ogg のファイルをバイナリエディタなどでのぞくと、先頭に “OggS” という文字列が書かれています。また、ビットマップ画像ファイルでは、マジックナンバーは、”BM”に設定されています。メモリ上で、これらのマジックナンバーを探すことで、データ本体に辿りつけることもあります。ファイルフォーマットをよく知っておくことが、データ本体にたどり着く近道です。</p>
+
+<h2>おまけ</h2>
+
+<p>実はこの記事を書くために、secret.txt を自作する必要がありました。そのために、広く知られている、RC4 互換のArcFour アルゴリズムを利用して、暗号化を実現しています。初期化キーはプログラムに埋め込まれています。興味のある方は、ここから zip ファイルをダウンロードして、実際に暗号化・復号を確かめることも出来ます。また、「secret.txt」のフォーマットは、次の画像のようにヘッダ部(マジックナンバー：GteT、データ部のテキスト長： 1D 00 00 00)、データ部になっています。</p>
+
+<div id="attachment_43521" class="wp-caption aligncenter" style="width: 663px"><a href="/images/2011/09/secret-format.jpg"><img src="/images/2011/09/secret-format.jpg" alt="secret-format" title="secret-format" width="653" height="170" class="size-full wp-image-43521"/></a><p class="wp-caption-text">secret.txt のフォーマット</p></div>
+
+<p>解析の様子を実際に確かめてみたい方は、zip で固めたデータ、<a href="/images/2011/09/encryptedTexts.zip" onclick="javascript:_gaq.push(['_trackEvent','download','/images/2011/09/encryptedTexts.zip']);">encryptedTexts</a> をダウンロードして試してみてください。その際、もしかすると、<a href="http://www.microsoft.com/downloads/ja-jp/details.aspx?familyid=a7b7a05e-6de6-4d3a-a423-37bf0912db84&amp;displaylang=ja-nec" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.microsoft.com']);">Microsoft Visual C++ 2010 再頒布可能パッケージ (x86)</a>などが必要となるかもしれません。なお、注意で書いた防御機構は実装していません。自由に解析していただいて結構です。
+</p>
+
+<p>※プログラムは、本業の合間を見つけて作ったので、大半のエラーチェックやフォーマットを真面目に考えて実装しているわけではありません。したがって、今回の例程度よりも文字列長が長い文字のエンコード・デコードはうまく動作しないしない場合がありますので、あらかじめご了承ください。
+</p>
+
+<h2>私の次回の執筆テーマ</h2>
+
+<p>Wireshark で、パケットをキャプチャして、ダウンロードされるファイルのデータを取得してみるような内容にしようかと考えています。</p>
+                            
+
+    <h2>Tags</h2>
+      <a href="../../../tags/uncategorized.html">Uncategorized</a>
+  </article>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2014/04/10/takezoux2.html">ScalaとRubyどっちがいいの？</a> <span>2014-04-10</span></li>
+                  <li><a href="../../../2014/03/08/takezoux2.html">3分で掴むScalaのコツ</a> <span>2014-03-08</span></li>
+                  <li><a href="../../../2013/12/08/takezoux2.html">ScalaのParserCombinator実践入門＋</a> <span>2013-12-08</span></li>
+                  <li><a href="../../../2013/06/21/takezoux2.html">UnityでWebSocketを使ってチャット -Playと一緒-</a> <span>2013-06-21</span></li>
+                  <li><a href="../../../2013/01/30/k_ryoko.html">GTE Git branching model</a> <span>2013-01-30</span></li>
+                  <li><a href="../../../2012/12/19/takezoux2.html">scala 2.10のreflectionでorg.apache.commons.beanutils.PropertyUtilsっぽいものを作ってみた</a> <span>2012-12-19</span></li>
+                  <li><a href="../../../2012/09/05/yyuu.html">rbenv – ruby + python => pyenv</a> <span>2012-09-05</span></li>
+                  <li><a href="../../../2012/08/02/takezoux2.html">Scala勉強会 in 本郷始めました。</a> <span>2012-08-02</span></li>
+                  <li><a href="../../../2012/07/31/kohashi.html">enchant.jsでjsファイルを必要なときにロードする</a> <span>2012-07-31</span></li>
+                  <li><a href="../../../2012/07/30/takezoux2.html">javaのExceptionのコストについて</a> <span>2012-07-30</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2014.html">2014 (2)</a></li>
+                  <li><a href="../../../2013.html">2013 (3)</a></li>
+                  <li><a href="../../../2012.html">2012 (10)</a></li>
+                  <li><a href="../../../2011.html">2011 (11)</a></li>
+                  <li><a href="../../../2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../../tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../../tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../../tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../../tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../../tags/android.html">Android (3)</a></li>
+                      <li><a href="../../../tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../../tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../../tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../../tags/git.html">git (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../../tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../../tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../../tags/python.html">Python (1)</a></li>
+                      <li><a href="../../../tags/c.html">C# (1)</a></li>
+                      <li><a href="../../../tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../../tags/css.html">css (1)</a></li>
+                      <li><a href="../../../tags/java.html">Java (2)</a></li>
+                      <li><a href="../../../tags/jetty.html">jetty (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../../authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../../authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../../authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../../authors/ta2.html">ta2</a></li>
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../../authors/arikui.html">arikui</a></li>
+                      <li><a href="../../../authors/yamauchi.html">yamauchi</a></li>
+                      <li><a href="../../../authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../../authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

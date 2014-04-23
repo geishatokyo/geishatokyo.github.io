@@ -1,0 +1,2035 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            
+  <h1><a href="archives/2014/04/10/takezoux2.html">ScalaとRubyどっちがいいの？</a></h1>
+  <span>Posted on 2014-04-10
+    by <a href="archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h2>– PR –</h2>
+
+<p style="background:#fafad2;">
+芸者東京で隔週水曜にScalaの勉強会を開催しています。<br/>
+上級者の方から、Scalaを使い始めた方、興味を持っている方などどなたでもウェルカムですのでふるってご参加下さい。<br/>
+勉強会への参加登録は、<a href="http://rpscala.doorkeeper.jp/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://rpscala.doorkeeper.jp']);">DoorKeeper</a>のほうで行っています。
+</p>
+
+<hr/>
+
+<p>第123回Scala勉強会で出た、<br/>
+<span style="font-size: 20px;background:#ffffe0;">「Webサービスを作るにあたってScalaとRubyのどちらで作った方がいいのか?」</span><br/>
+という質問に対する参加者の解答まとめです。</p>
+
+<h1>結論</h1>
+
+<p style="font-size: 20px;background:#ffffe0;">その会社の目指すところ、状況によってかわってくるため、慎重に選びましょう！</p>
+
+<p>ということです。選ぶポイントとしては次のような感じになっています。</p>
+
+<h3>1. 人材採用</h3>
+
+<p>Scala、Rubyを使える人数を比較すると、Rubyのほうが圧倒的に多いため人材確保を考えるとRubyのほうが良いだろう。<br/>
+ただし、Scalaを使える人なら技術力が高い人が多いため、精鋭を集めたいならScalaのほうが良いかも。</p>
+
+<h3>2. パフォーマンス</h3>
+
+<p>サーバー単体の場合はScalaで書いたほうがだいたいの場合では速いが、<br/>
+実際は、実装によって大きくかわるのと、通常はスケールアウトが前提となるためサーバー単体での速さはそこまでは重要ではない。<br/>
+むしろ、スケールアウトを行うにあたって、インフラエンジニアのスキルにあっているほうが良いだろう。</p>
+
+<h3>3. 開発効率</h3>
+
+<p>やはり初期はRuby(もといRuby on Rails)の開発効率は非常に高いが、開発規模が大きくなり行数が増え、人数が増加してくると、リファクタリングやユニットテストの理由などによりScalaのほうが開発効率が良くなる。</p>
+
+<h4>3-1. リファクタリング</h4>
+
+<p>Scalaの場合は、コンパイラーによりチェックが入るためクラス、メソッド、変数名の変更を安心して行うことが出来る。<br/>
+Rubyの場合は、テストがしっかり書かれていないと安心して行えない。</p>
+
+<h4>3-2. ユニットテスト</h4>
+
+<p>Rubyの場合はTypoでプログラムが死ぬ場合も多く、リファクタリングのことも考えるとしっかりとテストを書く必要がある。<br/>
+Scalaの場合は、ロジックに関するテストだけを書けば良いため、Rubyよりはユニットテスト量は少なくて済む。</p>
+
+<h3>4. 好み</h3>
+
+<p>メインになるエンジニアが好むものを使ったほうが、モチベもあがるし良いだろう。</p>
+
+<hr/>
+
+<p>ちなみに弊社(芸者東京エンターテインメント)では、</p>
+
+<ol>
+<li>優秀な人材を取りたい</li>
+<li>パフォーマンスが良さそうなほうがいいよね</li>
+<li>最終的には大規模なプロジェクトになることが多い+ゲーム開発で、仕様変更が頻繁に発生してユニットテストを全部書いていられない</li>
+<li>静的言語好き</li>
+</ol>
+
+<p>なため、Scalaの採用は妥当かなっといった感じです。</p>
+                            
+
+  <hr/>
+  <h1><a href="archives/2014/03/08/takezoux2.html">3分で掴むScalaのコツ</a></h1>
+  <span>Posted on 2014-03-08
+    by <a href="archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>ある程度Scalaの基本文法を知っている+オブジェクト指向言語を理解している人向けです。<br/>
+独断と偏見で使用頻度の高いものをピックアップしているので、人によって所感は違うかもですが、ご容赦下さい。</p>
+
+<h2>1. 関数型=関数がファーストクラス+副作用が無い(ようにかける)　であることを心がける</h2>
+
+<p>Scalaは、オブジェクト指向言語であるとともに、関数型言語でもあります。<br/>
+java likeに書くことは出来ますが、関数型的にかけるとかっこいい、テストしやすい、わかりやすい、などいいことずくめです。</p>
+
+<hr/>
+
+<h3>val と varの違い</h3>
+
+<p>変数の宣言をするときに、valとvarの２種類のキーワードが有ります。<br/>
+違いは、valは変数を定義した後再代入不可、varは再代入可能です。<br/>
+Scalaでは基本的にvalを使うようにしましょう。副作用がないプログラムをかけるようになります。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="mi">1</span>
+<span class="k">var</span> <span class="n">b</span> <span class="k">=</span> <span class="mi">2</span>
+
+<span class="n">a</span> <span class="k">=</span> <span class="mi">334</span> <span class="c1">// Error!
+</span><span class="n">b</span> <span class="k">=</span> <span class="mi">2183</span> <span class="c1">// OK!
+</span></pre>
+
+<hr/>
+
+<h3>ラムダ式</h3>
+
+<p>ようは簡単に関数が定義できる機能です。<br/>
+メソッドに関数を渡す時によく利用します。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">nums</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">evens</span> <span class="k">=</span> <span class="n">nums</span><span class="o">.</span><span class="n">map</span><span class="o">(</span> <span class="n">i</span> <span class="k">=&gt;</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="o">)</span> <span class="c1">// &lt;- i = i * 2がラムダ式
+</span></pre>
+
+<hr/>
+
+<h3>関数を引数に渡せる</h3>
+
+<p>関数がファーストクラスなので、関数を引数に取るメソッドを定義できます。</p>
+<pre class="highlight scala"><span class="k">def</span> <span class="n">printTime</span><span class="o">(</span> <span class="n">format</span> <span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">String</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="o">(</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">12</span><span class="o">).</span><span class="n">foreach</span><span class="o">(</span> <span class="n">hour</span> <span class="k">=&gt;</span> <span class="n">printn</span><span class="o">(</span><span class="n">format</span><span class="o">(</span><span class="n">hour</span><span class="o">))</span> <span class="o">)</span>
+<span class="o">}</span>
+<span class="n">printTime</span><span class="o">(</span> <span class="n">hour</span> <span class="k">=&gt;</span> <span class="n">hour</span> <span class="o">+</span> <span class="s">"時です"</span><span class="o">)</span> <span class="c1">// 1時~12時が出力される
+</span><span class="n">printTime</span><span class="o">(</span> <span class="n">hour</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="s">"${hour}:00"</span><span class="o">)</span> <span class="c1">// 1:00 ~ 12:00が出力される
+</span></pre>
+
+<h2>2. <a href="http://www.scala-lang.org/api/current/#scala.collection.immutable.List" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-lang.org']);">Listのメソッド</a>を覚える</h2>
+
+<p>Scalaは標準ライブラリが非常に強力です。他にも、便利なクラスはいろいろ有りますが、特にListのメソッドは使用頻度が高いので何があるかを把握しておきましょう。特に、次のメソッドはマストラーンです。</p>
+
+<hr/>
+
+<h3>foreach</h3>
+
+<p>要素を一つ一つ処理していきます。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">list</span> <span class="k">=</span> <span class="mi">1</span> <span class="o">::</span> <span class="mi">2</span><span class="o">::</span> <span class="mi">3</span> <span class="o">::</span> <span class="nc">Nil</span>
+<span class="n">list</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span> <span class="n">i</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">)</span>
+</pre>
+
+<hr/>
+
+<h3>map</h3>
+
+<p>要素を変換し、新しいリストを返します。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">list</span> <span class="k">=</span> <span class="mi">1</span> <span class="o">::</span> <span class="nc">List</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">odds</span> <span class="k">=</span> <span class="n">list</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">i</span> <span class="k">=&gt;</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+</pre>
+
+<hr/>
+
+<h3>filter</h3>
+
+<p>trueを返した要素だけを取り出したリストを返します。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">list</span> <span class="k">=</span> <span class="o">(</span><span class="mi">0</span> <span class="n">to</span> <span class="mi">100</span><span class="o">).</span><span class="n">toList</span>
+<span class="k">val</span> <span class="n">evens</span> <span class="k">=</span> <span class="n">list</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span> <span class="k">_</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+</pre>
+
+<hr/>
+
+<h3>groupBy</h3>
+
+<p>返した要素をKeyとしてグルーピングしたMapを返す</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">objects</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="s">"Apple"</span><span class="o">,</span><span class="s">"Apache"</span><span class="o">,</span><span class="s">"Banana"</span><span class="o">,</span><span class="s">"Bash"</span><span class="o">,</span><span class="s">"Scala"</span><span class="o">,</span><span class="s">"Stash"</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">groupByInitial</span> <span class="k">=</span> <span class="n">objects</span><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span> <span class="n">s</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span>
+<span class="cm">/* 中身はこんな感じになります
+Map(
+  'A' -&gt; List("Apple","Apache"),
+  'B' -&gt; List("Banana","Bash"),
+  'S' -&gt; List("Scala","Stash")
+)
+*/</span>
+</pre>
+
+<p>※Mapは連想配列のことです。</p>
+
+<h2>3.パターンマッチング</h2>
+
+<p>Scalaでは、他の言語でのswitchみたいなものが非常に強力になっています。これを使わなければScalaとは言えないレベルです。</p>
+
+<hr/>
+
+<h3>Case class</h3>
+
+<p>Scalaのパターンマッチングを非常に強力してくれる機能です。だいたい次のように使います。</p>
+<pre class="highlight scala"><span class="k">trait</span> <span class="nc">Exp</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Add</span><span class="o">(</span> <span class="n">a</span> <span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">b</span> <span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Exp</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Sub</span><span class="o">(</span><span class="n">a</span> <span class="k">:</span> <span class="kt">Int</span> <span class="o">,</span> <span class="n">b</span> <span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Exp</span>
+
+<span class="k">def</span> <span class="n">calc</span><span class="o">(</span> <span class="n">exp</span> <span class="k">:</span> <span class="kt">Exp</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="n">exp</span> <span class="k">match</span><span class="o">{</span>
+    <span class="k">case</span> <span class="nc">Add</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">case</span> <span class="nc">Sub</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">calc</span><span class="o">(</span><span class="nc">Add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">))</span> <span class="c1">// return 3
+</span><span class="n">calc</span><span class="o">(</span><span class="nc">Sub</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span><span class="mi">2</span><span class="o">))</span> <span class="c1">// return 2
+</span></pre>
+
+<hr/>
+
+<h3>Option型</h3>
+
+<p>Scalaは、nullチェックは基本使いません。nullが入りうる可能性がある変数は、変わりにOption型でラップしパターンマッチングやforeachなどで値を取り出します。</p>
+<pre class="highlight scala"><span class="k">def</span> <span class="n">login</span><span class="o">(</span> <span class="n">nameOp</span> <span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="n">nameOp</span> <span class="k">match</span><span class="o">{</span>
+    <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="s">"ぽこ"</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">"ぽこたんインしたお"</span><span class="o">)</span>
+    <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="n">name</span><span class="o">)</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startsWith</span><span class="o">(</span><span class="s">"悟"</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">printnl</span><span class="o">(</span><span class="n">s</span><span class="s">"オッス、オラ${name}"</span><span class="o">)</span>
+    <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="n">name</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">"${name}さんがログインしました"</span><span class="o">)</span>
+    <span class="k">case</span> <span class="nc">None</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">"中に誰もいませんよ？"</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">login</span><span class="o">(</span><span class="nc">Some</span><span class="o">(</span><span class="s">"ぽこ"</span><span class="o">))</span> <span class="c1">// "ぽこたんインしたお"が出力
+</span><span class="n">login</span><span class="o">(</span><span class="nc">Some</span><span class="o">(</span><span class="s">"悟空"</span><span class="o">))</span> <span class="c1">// "オッス、オラ悟空"
+</span><span class="n">login</span><span class="o">(</span><span class="nc">Some</span><span class="o">(</span><span class="s">"太郎"</span><span class="o">))</span> <span class="c1">// "太郎さんがログインしました"
+</span><span class="n">login</span><span class="o">(</span><span class="nc">None</span><span class="o">)</span> <span class="c1">// "中に誰もいませんよ？"
+</span></pre>
+
+<p>だいたい、このあたりのことを気を付けて書けば、なんかScalaっぽいコードになります。</p>
+                            
+
+  <hr/>
+  <h1><a href="archives/2013/12/08/takezoux2.html">ScalaのParserCombinator実践入門＋</a></h1>
+  <span>Posted on 2013-12-08
+    by <a href="archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p><a href="http://qiita.com/advent-calendar/2013/scala" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://qiita.com']);">Scala advent calendar</a>12月8日の記事です。</p>
+
+<h2>1. はじめに</h2>
+
+<p>takezoux2こと竹下です。<br/>
+今回は、ScalaのParserCombinatorの実践入門＋の記事を書きたいと思います。<br/>
+ParserCombinatorの入門記事はだいたい四則演算を例に出しています。<br/>
+入門編の題材として良いとは思いますが正直私は、「いまさら四則演算とかパースしてもしょうがくね？」と思うので、<br/>
+この記事では弊社の実際の活用事例を絡めて、ちょっと突っ込んだ内容を紹介したいと思います。<br/>
+ちなみに、本当の入門には、<a href="https://www.google.co.jp/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=2&amp;ved=0CDUQFjAB&amp;url=http%3A%2F%2Fcappuccino.jp%2Fscala-ja%2F%3Fc%3Dplugin%3Bplugin%3Dattach_download%3Bp%3DScala%25CA%25D9%25B6%25AF%25B2%25F1%25A1%25F7%25B4%25D8%25C5%25EC-2%3Bfile_name%3DScala-parser-combinator.pdf&amp;ei=pT-jUquRCcvfkgXOnIHwBA&amp;usg=AFQjCNH_a6iTgCWyObsTA2REKDnd3N4FdQ&amp;bvm=bv.57752919,d.dGI&amp;cad=rja" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.google.co.jp']);">水島さんのPDF</a>が非常にわかりやすいと思います。</p>
+
+<h2>2. ParserCombinatorとはなんぞや？</h2>
+
+<p>ParserCombinatorとは、文字列の構文の解析を行うクラスまたは関数を受け取り、協調させる機能のことです。用は、プログラムとか数式みたいにルールの決まっている文章を簡単に解析できる機能です。Scalaにはかなり高機能なParserCombinatorが標準のライブラリで提供されています。日本語とか英語などの文法がきちんと定義できない自然言語の解析は無理なので、そういう解析に使おうと思っている人は諦めてください。</p>
+
+<p>弊社では、</p>
+
+<ul>
+<li>SQLのCreateTable文のパース</li>
+<li>DSLのパース</li>
+</ul>
+
+<p>に利用しています。今回は、<a href="http://dev.mysql.com/doc/refman/5.1/ja/create-table.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://dev.mysql.com']);">CreateTable文</a>のパースをステップ・バイ・ステップで実装していきます。ただし、CreateTable文を完全にパースしようとするとえらいことになるので、今回は基本的なカラム定義のパースのみの内容になります。</p>
+
+<h2>3. なぜSQLをパースするの？</h2>
+
+<p>弊社では現在、SQLのCreateTable文をパースするライブラリを作成、使用しています。<br/>
+二つのCreateTable文の差分を取り、定義ファイルの更新に伴って自動でデータベースを更新したり、データベースのマイグレーションファイルを生成することを目的にしています。</p>
+
+<p>弊社のライブラリは<a href="https://github.com/geishatokyo/diff-sql-table" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">git-hub</a>に公開しています。<br/>
+(現在、MySQLのみが対象であるのと、まだまだ開発途中であるので使う方は完全に自己責任でお願いします。)<br/>
+が、この記事は、私が練習がてら書いた同様の<a href="https://github.com/takezoux2/sqltool" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">プログラム</a>を元に書いていきます。</p>
+
+<h2>4. 今回のゴール</h2>
+<pre class="highlight scala"><span class="nc">CREATE</span> <span class="nc">TABLE</span> <span class="nc">IF</span> <span class="nc">NOT</span> <span class="nc">EXISTS</span> <span class="nc">User</span><span class="o">(</span>
+  <span class="n">id</span> <span class="nc">BIGINT</span> <span class="nc">PRIMARY</span> <span class="nc">KEY</span> <span class="nc">AUTO_INCREMENT</span><span class="o">,</span>
+  <span class="n">nickname</span> <span class="nc">VARCHAR</span><span class="o">(</span><span class="mi">100</span><span class="o">),</span>
+  <span class="n">age</span> <span class="nc">INTEGER</span>
+<span class="o">);</span>
+</pre>
+
+<p>を正しくパース出来るまでです。</p>
+
+<h2>5. 環境構築</h2>
+
+<p>特に依存ライブラリはないし1ファイルで済むので、2.10以降の普通のScalaのコンパイラーかsbtを用意して貰えれば大丈夫です。scala versionは2.10.3です。</p>
+
+<h2>Step1. ParserCombinatorのクラスを準備</h2>
+
+<p>普通のパーサーコンビネーターを実装する場合は、<a href="http://www.scala-lang.org/api/current/#scala.util.parsing.combinator.RegexParsers" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-lang.org']);">RegexParsers</a>を使用します。正規表現でParserを定義できるので、だいたいの場合はこれで事足ります。</p>
+
+<p>まずは、RegexParsersを継承したobjectの作成と、構文解析を行うメソッドを定義してあげます。</p>
+
+<p>CreateTableParser.scala</p>
+<pre class="highlight scala"><span class="k">import</span> <span class="nn">scala.util.parsing.combinator._</span>
+
+<span class="k">object</span> <span class="nc">App</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span> <span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">CreateTableParser</span><span class="o">(</span><span class="s">"hoge"</span><span class="o">)</span>
+
+    <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">"Success to parse $r"</span><span class="o">)</span>
+
+    <span class="nc">CreateTableParser</span><span class="o">(</span><span class="s">" hoge \t"</span><span class="o">)</span> <span class="c1">// OK
+</span>    <span class="nc">CreateTableParser</span><span class="o">(</span><span class="s">"ho ge"</span><span class="o">)</span> <span class="c1">// NG
+</span>    <span class="nc">CreateTableParser</span><span class="o">(</span><span class="s">"fuga"</span><span class="o">)</span> <span class="c1">// NG
+</span>  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">CreateTableParser</span> <span class="k">extends</span> <span class="nc">RegexParsers</span><span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">expr</span> <span class="k">=</span> <span class="s">"hoge"</span>
+
+  <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">s</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">parseAll</span><span class="o">(</span><span class="n">expr</span><span class="o">,</span><span class="n">s</span><span class="o">)</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">Success</span><span class="o">(</span><span class="n">tree</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">tree</span>
+      <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">NoSuccess</span> <span class="o">=&gt;</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Bad syntax: "</span><span class="o">+</span><span class="n">s</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>これは、”hoge”という文字列を一つだけ受け取るパーサーになります。<br/>
+“hoge”と空白文字以外を含んだ文字列を渡すと、パースに失敗し例外を投げます。</p>
+
+<h2>Step2. 解析した結果の定義</h2>
+
+<p>通常はパース結果は、パースした解析木を返すことになります。<br/>
+今回は、CreateTableSQLクラスを定義し、これを返すことにします。</p>
+
+<p>CreateTableParser.scala</p>
+<pre class="highlight scala"><span class="k">import</span> <span class="nn">scala.util.parsing.combinator._</span>
+
+<span class="k">object</span> <span class="nc">App</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span> <span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">CreateTableParser</span><span class="o">(</span><span class="s">"hoge"</span><span class="o">)</span>
+
+    <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">"Success to parse $r"</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">CreateTableSQL</span><span class="o">(</span><span class="n">tableName</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">columns</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Column</span><span class="o">])</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Column</span><span class="o">(</span><span class="n">name</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">columnType</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">options</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">ColumnOption</span><span class="o">])</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">ColumnOption</span><span class="o">(</span><span class="n">v</span> <span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+
+<span class="k">object</span> <span class="nc">CreateTableParser</span> <span class="k">extends</span> <span class="nc">RegexParsers</span><span class="o">{</span>
+
+  <span class="c1">// Parser[String] からParser[CreateTableSQL]へ変換
+</span>  <span class="k">def</span> <span class="n">expr</span> <span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">CreateTableSQL</span><span class="o">]</span> <span class="k">=</span> <span class="s">"hoge"</span> <span class="o">^^^</span> <span class="nc">CreateTableSQL</span><span class="o">(</span><span class="s">"Unknown"</span><span class="o">,</span><span class="nc">Nil</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">s</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">:</span> <span class="kt">CreateTableSQL</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">parseAll</span><span class="o">(</span><span class="n">expr</span><span class="o">,</span><span class="n">s</span><span class="o">)</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">Success</span><span class="o">(</span><span class="n">tree</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">tree</span>
+      <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">NoSuccess</span> <span class="o">=&gt;</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Bad syntax: "</span><span class="o">+</span><span class="n">s</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>※^^^は、パースした内容を受け取らずに別の型を返すときに使用します。普段はあまり使用しないので、適当にこんなもんかで流しておいてください。</p>
+
+<h2>Step3. とりあえずCREATE TABLEをパース</h2>
+
+<p>まずは、<a href="http://dev.mysql.com/doc/refman/5.1/ja/create-table.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://dev.mysql.com']);">定義の開始</a>のキーワード部分をパースします。</p>
+<pre class="highlight scala"><span class="nc">CREATE</span> <span class="o">[</span><span class="kt">TEMPORARY</span><span class="o">]</span> <span class="nc">TABLE</span> <span class="o">[</span><span class="kt">IF</span> <span class="kt">NOT</span> <span class="kt">EXISTS</span><span class="o">]</span>
+</pre>
+
+<p>の部分です。<br/>
+構文中の空白を取り除いてキーワードを「~」でつなぐことが基本になります。<br/>
+任意出現のキーワードはoptでくるんであげるだけでよしなにやってくれます。</p>
+
+<p>CreateTableParser.scala</p>
+<pre class="highlight scala"><span class="k">import</span> <span class="nn">scala.util.parsing.combinator._</span>
+
+<span class="k">object</span> <span class="nc">CreateTableParser</span> <span class="k">extends</span> <span class="nc">RegexParsers</span><span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">createStart</span><span class="k">=</span> <span class="s">"CREATE"</span> <span class="o">~</span> <span class="n">opt</span><span class="o">(</span><span class="s">"TEMPORARY"</span><span class="o">)</span> <span class="o">~</span> <span class="s">"TABLE"</span> <span class="o">~</span> <span class="n">opt</span><span class="o">(</span><span class="n">ifNotExists</span><span class="o">)</span>
+  <span class="c1">// このように、小分けにして組み合わせることが出来る
+</span>  <span class="k">def</span> <span class="n">ifNotExists</span> <span class="k">=</span> <span class="s">"IF"</span> <span class="o">~</span> <span class="s">"NOT"</span> <span class="o">~</span> <span class="s">"EXISTS"</span>
+
+  <span class="k">def</span> <span class="n">expr</span> <span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">CreateTableSQL</span><span class="o">]</span> <span class="k">=</span> <span class="n">createStart</span> <span class="o">^^^</span> <span class="nc">CreateTableSQL</span><span class="o">(</span><span class="s">"Unknown"</span><span class="o">,</span><span class="nc">Nil</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">s</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">:</span> <span class="kt">CreateTableSQL</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">parseAll</span><span class="o">(</span><span class="n">expr</span><span class="o">,</span><span class="n">s</span><span class="o">)</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">Success</span><span class="o">(</span><span class="n">tree</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">tree</span>
+      <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">NoSuccess</span> <span class="o">=&gt;</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Bad syntax: "</span><span class="o">+</span><span class="n">s</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="k">object</span> <span class="nc">App</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span> <span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">CreateTableParser</span><span class="o">(</span><span class="s">"CREATE TABLE User"</span><span class="o">)</span>
+
+    <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">"Success to parse $r"</span><span class="o">)</span> <span class="c1">// Success to parse CreateTableSQL(User,List())
+</span>  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="k">case</span> <span class="k">class</span> <span class="nc">CreateTableSQL</span><span class="o">(</span><span class="n">tableName</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">columns</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Column</span><span class="o">])</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Column</span><span class="o">(</span><span class="n">name</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">columnType</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">options</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">ColumnOption</span><span class="o">])</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">ColumnOption</span><span class="o">(</span><span class="n">v</span> <span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</pre>
+
+<h2>Step4. テーブル名をパース</h2>
+
+<p>次にテーブル名をパースします。<br/>
+テーブル名は任意の名前を付けることができるので、「任意の文字列」を表すParserを定義します。<br/>
+RegexParsersは、正規表現からParserを生成できるのでテーブル名に使用可能な文字の正規表現を書くだけでOKです。<br/>
+また、パースしたテーブル名を受け取る必要があります。今まで、パース結果を受け取る必要が無かったので<br/>
+「^^^」でパーサーの変換をしていましたが、ほとんどの場合は「^^」を使用してパターンマッチングでパースした結果を受け取ります。</p>
+
+<p>さらに、キーワード部分は不要でありパターンマッチングに含める必要が無いためパーサーの連結を「~>」にします。<br/>
+「~>」は、この連結より前部分の結果を捨てるという意味になります。同様に「
+</p><p>CreateTableParser.scala</p>
+<pre class="highlight scala"><span class="k">import</span> <span class="nn">scala.util.parsing.combinator._</span>
+
+<span class="k">object</span> <span class="nc">CreateTableParser</span> <span class="k">extends</span> <span class="nc">RegexParsers</span><span class="o">{</span>
+
+  <span class="c1">// .rを付けて正規表現にしておけば、正規表現Parserになる
+</span>  <span class="k">def</span> <span class="n">chars</span> <span class="k">=</span> <span class="s">"[a-zA-Z0-9_]+"</span><span class="o">.</span><span class="n">r</span>
+
+  <span class="k">def</span> <span class="n">createStart</span><span class="k">=</span> <span class="s">"CREATE"</span> <span class="o">~</span> <span class="n">opt</span><span class="o">(</span><span class="s">"TEMPORARY"</span><span class="o">)</span> <span class="o">~</span> <span class="s">"TABLE"</span> <span class="o">~</span> <span class="n">opt</span><span class="o">(</span><span class="n">ifNotExists</span><span class="o">)</span>
+  <span class="k">def</span> <span class="n">ifNotExists</span> <span class="k">=</span> <span class="s">"IF"</span> <span class="o">~</span> <span class="s">"NOT"</span> <span class="o">~</span> <span class="s">"EXISTS"</span>
+
+  <span class="k">def</span> <span class="n">tableName</span> <span class="k">=</span> <span class="n">chars</span>
+
+  <span class="c1">// ~では無く、~&gt;になっていることと、^^と二つになっていることに注意！
+</span>  <span class="k">def</span> <span class="n">expr</span> <span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">CreateTableSQL</span><span class="o">]</span> <span class="k">=</span> <span class="n">createStart</span> <span class="o">~&gt;</span> <span class="n">tableName</span> <span class="o">^^{</span>
+    <span class="k">case</span> <span class="n">tableName</span> <span class="k">=&gt;</span> <span class="o">{</span> <span class="nc">CreateTableSQL</span><span class="o">(</span><span class="n">tableName</span><span class="o">,</span><span class="nc">Nil</span><span class="o">)</span> <span class="o">}</span> <span class="c1">// tableName Parserがパースした結果を取り出す
+</span>
+  <span class="o">}</span>
+  <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">s</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">:</span> <span class="kt">CreateTableSQL</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">parseAll</span><span class="o">(</span><span class="n">expr</span><span class="o">,</span><span class="n">s</span><span class="o">)</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">Success</span><span class="o">(</span><span class="n">tree</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">tree</span>
+      <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">NoSuccess</span> <span class="o">=&gt;</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Bad syntax: "</span><span class="o">+</span><span class="n">s</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="k">object</span> <span class="nc">App</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span> <span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">CreateTableParser</span><span class="o">(</span><span class="s">"CREATE TABLE User"</span><span class="o">)</span>
+
+    <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">"Success to parse $r"</span><span class="o">)</span> <span class="c1">// Success to parse CreateTableSQL(User,List())
+</span>  <span class="o">}</span>
+<span class="o">}</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">CreateTableSQL</span><span class="o">(</span><span class="n">tableName</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">columns</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Column</span><span class="o">])</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Column</span><span class="o">(</span><span class="n">name</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">columnType</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">options</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">ColumnOption</span><span class="o">])</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">ColumnOption</span><span class="o">(</span><span class="n">v</span> <span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</pre>
+
+<h2>Step5. テーブルボディーをパース</h2>
+
+<p>次に、テーブルボディ部分の定義に移ります。<br/>
+とりあえず、カラムの定義はおいておいて、ボディーは複数のカラム定義のリストであることを定義します。<br/>
+その際に、今回はrep1sep( list_element_parser, separator_parser)というメソッドを使用しています。<br/>
+ほかにも複数回出現する要素をパースするrep系メソッドがいくつかあるのでAPIで確認をしてみてください。</p>
+
+<p>CreateTableParser.scala</p>
+<pre class="highlight scala"><span class="k">import</span> <span class="nn">scala.util.parsing.combinator._</span>
+
+<span class="k">object</span> <span class="nc">CreateTableParser</span> <span class="k">extends</span> <span class="nc">RegexParsers</span><span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">chars</span> <span class="k">=</span> <span class="s">"[a-zA-Z0-9_]+"</span><span class="o">.</span><span class="n">r</span>
+
+  <span class="k">def</span> <span class="n">createStart</span><span class="k">=</span> <span class="s">"CREATE"</span> <span class="o">~</span> <span class="n">opt</span><span class="o">(</span><span class="s">"TEMPORARY"</span><span class="o">)</span> <span class="o">~</span> <span class="s">"TABLE"</span> <span class="o">~</span> <span class="n">opt</span><span class="o">(</span><span class="n">ifNotExists</span><span class="o">)</span>
+  <span class="k">def</span> <span class="n">ifNotExists</span> <span class="k">=</span> <span class="s">"IF"</span> <span class="o">~</span> <span class="s">"NOT"</span> <span class="o">~</span> <span class="s">"EXISTS"</span>
+
+  <span class="k">def</span> <span class="n">tableName</span> <span class="k">=</span> <span class="n">chars</span>
+
+  <span class="c1">// rep1sepは指定したセパレーターで区切られたリストをパースできる。
+</span>  <span class="k">def</span> <span class="n">body</span> <span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">List</span><span class="o">[</span><span class="kt">Column</span><span class="o">]]</span> <span class="k">=</span> <span class="s">"("</span> <span class="o">~&gt;</span> <span class="n">rep1sep</span><span class="o">(</span><span class="n">column</span><span class="o">,</span><span class="s">","</span><span class="o">)</span> <span class="o">&lt;~</span> <span class="s">")"</span> <span class="o">~</span> <span class="n">opt</span><span class="o">(</span><span class="s">";"</span><span class="o">)</span>
+  <span class="cm">/* 再帰を使って、こうも書ける
+      複雑なリストのパースを行いたい場合などは、再帰で書くと楽な時も多い。
+  def body = "(" ~&gt; columns &lt;~ ")" ~ opt(")")
+  def columns: Parser[List[Column]] = (column ~ "," ~ columns ^^ {
+    case column ~ "," ~ columns =&gt; column :: colmuns
+  }) |
+  (column ^^ {
+    case column =&gt; column :: Nil
+  })
+  */</span>
+
+  <span class="c1">// とりあえずカラムの定義は後回し。
+</span>  <span class="k">def</span> <span class="n">column</span> <span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">Column</span><span class="o">]</span> <span class="k">=</span> <span class="n">success</span><span class="o">(</span><span class="nc">Column</span><span class="o">(</span><span class="s">"Unknown"</span><span class="o">,</span><span class="s">"Unkown"</span><span class="o">))</span>
+
+  <span class="k">def</span> <span class="n">expr</span> <span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">CreateTableSQL</span><span class="o">]</span> <span class="k">=</span> <span class="n">createStart</span> <span class="o">~&gt;</span> <span class="n">tableName</span> <span class="o">~</span> <span class="n">body</span> <span class="o">^^{</span>
+    <span class="k">case</span> <span class="n">tableName</span> <span class="o">~</span> <span class="n">columns</span> <span class="k">=&gt;</span> <span class="o">{</span> <span class="nc">CreateTableSQL</span><span class="o">(</span><span class="n">tableName</span><span class="o">,</span><span class="n">columns</span><span class="o">)</span> <span class="o">}</span> <span class="c1">// tableName Parserがパースした結果を取り出す
+</span>
+  <span class="o">}</span>
+  <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">s</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">:</span> <span class="kt">CreateTableSQL</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">parseAll</span><span class="o">(</span><span class="n">expr</span><span class="o">,</span><span class="n">s</span><span class="o">)</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">Success</span><span class="o">(</span><span class="n">tree</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">tree</span>
+      <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">NoSuccess</span> <span class="o">=&gt;</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Bad syntax: "</span><span class="o">+</span><span class="n">s</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="k">object</span> <span class="nc">App</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span> <span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">CreateTableParser</span><span class="o">(</span><span class="s">"""
+CREATE TABLE IF NOT EXISTS User(
+  ,
+);
+"""</span><span class="o">)</span>
+
+    <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">"Success to parse $r"</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">CreateTableSQL</span><span class="o">(</span><span class="n">tableName</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">columns</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Column</span><span class="o">])</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Column</span><span class="o">(</span><span class="n">name</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">columnType</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">options</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">ColumnOption</span><span class="o">])</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">ColumnOption</span><span class="o">(</span><span class="n">v</span> <span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</pre>
+
+<h2>Step6. カラム定義をパース</h2>
+
+<p>最後の仕上げにカラム定義をパースします。<br/>
+カラムは基本</p>
+<pre class="highlight scala"><span class="n">カラム名</span><span class="err">　</span><span class="n">カラムタイプ</span><span class="err">　</span><span class="n">オプション</span><span class="o">*</span>
+</pre>
+
+<p>で定義されます。オプションは数が多いので今回は、PrimaryKeyとAutoIncrementだけにしておきます。</p>
+
+<p>これで、基本的なCreateTable文のパーサーの完成です。</p>
+
+<p>CreateTableParser.scala</p>
+<pre class="highlight scala">
+<span class="k">import</span> <span class="nn">scala.util.parsing.combinator._</span>
+
+<span class="k">object</span> <span class="nc">CreateTableParser</span> <span class="k">extends</span> <span class="nc">RegexParsers</span><span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">chars</span> <span class="k">=</span> <span class="s">"[a-zA-Z0-9_]+"</span><span class="o">.</span><span class="n">r</span>
+
+  <span class="k">def</span> <span class="n">createStart</span><span class="k">=</span> <span class="s">"CREATE"</span> <span class="o">~</span> <span class="n">opt</span><span class="o">(</span><span class="s">"TEMPORARY"</span><span class="o">)</span> <span class="o">~</span> <span class="s">"TABLE"</span> <span class="o">~</span> <span class="n">opt</span><span class="o">(</span><span class="n">ifNotExists</span><span class="o">)</span>
+  <span class="k">def</span> <span class="n">ifNotExists</span> <span class="k">=</span> <span class="s">"IF"</span> <span class="o">~</span> <span class="s">"NOT"</span> <span class="o">~</span> <span class="s">"EXISTS"</span>
+
+  <span class="k">def</span> <span class="n">tableName</span> <span class="k">=</span> <span class="n">chars</span>
+
+  <span class="k">def</span> <span class="n">body</span> <span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">List</span><span class="o">[</span><span class="kt">Column</span><span class="o">]]</span> <span class="k">=</span> <span class="s">"("</span> <span class="o">~&gt;</span> <span class="n">rep1sep</span><span class="o">(</span><span class="n">column</span><span class="o">,</span><span class="s">","</span><span class="o">)</span> <span class="o">&lt;~</span> <span class="s">")"</span> <span class="o">~</span> <span class="n">opt</span><span class="o">(</span><span class="s">";"</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">column</span> <span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">Column</span><span class="o">]</span> <span class="k">=</span> <span class="n">columnName</span> <span class="o">~</span> <span class="n">columnType</span> <span class="o">~</span> <span class="n">rep</span><span class="o">(</span><span class="n">columnOptions</span><span class="o">)</span> <span class="o">^^</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="n">name</span> <span class="o">~</span> <span class="n">columnType</span> <span class="o">~</span> <span class="n">options</span> <span class="k">=&gt;</span> <span class="nc">Column</span><span class="o">(</span><span class="n">name</span><span class="o">,</span><span class="n">columnType</span><span class="o">,</span><span class="n">options</span><span class="o">)</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">columnName</span> <span class="k">=</span> <span class="n">chars</span>
+  <span class="c1">// INTEGER,VARCHAR(100)など
+</span>  <span class="k">def</span> <span class="n">columnType</span> <span class="k">=</span> <span class="s">"""[a-zA-Z]+(\(\d+\))?"""</span><span class="o">.</span><span class="n">r</span>
+
+  <span class="c1">// | でいずれか一つの選択
+</span>  <span class="k">def</span> <span class="n">columnOptions</span> <span class="k">=</span> <span class="n">primaryKey</span> <span class="o">|</span> <span class="n">autoIncrement</span>
+  <span class="k">def</span> <span class="n">primaryKey</span> <span class="k">=</span> <span class="s">"PRIMARY"</span> <span class="o">~</span> <span class="s">"KEY"</span> <span class="o">^^^</span> <span class="o">{</span> <span class="nc">ColumnOption</span><span class="o">(</span><span class="s">"PrimaryKey"</span><span class="o">)</span> <span class="o">}</span>
+  <span class="k">def</span> <span class="n">autoIncrement</span> <span class="k">=</span> <span class="s">"AUTO_INCREMENT"</span> <span class="o">^^^</span> <span class="o">{</span> <span class="nc">ColumnOption</span><span class="o">(</span><span class="s">"AutoIncrement"</span><span class="o">)</span> <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">expr</span> <span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">CreateTableSQL</span><span class="o">]</span> <span class="k">=</span> <span class="n">createStart</span> <span class="o">~&gt;</span> <span class="n">tableName</span> <span class="o">~</span> <span class="n">body</span> <span class="o">^^{</span>
+    <span class="k">case</span> <span class="n">tableName</span> <span class="o">~</span> <span class="n">columns</span> <span class="k">=&gt;</span> <span class="o">{</span> <span class="nc">CreateTableSQL</span><span class="o">(</span><span class="n">tableName</span><span class="o">,</span><span class="n">columns</span><span class="o">)</span> <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">s</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">:</span> <span class="kt">CreateTableSQL</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">parseAll</span><span class="o">(</span><span class="n">expr</span><span class="o">,</span><span class="n">s</span><span class="o">)</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">Success</span><span class="o">(</span><span class="n">tree</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">tree</span>
+      <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">NoSuccess</span> <span class="o">=&gt;</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Bad syntax: "</span><span class="o">+</span><span class="n">s</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="k">object</span> <span class="nc">App</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span> <span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">CreateTableParser</span><span class="o">(</span><span class="s">"""
+CREATE TABLE IF NOT EXISTS User(
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  nickname VARCHAR(100),
+  age INTEGER
+);
+"""</span><span class="o">)</span>
+
+    <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">"Success to parse $r"</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">CreateTableSQL</span><span class="o">(</span><span class="n">tableName</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">columns</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Column</span><span class="o">])</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Column</span><span class="o">(</span><span class="n">name</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">columnType</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">options</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">ColumnOption</span><span class="o">])</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">ColumnOption</span><span class="o">(</span><span class="n">v</span> <span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</pre>
+
+<h2>おまけ1. 大文字小文字の無視</h2>
+
+<p>SQLのキーワードは、実際は大文字小文字を区別しません。<br/>
+大文字小文字の無視設定は、</p>
+
+<ol>
+<li>Javaの正規表現のiオプション</li>
+<li>大文字小文字を無視してしまうParserを作る</li>
+</ol>
+
+<p>の二つの方法があります。文字列はimplicit conversionでParser[String]へ変換されているので、<br/>
+ここをオーバーライドしてあげることで、設定変更できます。</p>
+
+<p>1. Javaの正規表現オプションでの解決方法</p>
+<pre class="highlight scala">
+<span class="k">object</span> <span class="nc">CreateTableParser</span> <span class="k">extends</span> <span class="nc">RegexParsers</span><span class="o">{</span>
+  <span class="k">class</span> <span class="nc">CaseInsensitive</span><span class="o">(</span><span class="n">string</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">def</span> <span class="n">i</span> <span class="k">=</span> <span class="o">(</span><span class="s">"(?i)"</span> <span class="o">+</span> <span class="n">string</span><span class="o">).</span><span class="n">r</span>
+  <span class="o">}</span>
+  <span class="k">implicit</span> <span class="k">def</span> <span class="n">caseInsensitive</span><span class="o">(</span><span class="n">string</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">CaseInsensitive</span><span class="o">(</span><span class="n">string</span><span class="o">)</span>
+
+  <span class="c1">// 以下略
+</span><span class="o">}</span>
+</pre>
+
+<p>2. 大文字小文字無視Parserを作る</p>
+<pre class="highlight scala">
+<span class="k">object</span> <span class="nc">CreateTableParser</span> <span class="k">extends</span> <span class="nc">RegexParsers</span><span class="o">{</span>
+  <span class="c1">// Make literal case insensitive
+</span>  <span class="k">implicit</span> <span class="k">override</span> <span class="k">def</span> <span class="n">literal</span><span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Parser</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="o">{</span>
+    <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">in</span><span class="k">:</span> <span class="kt">Input</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">source</span> <span class="k">=</span> <span class="n">in</span><span class="o">.</span><span class="n">source</span>
+      <span class="k">val</span> <span class="n">offset</span> <span class="k">=</span> <span class="n">in</span><span class="o">.</span><span class="n">offset</span>
+      <span class="k">val</span> <span class="n">start</span> <span class="k">=</span> <span class="n">handleWhiteSpace</span><span class="o">(</span><span class="n">source</span><span class="o">,</span> <span class="n">offset</span><span class="o">)</span>
+      <span class="k">var</span> <span class="n">i</span> <span class="k">=</span> <span class="mi">0</span>
+      <span class="k">var</span> <span class="n">j</span> <span class="k">=</span> <span class="n">start</span>
+      <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="o">.</span><span class="n">length</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">source</span><span class="o">.</span><span class="n">length</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">s</span><span class="o">.</span><span class="n">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="n">toLower</span> <span class="o">==</span> <span class="n">source</span><span class="o">.</span><span class="n">charAt</span><span class="o">(</span><span class="n">j</span><span class="o">).</span><span class="n">toLower</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 比較時にtoLowerをかけてやる
+</span>        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="o">}</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">s</span><span class="o">.</span><span class="n">length</span><span class="o">)</span>
+        <span class="nc">Success</span><span class="o">(</span><span class="n">source</span><span class="o">.</span><span class="n">subSequence</span><span class="o">(</span><span class="n">start</span><span class="o">,</span> <span class="n">j</span><span class="o">).</span><span class="n">toString</span><span class="o">,</span> <span class="n">in</span><span class="o">.</span><span class="n">drop</span><span class="o">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">offset</span><span class="o">))</span>
+      <span class="k">else</span>  <span class="o">{</span>
+        <span class="k">val</span> <span class="n">found</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">start</span> <span class="o">==</span> <span class="n">source</span><span class="o">.</span><span class="n">length</span><span class="o">())</span> <span class="s">"end of source"</span> <span class="k">else</span> <span class="s">"`"</span><span class="o">+</span><span class="n">source</span><span class="o">.</span><span class="n">charAt</span><span class="o">(</span><span class="n">start</span><span class="o">)+</span><span class="s">"'"</span>
+        <span class="nc">Failure</span><span class="o">(</span><span class="s">"`"</span><span class="o">+</span><span class="n">s</span><span class="o">+</span><span class="s">"' expected but "</span><span class="o">+</span><span class="n">found</span><span class="o">+</span><span class="s">" found"</span><span class="o">,</span> <span class="n">in</span><span class="o">.</span><span class="n">drop</span><span class="o">(</span><span class="n">start</span> <span class="o">-</span> <span class="n">offset</span><span class="o">))</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="c1">// 以下略
+</span><span class="o">}</span>
+</pre>
+
+  <hr/>
+  <h1><a href="archives/2013/06/21/takezoux2.html">UnityでWebSocketを使ってチャット -Playと一緒-</a></h1>
+  <span>Posted on 2013-06-21
+    by <a href="archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>最近は、Unityをいじっているtakezoux2こと竹下です。</p>
+
+<p>今回は、UnityでWebSocketを使ったチャットを作って動かしてみたいと思います。<br/>
+UnityはC#で実装しています。有料のAssetは使っていません。<br/>
+サーバーにはPlayを使っていますが、scalaのコードは今回全く書かなくてOKです。</p>
+<hr/>
+まず、Unityって何？WebSocketって何？Playって何？っていう人がいるので簡単に説明しておきます。<br/>
+簡単にしか説明はしないので、詳しくは各自ググってください。<br/>
+全部知ってるよって人は、ここは飛ばしてください。
+<h2>Unity</h2>
+<p>
+3Dゲームエンジン。iOS,Androidなど、各種プラットフォームのアプリをワンソースで開発することができるツールです。<br/>
+言語はC#,UnityScript(JavaScriptベース),Boo(Pythonベース)が使えます。<br/>
+3Dオブジェクトの空間配置などはGUIで可能なので、割と非プログラマやスキル不足のプログラマにも優しいです。<br/>
+各種Asset(有料のものが多い;;)で、様々な機能拡張なども可能です。</p>
+<p>無料で３０日のPro版トライアルあります。それ以降は、ライセンスの購入の必要あります。<br/>
+<a href="http://japan.unity3d.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://japan.unity3d.com']);">Unity公式ページ</a></p>
+<h2>WebSocket</h2>
+<p>
+最近流行の双方向通信規格です。同期通信を簡単に行えます。<br/>
+<a href="http://ja.wikipedia.org/wiki/WebSocket" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://ja.wikipedia.org']);">WebSocket(wiki)</a>
+</p>
+
+<h2>Play</h2>
+
+<p>
+scalaで書かれたWebサーバーです。WebSocketもNode.js並みに簡単に実装できます。今回のサーバープログラムとして使用しました。<br/>
+この辺のことについてもっと詳しく知りたい方は、弊社でやっているscala勉強会に参加すると<br/>
+ソースコードレベルまで詳しく教えてくれる人がいますw<br/>
+<a href="http://www.playframework.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.playframework.com']);">Play公式</a>
+</p>
+
+<hr/>
+
+<h2>検証環境</h2>
+
+<p>
+Mac上で検証しています。<br/>
+ただ、UnityもPlayもWindows上で動作するので、おそらくWindowsでも動作するとは思います。
+</p>
+
+<h2>手順</h2>
+
+<ol>
+<li>Unityの準備</li>
+<li>WebSocketSharpの準備</li>
+<li>クライアント実装</li>
+<li>サーバーの準備</li>
+<li>接続！</li>
+</ol>
+
+<hr/>
+
+<h2>1.Unityの準備</h2>
+
+<h3>Unityのインストール</h3>
+
+<p>
+<a href="http://japan.unity3d.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://japan.unity3d.com']);">Unity公式</a>からダウンロードをしてきてください。<br/>
+あとは、画面の指示に従ってインストールしましょう。起動すると、シリアルコードが聞かれますが、シリアルコードを持っていない人はtrialで開始してください。機能はトライアル期間はフルで使えます。</p>
+<h3>Unityプロジェクトの準備</h3>
+<p>
+file > New Projectから新しいプロジェクトを作ってください。名前はWebSocketSampleとか適当でいいです。
+</p>
+
+<hr/>
+
+<h2>2. WebSocketSharpの準備</h2>
+
+<h3>WebSocketSharpのビルド</h3>
+
+<p>
+今回は、UnityでWebSocketを使うために、<a href="https://github.com/sta/websocket-sharp" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">WebSocketSharp</a>というライブラリを使います。</p>
+<p>※2014/1/21追記<br/>
+AssetStoreで15$で販売中だそうです。ビルドが面倒だったり、使ってみて良かったらAssetStoreで購入してあげてください。</p>
+<p>まず、ソースコードをgithubからcloneしてきてください。<br/>
+次に、WebSocketTest.slnを開きます。MonoDevelopで開いてOKです。Windows環境なら、VisualStudioでも大丈夫だと思います。</p>
+<p>プロジェクトが開けたら、ビルドレベルをReleaseにしてビルドします。私の環境では、サブプロジェクトのExampleXでビルドエラーが出たので、websocket-sharpだけビルドできればOKなので、ExampleX達をソリューションから削除してビルドしました。</p>
+<p>ビルドが完了したら、websocket-sharp/bin/Release/websocket-sharp.dllが生成されているので、<br/>
+これを先ほど作ったUnityプロジェクトのAssetsディレクトリ以下にコピーしてください。(Assetsディレクトリ以下に入っていればどこでもいいのでAssets/Dllディレクトリを作ってその下に入れるなどすると、後で整理しやすいです)</p>
+<hr/>
+<h2>3. クライアントの実装</h2>
+<h3>GameObjectの準備とComponentのアタッチ</h3>
+<p>
+Unityで先ほどのプロジェクトを開いたら、<br/>
+Game Object > Create Empty<br/>
+から新しいGameObjectを作成します。<br/>
+名前は何でもいいですが、Chatぐらいにしておきましょう。<br/>
+ヒエラルキーもどこに置いておいても大丈夫なので、作成したままの場所に置いておいてください。</p>
+<p>つぎに、処理を記述するためのスクリプトを作成しChatオブジェクトにアタッチします。<br/>
+Projectペインで、Assetsディレクトリを右クリックし、Create > C# Scriptを選択してください。<br/>
+作られたファイルはChatぐらいにリネームしてください。(リネームはProjectタブ上でファイルを２回クリックすれば変更できます。ダブルクリックしてしまうとファイルを開いてしまうので注意)</p>
+<p>次に、ProjectペインのChatスクリプトをドラッグして、Hierarchyペインの先ほど作成したChatオブジェクトへドロップしてください。これで、アタッチは完了です。</p>
+<p><img src="/images/2013/06/unitwschat_unity_how_to.png" alt="Operation help"/></p>
+<h3>実装</h3>
+<p>
+いよいよ実装です。<br/>
+先ほど作成したChatスクリプトをダブルクリックしてください。MonoDevelopが起動するので、Chatスクリプトを編集してください。</p>
+<p>ソースコードは以下の通りです。</p>
+<pre>
+using UnityEngine;
+using System.Collections;
+using WebSocketSharp;
+using System.Collections.Generic;
+
+public class Chat : MonoBehaviour {
+
+    // Use this for initialization
+    void Start () {
+        Connect();
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+    }
+
+    /// <summary>
+    /// The message which store current input text.
+    /// </summary>
+    string message = "";
+    /// <summary>
+    /// The list of chat message.
+    /// </summary>
+    List<string> messages = new List<string>();
+
+    /// <summary>
+    /// Raises the GU event.
+    ///
+    /// </summary>
+    void OnGUI(){
+
+        // Input text
+        message = GUI.TextArea(new Rect(0,10,Screen.width * 0.7f,Screen.height / 10),message);
+
+        // Send message button
+        if(GUI.Button(new Rect(Screen.width * 0.75f,10,Screen.width * 0.2f,Screen.height / 10),"Send")){
+            SendChatMessage();
+        }
+
+        // Show chat messages
+        var l = string.Join("\n",messages.ToArray());
+        var height = Screen.height * 0.1f * messages.Count;
+        GUI.Label(
+            new Rect(0,Screen.height * 0.1f + 10,Screen.width * 0.8f,height),
+            l);
+
+    }
+
+    WebSocket ws;
+
+    void Connect(){
+        ws =  new WebSocket("ws://localhost:9000/chat/ws");
+
+        // called when websocket messages come.
+        ws.OnMessage += (sender, e) =>
+        {
+            string s = e.Data;
+            Debug.Log(string.Format( "Receive {0}",s));
+            messages.Add("> " + e.Data);
+            if(messages.Count > 10){
+                messages.RemoveAt(0);
+            }
+        };
+
+        ws.Connect();
+        Debug.Log("Connect to " + ws.Url);
+    }
+
+    void SendChatMessage(){
+        Debug.Log("Send message " + message);
+        ws.Send(message);
+        this.message = "";
+    }
+}
+</pre>
+<p>やっていることは、Connect()でWebSocketでサーバーに接続。<br/>
+SendChatMessage()で、WebSocketメッセージの送信。<br/>
+OnGUIで画面の描画を行っています。<br/>
+あまり難しいことはやっていないので、ソースコードを追ってもらえればわかるかと思います。<br/>
+わからなければ、ソースコードをコピペしてください。</p>
+<p>これで、クライアントの実装は完了です。
+</p>
+
+<hr/>
+
+<h2>4. サーバーの準備</h2>
+
+<p>
+最後にサーバーの準備です。githubに用意しているのでコードは書かなくてOKです。<br/>
+sbtで実行していますが、既にplayが入っている人はplayで実行してもらっても大丈夫です。
+</p>
+
+<h3>sbtの準備</h3>
+
+<p>
+サーバーの実行に使うので、sbtをインストールしてください。バージョンは、0.12.2以降が入って入ればOKです。<br/>
+なお、sbtはscala向けのビルドツールです。<br/>
+sbtは、<a href="http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-sbt.org']);">公式サイトのここ</a>からダウンロードできます。Jarとシェルスクリプトをダウンロードしてきて、パスを通すだけです。
+</p>
+
+<h3>プログラムのcloneとサーバーの実行</h3>
+
+<p>
+サーバープログラムは<a href="https://github.com/takezoux2/play-websocket-chat" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">こちらのgithub</a>からソースコードをcloneしてください。<br/>
+cloneしたらプロジェクトのルートディレクトリで</p>
+<pre class="highlight plaintext">sbt run
+</pre>
+
+<p>を実行してください。<br/>
+初回の起動は、scalaのダウンロードや、playのダウンロード、ライブラリのダウンロードが発生するので、時間がかかります。<br/>
+ネットワーク環境の整っているところで実行してください。<br/>
+以下のようなメッセージが表示されると、起動完了です。</p>
+<pre class="highlight plaintext">--- (Running the application from SBT, auto-reloading is enabled) ---
+
+[info] play - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+(Server started, use Ctrl+D to stop and go back to the console...)
+</pre>
+
+<h2>5. 接続!</h2>
+
+<p>
+Unityクライアントは、Unityの上の方にある三角の再生ボタンを押すと実行できます。<br/>
+テキストボックスに送信したいテキストを入力してボタンを押すせばメッセージを送れます。<br/>
+テキストボックスの下には、チャットで発言されたテキストが表示されます。</p>
+
+<p>１クライアントだけでやっても何も楽しくないので、<br/>
+<a href="http://localhost:9000/chat" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','']);">http://localhost:9000/chat</a>にアクセスしてください。<br/>
+ここでブラウザからチャットを使えます。</p>
+
+<p>Unityクライアントで入力した文章が、ブラウザのほうでも表示され、<br/>
+ブラウザで入力した文章がUnityクライアントでも表示されていることが確認できると思います。<br/>
+おつかれさまでした。</p>
+
+  <hr/>
+  <h1><a href="archives/2013/01/30/k_ryoko.html">GTE Git branching model</a></h1>
+  <span>Posted on 2013-01-30
+    by <a href="archives/authors/k_ryoko.html">k_ryoko</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>こんにちは、アプリ開発プログラマ ryoco と申します。<br/>
+最近 git 開発にして捗ったというスライドを読みまして、実は皆、他社の git の使いかたに興味があるのではと思い書いてみました。<br/>
+まぁ、他社の開発スタイルというのは皆知りたい所ですよね!<br/>
+という訳で、弊社のとあるwebアプリのVCSの歴史と使い方の紹介でございます。</p>
+
+<p>9ヶ月くらい前まで svn で運用していましたが、開発者が増えたのでブランチを切る事が多くなり、git に変更しました。<br/>
+ブランチ開発をする時は、svnよりgitの方がはるかに便利だからです。例えば、branchを切るのが高速、conflictが少ないなどの点で優れています。他にもありますが色々な所で見るので省略。<br/>
+因みに開発規模は現在5~6人です。<br/>
+主にプログラマが使う、html ファイルとプログラムソースファイルのプロジェクトのみで、仕様書や画像ファイルは相変わらず svn です。</p>
+
+<ul>
+</ul><ol>
+<li>svn</li>
+<li>適当な branching の git <strong>[git 第一段階]</strong></li>
+<li><a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> ベースのgit <strong>[git 第二段階]</strong> <- イマココ</li>
+</ol>
+
+<p>という風に変わっていきました。<br/>
+サブライブラリに hg を使っていた時代もありますが、省略。<br/>
+svn の時代は別に説明しても仕方がないので、git から説明していきます。</p>
+<h2>git 第一段階</h2>
+<ul>
+<li>ブランチは大きく分けて、3種類あります。</li>
+</ul><ol>
+<li><strong>master</strong> : 開発用</li>
+<li><strong>feature branch</strong> : それぞれの開発用。名前は各自適当に決める</li>
+<li><strong>release_yyMMdd</strong> : yyMMddリリースのリリースブランチ</li>
+</ol>
+
+<ul>
+<li>時系列で使い方を説明していきます。</li>
+</ul><ol>
+<li>それぞれの開発者が master から feature branch を作成し作業する。</li>
+<li>開発が完了、もしくは開発かつデバッグが完了したら master にマージ。デバッグするときは、master から fearure branch にマージしたりしてました。</li>
+<li>リリースするときに master から release 用のブランチを切って本番にリリース。</li>
+<li>リリースが完了したrelease_yyMMdd ブランチは削除していきます。</li>
+</ol>
+
+<ul>
+図にすると以下のようになります。<br/>
+<a href="/images/2013/01/old-git-flow.png"><img src="/images/2013/01/old-git-flow.png" alt="第一段階フロー図" title="old git flow" width="846" height="655" class="alignnone size-full wp-image-178979"/></a>
+</ul>
+
+<ul>
+<li>追記</li>
+</ul><ol>
+<li>releaseyyMMdd を切る前の master に、リリースしてはいけない機能というのがまれに混入します。<br/>
+その時は releaseyyMMdd で revert してしまいます。 releaseyyMMdd はリリース後、捨てられるので躊躇なく revert できるんですね。<br/>
+しかし、リリースしてはいけない機能は基本的に feature branch で管理していたので、revert しない事の方が多かったです。</li>
+<li>リリースする時はもちろん tag を切ります。</li>
+<li>リリースしてからバグに気がついた時は master で修正し、releaseyyMMdd に cherry-pick してました。</li>
+</ol>
+
+<h2>git 第二段階</h2>
+<ul>
+第一段階の運用方法でも手動でデプロイする分にはあんまり問題なかったんですが、システムデプロイの都合上、git の運用方法を変更する事になりました。<br/>
+自分達で考えても良い方法が思いつかなかったので、賢い人が考えたモデルに則り、慣れたら応用するか新しいモデルを考えようと思いました。<br/>
+大体 <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> の通りに運用していますが、運用上での問題点や注意点を書いていきたいので、簡易版で説明します。<a href="http://keijinsonyaban.blogspot.jp/2010/10/successful-git-branching-model.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://keijinsonyaban.blogspot.jp']);">日本語訳</a>もありますし、わざわざ説明する事も無いような気はしてますが。
+</ul>
+
+<ul>
+できれば <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> を読んでからの方が分かり易いです。
+</ul>
+
+<ul>
+<blockquote><p>ちょっと休憩<br/>
+     <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> がなんでこんな複雑で、このモデルで運用しなければならんのだ、という感じなんですが、なぜなんでしょう…。<br/>
+    自分達で git の運用を考える場合は、弊社第一段階みたいな感じか、cherry-pick職人が発生するとか、後々後悔する形になってしまうのだと思います。<br/>
+    master と develop は分離されていた方が安全ですし、コードレビューや gitlab で merge-requestを使った運用とか考えると、<strong>漏れなく master にも develop にも commit を含められる</strong>、今のところこの最強モデルなんでしょうね たぶん。</p></blockquote>
+</ul>
+
+<ul>
+<li>ブランチは大きく分けて、5種類あります。</li>
+</ul><ol>
+<li><strong>develop</strong> : 開発用</li>
+<li><strong>master</strong> : リリース用</li>
+<li><strong>release_x.x</strong> : x.x (version) リリースのリリースブランチ</li>
+<li><strong>hotfix_x.x</strong> : リリース後の修正ブランチ</li>
+<li><strong>feature branch</strong> : それぞれの開発用。名前は各自適当に決める</li>
+</ol>
+
+<ul>
+<li>同様に時系列で使い方を説明していきます。<br/>
+(日付けからversionに変わったのは、実際の運用でこうしているというだけで、深い意味はありません。)</li>
+<li>version は 1.0 から 2.0 に上がるという体で説明して行きます。</li>
+</ul><ol>
+<li>develop から開発者が feature branch を切り、開発が完了したら develop に戻します。</li>
+<li>develop からrelease_2.0 のブランチを切ります。<br/>
+このブランチで、デバッグ、修正をします。デバッグをしてくれる運営サイドの人とかが説明文などの html を修正したりもします。プログラマ以外も git ブランチくらいは使いこなすスキルが必要です。(誰でもできるよね!)</li>
+<li>release_2.0 用のデバッグか完了し、リリースができる状態になったら develop 、master にマージします。<br/>
+ここで release_2.0 の役目は終わりです。</li>
+<li>最後に master からtagを切り、本番にリリースします。</li>
+<li>本番でバグなど出た場合、master から hotfix ブランチを作成します。<br/>
+master から hotfix_2.1 という感じでマイナーバージョンを付けています。</li>
+<li>バグの修正が完了したら hotfix_2.1 を master、develop <strong>or</strong> release_3.0にマージします。<br/>
+develop <strong>or</strong> release_3.0である理由は、release_3.0 はそのうち develop にmergeされるからですね。</li>
+</ol>
+
+<ul>
+図にすると以下のようになります。<br/>
+<a href="/images/2013/01/git-flow-2.png"><img src="/images/2013/01/git-flow-2.png" alt="第二段階のフロー図" title="git flow" width="895" height="793" class="alignnone size-full wp-image-179107"/></a>
+</ul>
+
+<p><ul>
+<li>追記</li>
+</ul><ol>
+<li>
+非プログラマ以外への教育コスト<br/>
+がかかるように見えますが、上記モデルを完全に理解させる必要は無く、今はrelease<em>x.xだからこのブランチで作業してね、という情報共有さえできればなんとかなります。たぶん…</li>
+<li>マージ多くて面倒臭そだし忘れそう…<br/>
+という感じだと思いますが、基本的にマージをしなければいけないのは release</em>x.x と hotfix<em>x.x で、しかもこれらは両方とも同じ2箇所にマージしてしまえば良いので、慣れれば楽です。(魔法の言葉ですね)<br/>
+ただ、プロジェクトの git 管理者は立てて置いた方が良いと思います。
+</li>
+<li>破綻するパターン<br/>
+ルールに則らないと破綻します。develop から release</em>x.x を切らないとか、 release<em>x.x がいくつも切られてしまう場合などです。release</em>x.x も2個までだったらマージする人ががんばれば何とか対応ができなくないですが、辞めた方が良いです。</li>
+<li>feature branch の develop へのマージについて<br/>
+release<em>x.x 上でのデバッグ中に致命的なバグが出て、リリースにまにあわないっていう事があると思います。<br/>
+その場合、release</em>x.x からは必ず、場合によっては developからも revert 等する必要があります。<br/>
+そういう時の為に、feature branch をdevelop にマージする際は、git merge –squash を使っています。<br/>
+そうするとコミットが纏められるので revert が楽になり、release_x.x の他の機能の修正に影響を出さずにリリースできます。<br/>
+ただコミットログがブランチにしか残らないです。良い方法があったら教えて下さい。<br/>
+revertしたら feature branch に戻ってバグを潰しましょう。</li>
+</ol></p>
+
+<p>なんとなく掴めたでしょうか。<br/>
+このモデルではスケジュールの関係で無理、という所は無理だと思いますが、そもそも運営もうまく回っていないのではないでしょうか…。<br/>
+弊社プロジェクトでも少し厳しい所があり、頭を使ってミスしないようにイレギュラー対応をしています。<br/>
+イレギュラー対応について書こうかと思ったんですが、長くなるので辞めました。<br/>
+ここの説明は簡易版ですので、実際使う時は<a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">本家</a>や<a href="http://keijinsonyaban.blogspot.jp/2010/10/successful-git-branching-model.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://keijinsonyaban.blogspot.jp']);">日本語訳</a>を読んで自分のプロジェクトでも運用可能か考えて下さい。</p>
+
+<p>ここまで読んで下さったのにアレですが、開発者が少なければ git 第一段階の運用でも賄えるかと思います。半年くらい第一段階のモデルで運用していました。git の開発モデルからは外れているのですが…</p>
+
+<p>以上になります。<br/>
+ここまで読んで下さり、ありがとうございました。</p>
+
+<p>———————–キリトリ———————–</p>
+
+<p>ここからは書いてみての感想です。(読み飛ばし推奨。下らない事しかかきません)</p>
+
+<p>最初は、 <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> を読んだ事があるとか、git での運用に興味があるので積極的に読むけど、</p>
+
+<p>・非エンジニアへの教育コストかけられないとか (エンジニアへの教育コスト? 楽になる為だったらエンジニアは積極的に最先端を学ぶよね!ブーメラン!)<br/>
+・実際これで運用できると言い張れないがために結局適当なモデルで運用せざるを得ない<br/>
+・そもそも git での運用に懐疑的な人ばかりで git にできない</p>
+
+<p>みたいな人が対象だったんですが、書いているうちに結局簡易な説明くらいはしないといかんな、という所と、<a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> 読んでなくても簡易版で説明できたらPV伸びるかも…という欲が出てきてしまい、すごい長くなってしまいました。<br/>
+なるべく減らしたりしたんですが、すみません。<br/>
+長くした癖に、結局読み手側にあるていど考えて貰わないと無理、という結論に。</p>
+
+<p>感想というか、長くなった事への言い訳でした。</p>
+                            
+
+  <hr/>
+  <h1><a href="archives/2012/12/19/takezoux2.html">scala 2.10のreflectionでorg.apache.commons.beanutils.PropertyUtilsっぽいものを作ってみた</a></h1>
+  <span>Posted on 2012-12-19
+    by <a href="archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h1>自己紹介</h1>
+
+<p>こんにちは、takezoux2こと竹下です。<br/>
+最近はscala勉強会 in 東京で会場係をさせていただいています。</p>
+
+<p>今回はscala advent calendar2012に参加することになったので、<br/>
+scala2.10から導入されるReflectionの機能を使ってapache commonsのPropertyUtilsのdescribeメソッドっぽいものとその逆の機能を実装してみました。</p>
+
+<h1>環境構築</h1>
+
+<p>scala reflectionはscala2.10からの機能なので、それ以前のバージョンのscalaしか入ってい無い場合は、サンプルコードはコンパイル/実行できません。また、2012/12/19時点では安定版は出ておらず、検証にはscala2.10.0-RC4を使用しています。<br/>
+最新のバイナリは<a href="http://www.scala-lang.org/downloads" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-lang.org']);">scalaのダウンロードページ</a>からダウンロードできます。</p>
+
+<p><del datetime="2012-12-27T13:34:14+00:00">※sbt0.12.1はscala2.9.2でビルドされているので、scalaVersion := 2.10を設定しても2.10からの新機能を含んだソースはコンパイルエラーになります。</del><br/>
+<a href="https://twitter.com/xuwei_k" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://twitter.com']);">吉田さん</a>からの指摘により修正</p>
+
+<h3>sbtでのコンパイル方法</h3>
+
+<p>build.sbt</p>
+<pre class="highlight scala"><span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">"2.10.0-RC4"</span>
+
+<span class="n">libraryDependencies</span> <span class="o">&lt;+=</span> <span class="n">scalaVersion</span><span class="o">{</span> <span class="n">scalaVersion</span> <span class="k">=&gt;</span> <span class="s">"org.scala-lang"</span> <span class="o">%</span> <span class="s">"scala-reflect"</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">}</span>
+</pre>
+
+<p>のようにlibraryDependenciesにscala-reflectを設定してあげるとコンパイルできます。</p>
+
+<h1>今回実装した機能
+</h1><p>PropertyUtils#describeは、JavaBeansを渡すとgetter/setterの名前と値を列挙したMapを返してくれるメソッドです。<br/>
+<a href="http://commons.apache.org/beanutils/commons-beanutils-1.7.0/docs/api/org/apache/commons/beanutils/PropertyUtils.html#describe%28java.lang.Object%29" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://commons.apache.org']);">PropertyUtils api</a></p>
+<p>今回はこのメソッドと同じように、ScalaObjectのvarを列挙したMap[String,String]を返すメソッドと、<br/>
+その逆のMap[String,String]の値をScalaObjectに代入するメソッドを実装してみたいと思います。(PropertyUtilsはMap<string>を返しますが、型の判定を実装するため今回はMap[String,String]を返すようにしています。)</string></p>
+<h1>Reflectionの概要</h1>
+
+<p>Reflectionを使用するには、下の簡易図の流れでMethodMirrorを取得し、最終的にMethodMirrorのapplyメソッドを呼ぶことで、メソッドを実行できます。</p>
+<pre class="highlight plaintext">TypeTag#mirror                  typeOf[ClassName]
+        |                              |
+Mirror#reflect   Instance        Type#members
+        |-----------┘                  |
+InstanceMirror#reflectMethod 　  MethodSymbol
+        |------------------------------┘　
+MethodMirror@apply
+</pre>
+
+<h1>コード</h1>
+
+<p>説明するより、コード読んだほうが早いと思うのでさくっとコードを書いておきます。</p>
+<pre class="highlight scala"><span class="k">import</span> <span class="nn">scala.reflect.runtime.universe._</span>
+<span class="k">import</span> <span class="nn">scala.reflect._</span>
+
+<span class="k">case</span> <span class="k">class</span> <span class="nc">User</span><span class="o">(</span><span class="k">var</span> <span class="n">name</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="k">var</span> <span class="n">gender</span> <span class="k">:</span> <span class="kt">Int</span><span class="o">,</span><span class="k">var</span> <span class="n">admin_?</span> <span class="k">:</span> <span class="kt">Boolean</span><span class="o">){</span>
+  <span class="k">def</span> <span class="k">this</span><span class="o">()</span> <span class="k">=</span> <span class="k">this</span><span class="o">(</span><span class="s">""</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="kc">false</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">App</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span> <span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">]){</span>
+
+    <span class="k">val</span> <span class="n">m</span> <span class="k">=</span> <span class="n">toMap</span><span class="o">(</span><span class="nc">User</span><span class="o">(</span><span class="s">"Kudo"</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="kc">false</span><span class="o">))</span>
+    <span class="n">println</span><span class="o">(</span><span class="n">m</span><span class="o">)</span>
+    <span class="c1">//Map(admin_?  -&gt; false, gender  -&gt; 2, name  -&gt; Kudo)
+</span>
+    <span class="k">val</span> <span class="n">u</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">User</span><span class="o">()</span>
+    <span class="n">fromMap</span><span class="o">(</span><span class="n">u</span><span class="o">,</span><span class="nc">Map</span><span class="o">(</span><span class="s">"name"</span> <span class="o">-&gt;</span> <span class="s">"Riki"</span><span class="o">,</span><span class="s">"gender"</span> <span class="o">-&gt;</span> <span class="s">"1"</span><span class="o">,</span><span class="s">"admin_?"</span> <span class="o">-&gt;</span> <span class="s">"true"</span><span class="o">))</span>
+    <span class="n">println</span><span class="o">(</span><span class="n">u</span><span class="o">)</span>
+    <span class="c1">//User(Riki,1,true)
+</span>  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">toMap</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">v</span> <span class="k">:</span> <span class="kt">T</span><span class="o">)(</span><span class="k">implicit</span> <span class="n">tt</span> <span class="k">:</span> <span class="kt">TypeTag</span><span class="o">[</span><span class="kt">T</span><span class="o">],</span><span class="n">ct</span> <span class="k">:</span> <span class="kt">ClassTag</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="k">:</span> <span class="kt">Map</span><span class="o">[</span><span class="kt">String</span>,<span class="kt">String</span><span class="o">]</span><span class="k">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">t</span> <span class="k">=</span> <span class="n">typeOf</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span>
+    <span class="c1">// var だけを抽出
+</span>    <span class="k">val</span> <span class="n">vars</span> <span class="k">=</span> <span class="n">t</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span> <span class="k">_</span> <span class="k">match</span><span class="o">{</span>
+      <span class="k">case</span> <span class="n">t</span> <span class="k">:</span> <span class="kt">TermSymbol</span> <span class="o">=&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">isVar</span>
+      <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="kc">false</span>
+    <span class="o">})</span>
+
+    <span class="c1">// Reflection実行のためのMirrorを取得
+</span>    <span class="k">val</span> <span class="n">mirror</span> <span class="k">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">mirror</span> <span class="c1">// runtimeMirror(getClass.getClassLoader)でもOK
+</span>
+    <span class="c1">// インスタンス操作のためのReflectionを取得
+</span>    <span class="k">val</span> <span class="n">rf</span> <span class="k">=</span> <span class="n">mirror</span><span class="o">.</span><span class="n">reflect</span><span class="o">(</span><span class="n">v</span><span class="o">)</span>
+
+    <span class="k">var</span> <span class="n">fieldValues</span> <span class="k">:</span> <span class="kt">Map</span><span class="o">[</span><span class="kt">String</span>,<span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">.</span><span class="n">empty</span>
+
+    <span class="n">vars</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span> <span class="n">v</span> <span class="k">=&gt;</span> <span class="n">v</span> <span class="k">match</span><span class="o">{</span>
+      <span class="k">case</span> <span class="n">v</span> <span class="k">:</span> <span class="kt">TermSymbol</span> <span class="o">=&gt;</span> <span class="o">{</span>
+        <span class="c1">// GetterMethodを取得
+</span>        <span class="k">val</span> <span class="n">getterMethod</span> <span class="k">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">reflectMethod</span><span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="n">getter</span><span class="o">.</span><span class="n">asMethod</span><span class="o">)</span>
+        <span class="n">fieldValues</span> <span class="o">+=</span> <span class="o">(</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">decoded</span><span class="o">.</span><span class="n">trim</span> <span class="o">-&gt;</span> <span class="n">getterMethod</span><span class="o">().</span><span class="n">toString</span><span class="o">)</span> <span class="c1">//nameを取得すると末尾にスペースが入るのでtrimしておく
+</span>      <span class="o">}</span>
+    <span class="o">})</span>
+    <span class="n">fieldValues</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">fromMap</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span> <span class="n">v</span> <span class="k">:</span> <span class="kt">T</span> <span class="o">,</span> <span class="n">map</span> <span class="k">:</span> <span class="kt">Map</span><span class="o">[</span><span class="kt">String</span>,<span class="kt">String</span><span class="o">]</span> <span class="o">)(</span><span class="k">implicit</span> <span class="n">tt</span> <span class="k">:</span> <span class="kt">TypeTag</span><span class="o">[</span><span class="kt">T</span><span class="o">],</span><span class="n">ct</span> <span class="k">:</span> <span class="kt">ClassTag</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">t</span> <span class="k">=</span> <span class="n">typeOf</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span>
+
+    <span class="c1">// var だけを抽出
+</span>    <span class="k">val</span> <span class="n">vars</span> <span class="k">=</span> <span class="n">t</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span> <span class="k">_</span> <span class="k">match</span><span class="o">{</span>
+      <span class="k">case</span> <span class="n">t</span> <span class="k">:</span> <span class="kt">TermSymbol</span> <span class="o">=&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">isVar</span>
+      <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="kc">false</span>
+    <span class="o">})</span>
+    <span class="c1">// Reflection実行のためのMirrorを取得
+</span>    <span class="k">val</span> <span class="n">mirror</span> <span class="k">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">mirror</span> <span class="c1">// runtimeMirror(getClass.getClassLoader)でもOK
+</span>
+    <span class="c1">// インスタンス操作のためのReflectionを取得
+</span>    <span class="k">val</span> <span class="n">rf</span> <span class="k">=</span> <span class="n">mirror</span><span class="o">.</span><span class="n">reflect</span><span class="o">(</span><span class="n">v</span><span class="o">)</span>
+
+    <span class="n">vars</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span> <span class="n">v</span> <span class="k">=&gt;</span> <span class="n">v</span> <span class="k">match</span><span class="o">{</span>
+      <span class="k">case</span> <span class="n">t</span> <span class="k">:</span> <span class="kt">TermSymbol</span> <span class="o">=&gt;</span> <span class="o">{</span>
+        <span class="n">map</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">decoded</span><span class="o">.</span><span class="n">trim</span><span class="o">)</span> <span class="k">match</span><span class="o">{</span>
+          <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="n">v</span><span class="o">)</span> <span class="o">=&gt;{</span>
+            <span class="k">val</span> <span class="n">setterMethod</span> <span class="k">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">reflectMethod</span><span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="n">setter</span><span class="o">.</span><span class="n">asMethod</span><span class="o">)</span>
+
+            <span class="c1">// 型に合わせて文字列から変換する
+</span>            <span class="n">t</span><span class="o">.</span><span class="n">getter</span><span class="o">.</span><span class="n">asMethod</span><span class="o">.</span><span class="n">returnType</span> <span class="k">match</span><span class="o">{</span>
+              <span class="k">case</span> <span class="n">t</span> <span class="k">if</span> <span class="n">t</span> <span class="o">=:=</span> <span class="n">typeOf</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=&gt;</span> <span class="o">{</span>
+                <span class="n">setterMethod</span><span class="o">(</span><span class="n">v</span><span class="o">)</span>
+              <span class="o">}</span>
+              <span class="c1">// Primitive型に当たるものは、JavaUniverse.definitionsに定義されている
+</span>              <span class="k">case</span> <span class="n">definitions</span><span class="o">.</span><span class="nc">IntTpe</span> <span class="k">=&gt;</span> <span class="o">{</span>
+                <span class="n">setterMethod</span><span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="n">toInt</span><span class="o">)</span>
+              <span class="o">}</span>
+              <span class="k">case</span> <span class="n">definitions</span><span class="o">.</span><span class="nc">BooleanTpe</span> <span class="k">=&gt;</span> <span class="o">{</span>
+                <span class="n">setterMethod</span><span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="n">toBoolean</span><span class="o">)</span>
+              <span class="o">}</span>
+              <span class="c1">// 他の型は今回は割愛
+</span>              <span class="k">case</span> <span class="n">t</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">"Unknown type "</span> <span class="o">+</span> <span class="n">t</span><span class="o">)</span>
+            <span class="o">}</span>
+          <span class="o">}</span>
+          <span class="k">case</span> <span class="nc">None</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">"Value not found:"</span> <span class="o">+</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">decoded</span><span class="o">)</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">})</span>
+    <span class="n">v</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>ソースコードは<a href="https://gist.github.com/4311905" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://gist.github.com']);">Gist</a>にも公開しています。<br/>
+説明は、コード中に書いているので特段解説は不要かと思います。</p>
+
+<h2>感想</h2>
+
+<p>javaのreflectionを使っていたときは、scalaのpropertyの列挙に一苦労していましたが、scala reflectionでは簡単に列挙できます。他にも、implicitやscalaのEnumerationなどjavaのreflectionでは扱えなかった情報も扱うことができるようになるため、夢がひろがりんぐです。</p>
+
+<h3>参考にした資料</h3>
+
+<ul>
+<li>
+<span style="color:red">PDF注意</span><a href="http://scalamacros.org/talks/2012-04-28-MetaprogrammingInScala210.pdf" onclick="javascript:_gaq.push(['_trackEvent','download','http://scalamacros.org/talks/2012-04-28-MetaprogrammingInScala210.pdf']);">Metaprogramming in Scala 2.10</a>
+</li>
+<li>
+<a href="http://www.scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/index.html#scala.reflect.api.Mirrors" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-lang.org']);">Mirrors@scala api</a>
+</li>
+<li>
+<a href="http://hexx.github.com/pshow-scala-reflection/out" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://hexx.github.com']);">PABさんのスライド</a>
+</li>
+<li>
+<a href="http://lampwww.epfl.ch/~michelou/scala/scala-reflection.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lampwww.epfl.ch']);">Stephane Micheloudさんのブログ？</a>
+</li>
+</ul>
+                            
+
+  <hr/>
+  <h1><a href="archives/2012/09/05/yyuu.html">rbenv – ruby + python => pyenv</a></h1>
+  <span>Posted on 2012-09-05
+    by <a href="archives/authors/yyuu.html">yyuu</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>yyuu です。今回は、拙作の <a href="https://github.com/yyuu/pyenv" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">pyenv</a> についてご紹介させて頂きます。</p>
+
+<p>Python でアプリケーション開発をしている際には、特定のバージョンのインタプリタでアプリケーションの動作テストを行ないたくなることが多々あります。特に、複数のアプリケーションから参照されるライブラリを開発する場合などには、Python 2.x/3.x への両対応などを考えると、<a href="http://pypi.python.org/pypi/tox" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://pypi.python.org']);">tox</a> などを使って複数のバージョンを横断してテストを実行できる環境を用意することは重要になります。</p>
+
+<p>そのような用途向けに、$HOME 以下のユーザ環境に Python インタプリタをセットアップするための補助ツールとして <a href="https://github.com/utahta/pythonbrew" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">pythonbrew</a> や <a href="https://github.com/saghul/pythonz" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">pythonz</a> などといったツールが存在していたのですが、以下の点で不満を感じていました。</p>
+
+<ol>
+<li>Python で実装されているため、Python をインストールするのに Python が必要になる</li>
+<li>プロジェクトなどの単位で Python バージョンを切り替えることができない (pythonbrew)</li>
+<li>コマンドの検索パス ($PATH) を一切管理してくれない (pythonz)</li>
+</ol>
+
+<p>これらへの対処のため、Ruby 向けの <a href="https://github.com/sstephenson/rbenv" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">rbenv</a> をベースに Python 向けに作り直した <a href="https://github.com/yyuu/pyenv" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">pyenv</a> というものを作りました。このツールはの特徴としては以下のものがあります。</p>
+
+<ol>
+<li>bash シェルスクリプトによる実装 (zsh 対応)</li>
+<li>rbenv 流の Python バージョン管理の導入</li>
+<li>rbenv 流のコマンド検索パスの管理の導入</li>
+</ol>
+
+<p>使いかたなどは基本的に rbenv と同様です。rbenv と違う点としては、pyenv には rbenv における <a href="https://github.com/sstephenson/ruby-build" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">ruby-build</a> に相当する機能がデフォルトのプラグインとして提供されています。そのため、rbenv の場合よりもインストール手順が少しだけ簡素になります。</p>
+
+<p><code><br/>
+$ cd<br/>
+$ git clone git://github.com/yyuu/pyenv.git .pyenv<br/>
+</code></p>
+
+<p>インストールが完了したら、~/.pyenv/bin を $PATH に追加してください。</p>
+
+<p><code>$ echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bash_profile<br/>
+</code></p>
+
+<p>pyenv を有効化するために以下の設定をログインシェルの設定ファイルに追加してください。</p>
+
+<p><code>$ echo 'eval "$(pyenv init -)"' >> ~/.bash_profile<br/>
+</code></p>
+
+<p>設定が完了したらシェルを再起動することで pyenv が使用できるようになります。</p>
+
+<p><code>$ exec $SHELL<br/>
+</code></p>
+
+<p>pyenv についてのその他の使いかたなどは <a href="https://github.com/yyuu/pyenv/blob/master/README.md" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">pyenv の README</a> に記載してあるので、そちらを参照してください。それでは。</p>
+                            
+
+  <hr/>
+  <h1><a href="archives/2012/08/02/takezoux2.html">Scala勉強会 in 本郷始めました。</a></h1>
+  <span>Posted on 2012-08-02
+    by <a href="archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h2>Scala勉強会 in 本郷　初開催無事終了しました!</h2>
+
+<p>お越しいただいた方々、ありがとうございます。弊社で勉強会を開催するのは初めてだったので、いろいろいたらない点があったと思いますが、今後もどうぞよろしくお願いします。</p>
+
+<p>勉強会でやった内容は、<a href="http://scala-users.org/shibuya/index.php?title=%E5%8B%89%E5%BC%B7%E4%BC%9A%E7%AC%AC84%E5%9B%9E" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://scala-users.org']);">こちら</a>にまとめられています。<br/>
+gkojaxさんありがとうございます。</p>
+
+<h2>みなさんもScala勉強会に参加しませんか？</h2>
+
+<p>現在、Scala勉強会は毎週赤坂と本郷三丁目で持ち回りで勉強会をやっています。<br/>
+Scalaに興味がある方は、是非ご参加ください。</p>
+
+<p>Twitter:<a href="https://twitter.com/#!/search/%23rpscala" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://twitter.com']);">#rpscala</a> <a href="https://twitter.com/#!/search/%23akskscala" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://twitter.com']);">#akskscala</a><br/>
+Wiki:<a href="http://scala-users.org/shibuya/index.php?title=%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://scala-users.org']);">wiki</a><br/>
+メーリス:<a href="https://groups.google.com/forum/?hl=ja&amp;fromgroups#!forum/scalatokyo" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://groups.google.com']);">Scala勉強会 in 東京</a></p>
+                            
+
+  <hr/>
+  <h1><a href="archives/2012/07/31/kohashi.html">enchant.jsでjsファイルを必要なときにロードする</a></h1>
+  <span>Posted on 2012-07-31
+    by <a href="archives/authors/kohashi.html">kohashi</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>社内にバランスボールが十数個あってエンジニアやデザイナ、社長が座っていたりするのですがそろそろ普通の丸いバランスボールに飽きてきたのか、気がつくと社内にイボ付きバランスボール、ラグビーボール型バランスボール、ドーナツ型バランスボールなどがあります…。</p>
+
+<p>先日はとうとう、バンビ型のバランスボールが増えていました。<br/>
+バランス『ボール』ではまったく無い気がします。kohashiです。</p>
+
+<p>さて、jsで簡単にゲームを作れるエンジンである <a href="http://enchantjs.com" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://enchantjs.com']);">enchant.js</a> なのですが、たくさん書いているとjsコードもいっぱいになってきますよね。</p>
+
+<p>アクションゲームで2面、3面と続くようなモノや、あるいはノベルゲームで第2話、第3話…なんていうケース。<br/>
+そういう時に、jsコードを必要になった時に呼び出せるようにしてみましょう。</p>
+<pre class="highlight javascript"><span class="c1">//game.jsやindex.htmlの中など、最初のほうで読み込んでおく
+</span>  <span class="nx">enchant</span><span class="p">.</span><span class="nx">Game</span><span class="p">.</span><span class="nx">_loadFuncs</span><span class="p">[</span><span class="s1">'js'</span><span class="p">]</span>  <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">ele</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"script"</span><span class="p">);</span>
+    <span class="nx">ele</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s2">"text/javascript"</span><span class="p">;</span>
+    <span class="nx">ele</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">;</span>
+    <span class="nx">ele</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="nx">callback</span><span class="p">;</span>
+    <span class="nx">ele</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">'Cannot load an asset: '</span> <span class="o">+</span> <span class="nx">src</span><span class="p">);</span>
+    <span class="p">};</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">ele</span><span class="p">);</span>
+  <span class="p">};</span>
+
+<span class="c1">//ゲームの1面クリア時など、次のデータが必要になったタイミングで呼びだす。
+</span><span class="nx">game</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s2">"nextStage.js"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="c1">//ここは次のステージデータが読み込まれたあとで呼ばれます。
+</span>    <span class="c1">//次のステージを描画するための処理など。。。
+</span><span class="p">})</span>
+</pre>
+
+<p>簡単ですね！<br/>
+enchant.jsはversion 0.4から、ファイル読み込み後の処理が外から変更できるようになっているので、こういうことも簡単です。</p>
+
+<p>簡単すぎるので、オマケにロード表示を拡張するサンプルを。<br/>
+標準のロード表示が、黒い画面に白いバーでつまんない！という方にどうぞ。</p>
+<pre class="highlight javascript">  <span class="c1">//独自のロード画面作成
+</span>  <span class="nx">game</span><span class="p">.</span><span class="nx">loadingScene</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">enchant</span><span class="p">.</span><span class="nx">Scene</span><span class="p">();</span>
+  <span class="nx">game</span><span class="p">.</span><span class="nx">loadingScene</span><span class="p">.</span><span class="nx">backgroundColor</span> <span class="o">=</span> <span class="s1">'#FFF'</span><span class="p">;</span> <span class="c1">//白背景
+</span>  <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">enchant</span><span class="p">.</span><span class="nx">Label</span><span class="p">();</span> <span class="c1">//読み込み量表示ラベル
+</span>  <span class="nx">label</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">220</span><span class="p">);</span>
+  <span class="nx">label</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="s2">"black"</span><span class="p">;</span>
+
+  <span class="nx">game</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'progress'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">label</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="s1">'読込中：'</span> <span class="o">+</span>  <span class="nx">e</span><span class="p">.</span><span class="nx">loaded</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">total</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">label</span><span class="p">.</span><span class="nx">text</span><span class="p">)</span>
+  <span class="p">});</span>
+  <span class="nx">game</span><span class="p">.</span><span class="nx">loadingScene</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">label</span><span class="p">);</span>
+
+  <span class="c1">//その他、いろんな処理…
+</span>  <span class="nx">game</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span> <span class="c1">//読込開始されます
+</span></pre>
+
+<p>今回は単純に、　『読込中:  29/48 』　のような表示にしましたが、cssなどを使って素敵なロード表示の画面を作ってみてくださいね！<br/>
+参考： <a href="http://jsdo.it/search?q=%E3%83%AD%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0&amp;search_order=forked" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://jsdo.it']);">jsdo.it : ローディング</a></p>
+
+  <hr/>
+  <h1><a href="archives/2012/07/30/takezoux2.html">javaのExceptionのコストについて</a></h1>
+  <span>Posted on 2012-07-30
+    by <a href="archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>弊社提供サービスのおみせやさんへ負荷テストをかけていた際に、特定の条件で非常にパフォーマンスが悪くなることが発覚しました。<br/>
+調査の結果、根本原因はキャッシュに使用しているMemcachedからオブジェクトをデシリアライズする際のSerializableVersionIDの食い違いにより例外が大量に発生していることが原因でした。<br/>
+それをうけて、Javaの例外はコストが高いということは言われているので、どれほどのコストがかかるかの実験を行ないました。</p>
+
+<h2>実行環境</h2>
+
+<p>テストは私の開発機で行いました。<br/>
+実験に使用したコードは、この記事の一番下に記述しています。</p>
+
+<table>
+<tr>
+<td>OS</td>
+<td>Windows 7 Professional</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Intel Core i7 3.20GHz</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>24G</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>Java7</td>
+</tr>
+</table>
+
+<h2>実験その１.  例外を投げるコストの検証</h2>
+
+<p>例外なしのものと、例外ありのものでどれほど実行時間に差が出るかを検証しました。</p>
+
+<h3>結果</h3>
+
+<p>実行時間の単位はミリ秒</p>
+
+<table>
+<tr>
+<td>ループ回数</td>
+<td>100,000</td>
+<td>500,000</td>
+<td>1,000,000</td>
+</tr>
+<tr>
+<td>例外なし、try/catchなし</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>例外なし、try/catchあり</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>例外を握り潰す</td>
+<td>85</td>
+<td>383</td>
+<td>744</td>
+</tr>
+<tr>
+<td>例外のメッセージ(Exception#getMessage)のみを取得</td>
+<td>79</td>
+<td>361</td>
+<td>710</td>
+</tr>
+<tr>
+<td>例外のメッセージと<br/>スタックトレース(Exception#getStackTrace)を取得</td>
+<td>404</td>
+<td>1819</td>
+<td>3688</td>
+</tr>
+</table>
+
+<p>やはり、例外の処理はコストがかかることがわかります。<br/>
+特にStackTraceを取得してしまうと、ただ例外を処理するだけよりさらに５倍以上の時間がかかってしまっており、非常にパフォーマンスが悪いことがわかりました。<br/>
+例外が投げられない場合は、try/catch clauseの有無については、ほとんど影響は見られませんでした。(多少は影響があるみたいですが、実際の環境ではこんなオーバーヘッドより他の無駄な処理に気を使ったほうがはるかに生産的です。)</p>
+
+<h2>実験その２. 例外時のStackTraceの深さによる実行時間の変化の検証</h2>
+
+<p>２つ目の実験は、Methodのネスト数=StackTraceの深さを変えて実験を行なってみました。<br/>
+実験１と同様の処理を行う途中に再帰関数を使って適当な深さをプラスして、例外の処理時間の変化を検証しました。</p>
+
+<p>実行時間の単位はミリ秒</p>
+
+<table>
+<tr>
+<td>nest数</td>
+<td>例外</td>
+<td>100,000</td>
+<td>500,000</td>
+<td>1,000,000</td>
+</tr>
+<tr>
+<td rowspan="2">+1</td>
+<td>なし</td>
+<td>1</td>
+<td>3</td>
+<td>6</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>549</td>
+<td>2815</td>
+<td>5436</td>
+</tr>
+<tr>
+<td rowspan="2">+5</td>
+<td>なし</td>
+<td>1</td>
+<td>5</td>
+<td>7</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>819</td>
+<td>4164</td>
+<td>8352</td>
+</tr>
+<tr>
+<td rowspan="2">+10</td>
+<td>なし</td>
+<td>1</td>
+<td>7</td>
+<td>14</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>1195</td>
+<td>6016</td>
+<td>11988</td>
+</tr>
+<tr>
+<td rowspan="2">+20</td>
+<td>なし</td>
+<td>3</td>
+<td>11</td>
+<td>25</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>1904</td>
+<td>9380</td>
+<td>19178</td>
+</tr>
+<tr>
+<td rowspan="2">+50</td>
+<td>なし</td>
+<td>7</td>
+<td>35</td>
+<td>73</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>3992</td>
+<td>19827</td>
+<td>40568</td>
+</tr>
+</table>
+
+<p>図１:例外発生時のNest数と実行時間の関係<br/>
+<img src="/images/2012/07/blog_134019_chart.png"/></p>
+
+<p><p/>
+<p>スタックトレースの深さに比例して、実行時間が増加していることがわかります。</p>
+<h1>教訓
+<ul>
+<li>なるべく例外を使わないプログラムを書いたほうが、パフォーマンスは良くなる</li>
+<li>特定の条件で大量に例外が投げられる場合は、StackTraceを出さないようにしておいたほうが良い</li>
+</ul>
+</h1><p>ただし、StackTraceを出力するのはデバッグや問題の調査に非常に有用であるため極力出したほうがいいです。<br/>
+パフォーマンスを気にするあまりに例外関連のログを減らしても、問題がどこで起きているかがわからなくなってしまうと本末転倒なので、例外はコストが高いということは頭の片隅に置きつつ十分にログは出力するようにしましょう。</p>
+<h1>付録</h1>
+<h3>実行結果例</h3></p>
+<pre class="highlight plaintext">Each test loops 100000 times.
+
+---- Test exception cost ----
+Not throw exception: 3 msecs
+Not throw exception with try/catch: 4 msecs
+Catch exception and get nothing: 83 msecs
+Catch exception and get only message: 79 msecs
+Catch exception and get message and stacktrace: 385 msecs
+
+---- Test stack trace depth cost ---
+1 nested
+  not throw: 2 msecs
+  throw    : 561 msecs
+5 nested
+  not throw: 1 msecs
+  throw    : 813 msecs
+10 nested
+  not throw: 1 msecs
+  throw    : 1170 msecs
+20 nested
+  not throw: 3 msecs
+  throw    : 1868 msecs
+50 nested
+  not throw: 7 msecs
+  throw    : 3961 msecs
+</pre>
+
+<h3>検証コード</h3>
+<pre class="highlight java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExceptionTest</span><span class="o">{</span>
+
+    <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">LoopCount</span> <span class="o">=</span> <span class="mi">500000</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"Each test loops %s times."</span><span class="o">,</span><span class="n">LoopCount</span><span class="o">));</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"---- Test exception cost ----"</span><span class="o">);</span>
+        <span class="n">testExceptionCost</span><span class="o">();</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"---- Test stack trace depth cost ---"</span><span class="o">);</span>
+        <span class="n">testStackDepthCost</span><span class="o">();</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">testExceptionCost</span><span class="o">(){</span>
+
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"Not throw exception"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="n">notThrowException</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"Not throw exception with try/catch"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">notThrowException</span><span class="o">();</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">getStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"Catch exception and get nothing"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">throwException</span><span class="o">();</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"Catch exception and get only message"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">throwException</span><span class="o">();</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"Catch exception and get message and stacktrace"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">throwException</span><span class="o">();</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">getStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">testStackDepthCost</span><span class="o">(){</span>
+        <span class="n">testNested</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">testNested</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+        <span class="n">testNested</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+        <span class="n">testNested</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+        <span class="n">testNested</span><span class="o">(</span><span class="mi">50</span><span class="o">);;</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">int</span><span class="n">erface</span> <span class="n">Function</span><span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">doLoop</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span> <span class="o">,</span> <span class="n">Function</span> <span class="n">func</span><span class="o">){</span>
+        <span class="kt">long</span> <span class="n">start</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">LoopCount</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+            <span class="n">func</span><span class="o">.</span><span class="na">apply</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="kt">long</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">-</span> <span class="n">start</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"%s: %s msecs"</span><span class="o">,</span><span class="n">message</span><span class="o">,</span><span class="n">delta</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">notThrowException</span><span class="o">(){</span>
+        <span class="n">someProcess</span><span class="o">();</span>
+        <span class="n">Object</span> <span class="n">o</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">throwException</span><span class="o">(){</span>
+        <span class="n">someProcess</span><span class="o">();</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">"Error"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">nestedThrowException</span><span class="o">(</span><span class="kt">int</span> <span class="n">nest</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">nest</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">someProcess</span><span class="o">();</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="o">(</span><span class="s">"Nest "</span> <span class="o">+</span> <span class="n">nest</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="n">nestedThrowException</span><span class="o">(</span><span class="n">nest</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">nestedNotThrowException</span><span class="o">(</span><span class="kt">int</span> <span class="n">nest</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">nest</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">){</span>
+            <span class="n">someProcess</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="n">nestedNotThrowException</span><span class="o">(</span><span class="n">nest</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">testNested</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">nest</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nest</span> <span class="o">+</span> <span class="s">" nested"</span><span class="o">);</span>
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"  not throw"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">nestedNotThrowException</span><span class="o">(</span><span class="n">nest</span><span class="o">);</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">getStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"  throw    "</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">nestedThrowException</span><span class="o">(</span><span class="n">nest</span><span class="o">);</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">getStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">someProcess</span><span class="o">(){</span>
+        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+  <hr/>
+
+    <p><a href="page/2/">Next page</a></p>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="archives/2014/04/10/takezoux2.html">ScalaとRubyどっちがいいの？</a> <span>2014-04-10</span></li>
+                  <li><a href="archives/2014/03/08/takezoux2.html">3分で掴むScalaのコツ</a> <span>2014-03-08</span></li>
+                  <li><a href="archives/2013/12/08/takezoux2.html">ScalaのParserCombinator実践入門＋</a> <span>2013-12-08</span></li>
+                  <li><a href="archives/2013/06/21/takezoux2.html">UnityでWebSocketを使ってチャット -Playと一緒-</a> <span>2013-06-21</span></li>
+                  <li><a href="archives/2013/01/30/k_ryoko.html">GTE Git branching model</a> <span>2013-01-30</span></li>
+                  <li><a href="archives/2012/12/19/takezoux2.html">scala 2.10のreflectionでorg.apache.commons.beanutils.PropertyUtilsっぽいものを作ってみた</a> <span>2012-12-19</span></li>
+                  <li><a href="archives/2012/09/05/yyuu.html">rbenv – ruby + python => pyenv</a> <span>2012-09-05</span></li>
+                  <li><a href="archives/2012/08/02/takezoux2.html">Scala勉強会 in 本郷始めました。</a> <span>2012-08-02</span></li>
+                  <li><a href="archives/2012/07/31/kohashi.html">enchant.jsでjsファイルを必要なときにロードする</a> <span>2012-07-31</span></li>
+                  <li><a href="archives/2012/07/30/takezoux2.html">javaのExceptionのコストについて</a> <span>2012-07-30</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="archives/2014.html">2014 (2)</a></li>
+                  <li><a href="archives/2013.html">2013 (3)</a></li>
+                  <li><a href="archives/2012.html">2012 (10)</a></li>
+                  <li><a href="archives/2011.html">2011 (11)</a></li>
+                  <li><a href="archives/2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="archives/tags/scala.html">Scala (10)</a></li>
+                      <li><a href="archives/tags/maven.html">maven (4)</a></li>
+                      <li><a href="archives/tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="archives/tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="archives/tags/tips.html">Tips (4)</a></li>
+                      <li><a href="archives/tags/android.html">Android (3)</a></li>
+                      <li><a href="archives/tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="archives/tags/ios.html">iOS (3)</a></li>
+                      <li><a href="archives/tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="archives/tags/git.html">git (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="archives/tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="archives/tags/lua.html">Lua (1)</a></li>
+                      <li><a href="archives/tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="archives/tags/python.html">Python (1)</a></li>
+                      <li><a href="archives/tags/c.html">C# (1)</a></li>
+                      <li><a href="archives/tags/unity.html">Unity (1)</a></li>
+                      <li><a href="archives/tags/css.html">css (1)</a></li>
+                      <li><a href="archives/tags/java.html">Java (2)</a></li>
+                      <li><a href="archives/tags/jetty.html">jetty (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="archives/authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="archives/authors/yyuu.html">yyuu</a></li>
+                      <li><a href="archives/authors/kohashi.html">kohashi</a></li>
+                      <li><a href="archives/authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="archives/authors/ta2.html">ta2</a></li>
+                      <li><a href="archives/authors/y_okaya.html">y_okaya</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="archives/authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="archives/authors/arikui.html">arikui</a></li>
+                      <li><a href="archives/authors/yamauchi.html">yamauchi</a></li>
+                      <li><a href="archives/authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="archives/authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

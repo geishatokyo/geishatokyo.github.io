@@ -1,0 +1,471 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog - Apache SolrをMaven2から実行する</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <article> 
+    <h1>Apache SolrをMaven2から実行する </h1>
+    <span>Posted on 2011-08-02
+      by <a href="../../../authors/takezoux2.html">takezoux2</a>
+    </span>
+    <h1>1. はじめに</h1>
+
+<h2>1.1 Apache Solrとは</h2>
+
+<p><a href="http://lucene.apache.org/solr/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">Apache Solr</a>とはApacheプロジェクトのJavaで書かれた全文検索エンジンです。全文検索機能を実装した<a href="http://lucene.apache.org/java/docs/index.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">Apache Lucene</a>の上に、Webインターフェイスやらクラスタリング機能やら色々な機能を追加したアプリケーションになります。</p>
+
+<h2>1.2 なぜMaven2?</h2>
+
+<p>SubversionやGitなどを使って複数人でソース共有するときに、全ての依存したJarを登録しちゃうとSolrの開発に関係ない人も20MB以上のjarをDLすることになり捗らないよね?<br/>
+しかも、ちょっと拡張したい時も依存関係が増えるとその管理めんどくさいよね?<br/>
+ということでMaven使ってHappyになりましょうというのが今回の記事の趣旨です。<br/>
+ただし、初期設定はちょっと面倒かも。。。</p>
+
+<h1>2. Get Started</h1>
+
+<h2>2.1 環境</h2>
+
+<p>Java,<a href="http://maven.apache.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maven.apache.org']);">Maven 2.x</a>がすでに準備できていることが前提です。<br/>
+OSはWindows7で検証していますが、基本JavaなのでUnix系のOSでも問題なく実行できると思います。</p>
+
+<h2>2.2 Mavenプロジェクトの作成</h2>
+
+<p>まず、以下のコマンドを実行しプロジェクトの作成を行います。</p>
+<pre class="highlight plaintext">mvn archetype:generate -DgroupId=com.geishatokyo -DartifactId=solrwithmaven -DarchetypeArtifactId=maven-archetype-quickstart
+</pre>
+
+<p>goupId,artifactIdは各自で変更してください。</p>
+
+<h2>2.3 pom.xmlの編集</h2>
+
+<ul>
+<li>packagingをwarに変更</li>
+<li>依存関係にSolrの追加</li>
+<li>buildにJettyサーバーを設定</li>
+</ul>
+
+<p>を行います。packagingは初期はjarに設定されているので、warに変更するだけです。</p>
+
+<p>変更する部分のみ。</p>
+<pre class="highlight plaintext">   &lt;packaging&gt;war&lt;/packaging&gt;
+   &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.solr&lt;/groupId&gt;
+            &lt;artifactId&gt;solr&lt;/artifactId&gt;
+            &lt;version&gt;3.3.0&lt;/version&gt;
+            &lt;type&gt;war&lt;/type&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.1.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;webResources&gt;
+                        &lt;resource&gt;
+                            &lt;!-- this is relative to the pom.xml directory --&gt;
+                            &lt;directory&gt;src/main/resources2&lt;/directory&gt;
+                        &lt;/resource&gt;
+                    &lt;/webResources&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-jetty-plugin&lt;/artifactId&gt;
+                &lt;version&gt;6.1.25&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;systemProperties&gt;
+                        &lt;systemProperty&gt;
+                            &lt;name&gt;solr.solr.home&lt;/name&gt;
+                            &lt;value&gt;target/${artifactId}-${version}/solr&lt;/value&gt;
+                        &lt;/systemProperty&gt;
+                    &lt;/systemProperties&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+</pre>
+
+<h2>2.4 必要なコンフィグファイルのコピー</h2>
+
+<p>/src/main/resources2/solr/confフォルダを作成し、そこに必要な全てのコンフィグファイルを置いて下さい。<br/>
+コンフィグファイルは、<a href="http://lucene.apache.org/solr/#getstarted" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">こちら</a>からDLできるSolrのひな形に含まれているもの(example/solr/conf以下のファイル)をまるまるコピーしてくるのが一番楽です。</p>
+
+<p>また、/src/test/javaフォルダ以下のファイルは今回は必要ないので、削除しておいてください。</p>
+
+<h1>3. 実行</h1>
+<pre class="highlight plaintext">    mvn jetty:run-exploded
+</pre>
+
+<p>を実行するだけで起動できます。<br/>
+起動が完了したら、<a href="http://localhost:8080/solrwithmaven/admin/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','']);">http://localhost:8080/solrwithmaven/admin/</a>へアクセスしてください。</p>
+
+<h1>4. おまけ</h1>
+
+<h2>4.1 pomの設定ってなに？</h2>
+
+<h3>maven-war-plugin</h3>
+
+<p>サーバーへの配布形式の際に使用するwarファイルへ固める際の設定を少々変更しています。<br/>
+Solrのsolr.solr.home=./solr/にデフォルトで設定されているので、warにした際にコンフィグファイルがデフォルトのパスに置かれる用にしています。<br/>
+きちんとした説明は<a href="http://maven.apache.org/plugins/maven-war-plugin/examples/adding-filtering-webresources.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maven.apache.org']);">こちら</a>を参考にしてください。</p>
+
+<h3>maven-jetty-plugin</h3>
+
+<p>軽量Servletコンテナです。これを設定しておくと、簡単にWebアプリケーションを起動できます。<br/>
+また、通常時にはコンフィグファイルがコピーされる場所がSolrのデフォルトHomeと違うため、その設定を上書きして変更しています。</p>
+
+    <h2>Tags</h2>
+      <a href="../../../tags/tips.html">Tips</a>
+      <a href="../../../tags/maven.html">maven</a>
+  </article>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2014/04/10/takezoux2.html">ScalaとRubyどっちがいいの？</a> <span>2014-04-10</span></li>
+                  <li><a href="../../../2014/03/08/takezoux2.html">3分で掴むScalaのコツ</a> <span>2014-03-08</span></li>
+                  <li><a href="../../../2013/12/08/takezoux2.html">ScalaのParserCombinator実践入門＋</a> <span>2013-12-08</span></li>
+                  <li><a href="../../../2013/06/21/takezoux2.html">UnityでWebSocketを使ってチャット -Playと一緒-</a> <span>2013-06-21</span></li>
+                  <li><a href="../../../2013/01/30/k_ryoko.html">GTE Git branching model</a> <span>2013-01-30</span></li>
+                  <li><a href="../../../2012/12/19/takezoux2.html">scala 2.10のreflectionでorg.apache.commons.beanutils.PropertyUtilsっぽいものを作ってみた</a> <span>2012-12-19</span></li>
+                  <li><a href="../../../2012/09/05/yyuu.html">rbenv – ruby + python => pyenv</a> <span>2012-09-05</span></li>
+                  <li><a href="../../../2012/08/02/takezoux2.html">Scala勉強会 in 本郷始めました。</a> <span>2012-08-02</span></li>
+                  <li><a href="../../../2012/07/31/kohashi.html">enchant.jsでjsファイルを必要なときにロードする</a> <span>2012-07-31</span></li>
+                  <li><a href="../../../2012/07/30/takezoux2.html">javaのExceptionのコストについて</a> <span>2012-07-30</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2014.html">2014 (2)</a></li>
+                  <li><a href="../../../2013.html">2013 (3)</a></li>
+                  <li><a href="../../../2012.html">2012 (10)</a></li>
+                  <li><a href="../../../2011.html">2011 (11)</a></li>
+                  <li><a href="../../../2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../../tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../../tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../../tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../../tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../../tags/android.html">Android (3)</a></li>
+                      <li><a href="../../../tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../../tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../../tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../../tags/git.html">git (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../../tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../../tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../../tags/python.html">Python (1)</a></li>
+                      <li><a href="../../../tags/c.html">C# (1)</a></li>
+                      <li><a href="../../../tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../../tags/css.html">css (1)</a></li>
+                      <li><a href="../../../tags/java.html">Java (2)</a></li>
+                      <li><a href="../../../tags/jetty.html">jetty (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../../authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../../authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../../authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../../authors/ta2.html">ta2</a></li>
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../../authors/arikui.html">arikui</a></li>
+                      <li><a href="../../../authors/yamauchi.html">yamauchi</a></li>
+                      <li><a href="../../../authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../../authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,499 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog - 3分で掴むScalaのコツ</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <article> 
+    <h1>3分で掴むScalaのコツ </h1>
+    <span>Posted on 2014-03-08
+      by <a href="../../../authors/takezoux2.html">takezoux2</a>
+    </span>
+    <p>ある程度Scalaの基本文法を知っている+オブジェクト指向言語を理解している人向けです。<br/>
+独断と偏見で使用頻度の高いものをピックアップしているので、人によって所感は違うかもですが、ご容赦下さい。</p>
+
+<h2>1. 関数型=関数がファーストクラス+副作用が無い(ようにかける)　であることを心がける</h2>
+
+<p>Scalaは、オブジェクト指向言語であるとともに、関数型言語でもあります。<br/>
+java likeに書くことは出来ますが、関数型的にかけるとかっこいい、テストしやすい、わかりやすい、などいいことずくめです。</p>
+
+<hr/>
+
+<h3>val と varの違い</h3>
+
+<p>変数の宣言をするときに、valとvarの２種類のキーワードが有ります。<br/>
+違いは、valは変数を定義した後再代入不可、varは再代入可能です。<br/>
+Scalaでは基本的にvalを使うようにしましょう。副作用がないプログラムをかけるようになります。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="mi">1</span>
+<span class="k">var</span> <span class="n">b</span> <span class="k">=</span> <span class="mi">2</span>
+
+<span class="n">a</span> <span class="k">=</span> <span class="mi">334</span> <span class="c1">// Error!
+</span><span class="n">b</span> <span class="k">=</span> <span class="mi">2183</span> <span class="c1">// OK!
+</span></pre>
+
+<hr/>
+
+<h3>ラムダ式</h3>
+
+<p>ようは簡単に関数が定義できる機能です。<br/>
+メソッドに関数を渡す時によく利用します。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">nums</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">evens</span> <span class="k">=</span> <span class="n">nums</span><span class="o">.</span><span class="n">map</span><span class="o">(</span> <span class="n">i</span> <span class="k">=&gt;</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="o">)</span> <span class="c1">// &lt;- i = i * 2がラムダ式
+</span></pre>
+
+<hr/>
+
+<h3>関数を引数に渡せる</h3>
+
+<p>関数がファーストクラスなので、関数を引数に取るメソッドを定義できます。</p>
+<pre class="highlight scala"><span class="k">def</span> <span class="n">printTime</span><span class="o">(</span> <span class="n">format</span> <span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">String</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="o">(</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">12</span><span class="o">).</span><span class="n">foreach</span><span class="o">(</span> <span class="n">hour</span> <span class="k">=&gt;</span> <span class="n">printn</span><span class="o">(</span><span class="n">format</span><span class="o">(</span><span class="n">hour</span><span class="o">))</span> <span class="o">)</span>
+<span class="o">}</span>
+<span class="n">printTime</span><span class="o">(</span> <span class="n">hour</span> <span class="k">=&gt;</span> <span class="n">hour</span> <span class="o">+</span> <span class="s">"時です"</span><span class="o">)</span> <span class="c1">// 1時~12時が出力される
+</span><span class="n">printTime</span><span class="o">(</span> <span class="n">hour</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="s">"${hour}:00"</span><span class="o">)</span> <span class="c1">// 1:00 ~ 12:00が出力される
+</span></pre>
+
+<h2>2. <a href="http://www.scala-lang.org/api/current/#scala.collection.immutable.List" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-lang.org']);">Listのメソッド</a>を覚える</h2>
+
+<p>Scalaは標準ライブラリが非常に強力です。他にも、便利なクラスはいろいろ有りますが、特にListのメソッドは使用頻度が高いので何があるかを把握しておきましょう。特に、次のメソッドはマストラーンです。</p>
+
+<hr/>
+
+<h3>foreach</h3>
+
+<p>要素を一つ一つ処理していきます。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">list</span> <span class="k">=</span> <span class="mi">1</span> <span class="o">::</span> <span class="mi">2</span><span class="o">::</span> <span class="mi">3</span> <span class="o">::</span> <span class="nc">Nil</span>
+<span class="n">list</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span> <span class="n">i</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">)</span>
+</pre>
+
+<hr/>
+
+<h3>map</h3>
+
+<p>要素を変換し、新しいリストを返します。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">list</span> <span class="k">=</span> <span class="mi">1</span> <span class="o">::</span> <span class="nc">List</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">odds</span> <span class="k">=</span> <span class="n">list</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">i</span> <span class="k">=&gt;</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+</pre>
+
+<hr/>
+
+<h3>filter</h3>
+
+<p>trueを返した要素だけを取り出したリストを返します。</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">list</span> <span class="k">=</span> <span class="o">(</span><span class="mi">0</span> <span class="n">to</span> <span class="mi">100</span><span class="o">).</span><span class="n">toList</span>
+<span class="k">val</span> <span class="n">evens</span> <span class="k">=</span> <span class="n">list</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span> <span class="k">_</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+</pre>
+
+<hr/>
+
+<h3>groupBy</h3>
+
+<p>返した要素をKeyとしてグルーピングしたMapを返す</p>
+<pre class="highlight scala"><span class="k">val</span> <span class="n">objects</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="s">"Apple"</span><span class="o">,</span><span class="s">"Apache"</span><span class="o">,</span><span class="s">"Banana"</span><span class="o">,</span><span class="s">"Bash"</span><span class="o">,</span><span class="s">"Scala"</span><span class="o">,</span><span class="s">"Stash"</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">groupByInitial</span> <span class="k">=</span> <span class="n">objects</span><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span> <span class="n">s</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span>
+<span class="cm">/* 中身はこんな感じになります
+Map(
+  'A' -&gt; List("Apple","Apache"),
+  'B' -&gt; List("Banana","Bash"),
+  'S' -&gt; List("Scala","Stash")
+)
+*/</span>
+</pre>
+
+<p>※Mapは連想配列のことです。</p>
+
+<h2>3.パターンマッチング</h2>
+
+<p>Scalaでは、他の言語でのswitchみたいなものが非常に強力になっています。これを使わなければScalaとは言えないレベルです。</p>
+
+<hr/>
+
+<h3>Case class</h3>
+
+<p>Scalaのパターンマッチングを非常に強力してくれる機能です。だいたい次のように使います。</p>
+<pre class="highlight scala"><span class="k">trait</span> <span class="nc">Exp</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Add</span><span class="o">(</span> <span class="n">a</span> <span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">b</span> <span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Exp</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Sub</span><span class="o">(</span><span class="n">a</span> <span class="k">:</span> <span class="kt">Int</span> <span class="o">,</span> <span class="n">b</span> <span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Exp</span>
+
+<span class="k">def</span> <span class="n">calc</span><span class="o">(</span> <span class="n">exp</span> <span class="k">:</span> <span class="kt">Exp</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="n">exp</span> <span class="k">match</span><span class="o">{</span>
+    <span class="k">case</span> <span class="nc">Add</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">case</span> <span class="nc">Sub</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">calc</span><span class="o">(</span><span class="nc">Add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">))</span> <span class="c1">// return 3
+</span><span class="n">calc</span><span class="o">(</span><span class="nc">Sub</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span><span class="mi">2</span><span class="o">))</span> <span class="c1">// return 2
+</span></pre>
+
+<hr/>
+
+<h3>Option型</h3>
+
+<p>Scalaは、nullチェックは基本使いません。nullが入りうる可能性がある変数は、変わりにOption型でラップしパターンマッチングやforeachなどで値を取り出します。</p>
+<pre class="highlight scala"><span class="k">def</span> <span class="n">login</span><span class="o">(</span> <span class="n">nameOp</span> <span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="n">nameOp</span> <span class="k">match</span><span class="o">{</span>
+    <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="s">"ぽこ"</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">"ぽこたんインしたお"</span><span class="o">)</span>
+    <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="n">name</span><span class="o">)</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startsWith</span><span class="o">(</span><span class="s">"悟"</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">printnl</span><span class="o">(</span><span class="n">s</span><span class="s">"オッス、オラ${name}"</span><span class="o">)</span>
+    <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="n">name</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">"${name}さんがログインしました"</span><span class="o">)</span>
+    <span class="k">case</span> <span class="nc">None</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">"中に誰もいませんよ？"</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">login</span><span class="o">(</span><span class="nc">Some</span><span class="o">(</span><span class="s">"ぽこ"</span><span class="o">))</span> <span class="c1">// "ぽこたんインしたお"が出力
+</span><span class="n">login</span><span class="o">(</span><span class="nc">Some</span><span class="o">(</span><span class="s">"悟空"</span><span class="o">))</span> <span class="c1">// "オッス、オラ悟空"
+</span><span class="n">login</span><span class="o">(</span><span class="nc">Some</span><span class="o">(</span><span class="s">"太郎"</span><span class="o">))</span> <span class="c1">// "太郎さんがログインしました"
+</span><span class="n">login</span><span class="o">(</span><span class="nc">None</span><span class="o">)</span> <span class="c1">// "中に誰もいませんよ？"
+</span></pre>
+
+<p>だいたい、このあたりのことを気を付けて書けば、なんかScalaっぽいコードになります。</p>
+                            
+
+    <h2>Tags</h2>
+      <a href="../../../tags/uncategorized.html">Uncategorized</a>
+  </article>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../04/10/takezoux2.html">ScalaとRubyどっちがいいの？</a> <span>2014-04-10</span></li>
+                  <li><a href="takezoux2.html">3分で掴むScalaのコツ</a> <span>2014-03-08</span></li>
+                  <li><a href="../../../2013/12/08/takezoux2.html">ScalaのParserCombinator実践入門＋</a> <span>2013-12-08</span></li>
+                  <li><a href="../../../2013/06/21/takezoux2.html">UnityでWebSocketを使ってチャット -Playと一緒-</a> <span>2013-06-21</span></li>
+                  <li><a href="../../../2013/01/30/k_ryoko.html">GTE Git branching model</a> <span>2013-01-30</span></li>
+                  <li><a href="../../../2012/12/19/takezoux2.html">scala 2.10のreflectionでorg.apache.commons.beanutils.PropertyUtilsっぽいものを作ってみた</a> <span>2012-12-19</span></li>
+                  <li><a href="../../../2012/09/05/yyuu.html">rbenv – ruby + python => pyenv</a> <span>2012-09-05</span></li>
+                  <li><a href="../../../2012/08/02/takezoux2.html">Scala勉強会 in 本郷始めました。</a> <span>2012-08-02</span></li>
+                  <li><a href="../../../2012/07/31/kohashi.html">enchant.jsでjsファイルを必要なときにロードする</a> <span>2012-07-31</span></li>
+                  <li><a href="../../../2012/07/30/takezoux2.html">javaのExceptionのコストについて</a> <span>2012-07-30</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2014.html">2014 (2)</a></li>
+                  <li><a href="../../../2013.html">2013 (3)</a></li>
+                  <li><a href="../../../2012.html">2012 (10)</a></li>
+                  <li><a href="../../../2011.html">2011 (11)</a></li>
+                  <li><a href="../../../2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../../tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../../tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../../tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../../tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../../tags/android.html">Android (3)</a></li>
+                      <li><a href="../../../tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../../tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../../tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../../tags/git.html">git (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../../tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../../tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../../tags/python.html">Python (1)</a></li>
+                      <li><a href="../../../tags/c.html">C# (1)</a></li>
+                      <li><a href="../../../tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../../tags/css.html">css (1)</a></li>
+                      <li><a href="../../../tags/java.html">Java (2)</a></li>
+                      <li><a href="../../../tags/jetty.html">jetty (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../../authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../../authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../../authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../../authors/ta2.html">ta2</a></li>
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../../authors/arikui.html">arikui</a></li>
+                      <li><a href="../../../authors/yamauchi.html">yamauchi</a></li>
+                      <li><a href="../../../authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../../authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
