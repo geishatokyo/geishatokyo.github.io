@@ -1,3 +1,6 @@
 #!/bin/bash
 bundle exec middleman build
 cp -r build/*.html build/archives build/page build/static ./
+rm -r build
+git add *.html archives page static
+git commit -m 'Update site'
