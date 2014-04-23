@@ -1,13 +1,16 @@
 # Geisha Tokyo Engineer Blog
 
+http://blog.geishatokyo.com
+(http://geishatokyo.github.io)
+
 ## Development
 
-Require Ruby
+Requires Ruby
 
-1. Setup (First time only)  
+1. Get repository  
+git clone git@github.com:geishatokyo/geishatokyo.github.io.git engineerblog
+2. Setup bundler (First time only)  
 gem install bundler
-2. Get repository  
-git clone git@github.com:geishatokyo/engineerblog.git
 3. Install dependencies  
 cd engineerblog && bundle install
 4. Start server  
