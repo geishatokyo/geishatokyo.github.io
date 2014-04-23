@@ -1,0 +1,55 @@
+---
+title: enchant.jsでjsファイルを必要なときにロードする
+date: 2012-07-31
+tags: JavaScript
+authors: kohashi
+---
+ 
+<p>社内にバランスボールが十数個あってエンジニアやデザイナ、社長が座っていたりするのですがそろそろ普通の丸いバランスボールに飽きてきたのか、気がつくと社内にイボ付きバランスボール、ラグビーボール型バランスボール、ドーナツ型バランスボールなどがあります…。</p>
+<p>先日はとうとう、バンビ型のバランスボールが増えていました。<br/>
+バランス『ボール』ではまったく無い気がします。kohashiです。</p>
+<p>さて、jsで簡単にゲームを作れるエンジンである <a href="http://enchantjs.com" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://enchantjs.com']);">enchant.js</a> なのですが、たくさん書いているとjsコードもいっぱいになってきますよね。</p>
+<p>アクションゲームで2面、3面と続くようなモノや、あるいはノベルゲームで第2話、第3話…なんていうケース。<br/>
+そういう時に、jsコードを必要になった時に呼び出せるようにしてみましょう。</p>
+```javascript
+//game.jsやindex.htmlの中など、最初のほうで読み込んでおく
+  enchant.Game._loadFuncs['js']  = function(src, callback) {
+    var ele = document.createElement("script");
+    ele.type = "text/javascript";
+    ele.src = src;
+    ele.onload = callback;
+    ele.onerror = function() {
+      throw new Error('Cannot load an asset: ' + src);
+    };
+    document.body.appendChild(ele);
+  };
+
+//ゲームの1面クリア時など、次のデータが必要になったタイミングで呼びだす。
+game.load("nextStage.js", function(){
+    //ここは次のステージデータが読み込まれたあとで呼ばれます。
+    //次のステージを描画するための処理など。。。
+})
+```
+<p>簡単ですね！<br/>
+enchant.jsはversion 0.4から、ファイル読み込み後の処理が外から変更できるようになっているので、こういうことも簡単です。</p>
+<p>簡単すぎるので、オマケにロード表示を拡張するサンプルを。<br/>
+標準のロード表示が、黒い画面に白いバーでつまんない！という方にどうぞ。</p>
+```javascript
+  //独自のロード画面作成
+  game.loadingScene = new enchant.Scene();
+  game.loadingScene.backgroundColor = '#FFF'; //白背景
+  var label = new enchant.Label(); //読み込み量表示ラベル
+  label.moveTo(120, 220);
+  label.color = "black";
+
+  game.addEventListener('progress', function(e) {
+    label.text = '読込中：' +  e.loaded + '/' + e.total;
+    console.log(label.text)
+  });
+  game.loadingScene.addChild(label);
+
+  //その他、いろんな処理…
+  game.start(); //読込開始されます
+```
+<p>今回は単純に、　『読込中:  29/48 』　のような表示にしましたが、cssなどを使って素敵なロード表示の画面を作ってみてくださいね！<br/>
+参考： <a href="http://jsdo.it/search?q=%E3%83%AD%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0&amp;search_order=forked" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://jsdo.it']);">jsdo.it : ローディング</a></p>

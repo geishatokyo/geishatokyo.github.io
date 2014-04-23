@@ -1,0 +1,150 @@
+---
+title: 今流行のArctic.jsと、enchant.jsの比較
+date: 2012-01-26
+tags: Android,JavaScript,iOS
+authors: y_okaya
+---
+ 
+<p>こんにちは</p>
+<p>ライセンス云々で話題になっていたArctic.jsですが、スマフォに特化したCanvas Frameworkということで<br/>
+機能的にどうなのか、というところが大変気になります。弊社では同じゲーム向けのJSFrameworkとして、<br/>
+enchant.jsを使用しているので機能をざっくり比較してみようと思います。</p>
+<h2>機能の差</h2>
+<table>
+<thead>
+<tr>
+<th/>
+<th>Arctic.js</th>
+<th>enchant.js</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>サイズ(byte)</td>
+<td>90851</td>
+<td>88593</td>
+</tr>
+<tr>
+<td>圧縮後サイズ(byte)</td>
+<td>36696</td>
+<td>33570</td>
+</tr>
+<tr>
+<td>オブジェクトの描画</td>
+<td>canvas上</td>
+<td>div毎</td>
+</tr>
+<tr>
+<td>License</td>
+<td>MIT</td>
+<td>MIT or GPLv3</td>
+</tr>
+</tbody>
+</table>
+<p>圧縮後のファイルサイズはenchant.jsのほうが3kbほど少ないですね。<br/>
+どちらもjs上に継承などを行う擬似クラスを作るためのClass要素があったり、スマートフォン/PC両方で使えるようにtouch系イベントとmouseDown/Move系イベントを判定したり、fps(フレーム数）を設定してフレーム毎のイベントを設定するなどしています。</p>
+<p>Arctic.jsだけにある機能としては、Ajax対応（ただしJSONPはサポートしていないので、すべて同ドメインのサーバで処理する必要がある）、FLASHライクなタイムライン指定でのアニメーション機能があります。<br/>
+反対に、enchant.jsだけにある機能としてはaudio要素への対応としてのSoundオブジェクト、RPGのフィールドマップのようなものを作るMapオブジェクト、あとはプロパティ型の記述ができるのが特徴でしょうか。</p>
+<p><code>label.text = 'abc'; img.x=12; </code> と書くenchant.jsのほうが、<br/>
+<code> labe.setText('abc'); img.setX(12); </code>とするArctic.jsよりも直感的ですよね。</p>
+<p>後発だけあって、Arctic.jsのほうは<del>enchant.jsの機能をパクった</del>enchant.jsにある基本的な機能はだいたいあるような感じですね。</p>
+<p>オブジェクトの描画についてですが、Canvasでの描画の方が性能的に有利かもしれませんが、enchant.jsは<br/>
+divタグ毎にオブジェクトに持っていることで利便性をあげています。既存のアニメーション効果をdivタグ単位で<br/>
+適応することにより、今までのエフェクトを使いまわすことができるのです。</p>
+<p>enchant.jsと他のライブラリを合わせて使うサンプルは<a href="http://d.akiroom.com/2011-08/enchant-js-jquery-effects/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://d.akiroom.com']);">こちらのブログ</a>に具体的な実装方法が書かれていたので、実装方法はリンク先を御覧ください。</p>
+<h2>スプライトするまでのコードの比較</h2>
+<h3>Arctic.js</h3>
+```xml
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Test Sprite</title>
+	<script type="text/javascript" src="./arctic.js"></script>
+	<script type="text/javascript">
+        var GameMain = arc.Class.create(arc.Game, {
+            initialize:function(params) {
+                var sp = new arc.display.Sprite(this._system.getImage('a.png'));
+                sp.setX(10);
+                sp.setY(10);
+                this.addChild(sp);
+            },
+            update:function() {
+            }
+        });
+        window.addEventListener('DOMContentLoaded', function(e){
+            var system = new arc.System(320, 416, 'test');
+            system.setGameClass(GameMain);
+            system.load(['a.png']);
+        }, false);
+        </script>
+</head>
+<body>
+<canvas id='test'></canvas>
+</body>
+</html>
+```
+<h3>enchant.js</h3>
+```xml
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="./enchant.js"></script>
+    <script type="text/javascript">
+        enchant();
+        window.onload = function() {
+            var game = new Game(416,320);
+            game.preload('a.png');
+            game.onload = function() {
+                var test = new Sprite(100,100);
+                test.x = 10;
+                test.y = 10;
+                test.image = game.assets['a.png'];
+                game.rootScene.addChild(test);
+            };
+            game.start();
+        };
+    </script>
+</head>
+<body>
+</body>
+</html>
+```
+<p>どちらもオブジェクト指向的に書くようですが、enchant.jsの方がすっきり書けるようです。</p>
+<p>ちなみにenchant.jsでもcanvasの描画機能が強化されるようです。<br/>
+αブレンドもそのうちサポートされるとか。(詳細は<a href="http://wise9.jp/archives/6347" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://wise9.jp']);">こちら</a>)</p>
+<p>ぼちぼちスプライトの性能の差も比較していこうと思います。<br/>
+それはまた別記事でっ！</p>
+<p>追記：<br/>
+無理にArctic.jsでスッキリ書くと、こんな感じでしょうか。</p>
+<h3>Arctic.js</h3>
+```xml
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Test Sprite</title>
+	<script type="text/javascript" src="./arctic.js"></script>
+	<script type="text/javascript">
+        window.onload = function(){
+            var system = new arc.System(320, 416, 'test');
+            system.setGameClass(arc.Class.create(arc.Game, {
+				initialize:function(params) {
+					var sp = new arc.display.Sprite(this._system.getImage('a.png'));
+					sp.setX(10);
+					sp.setY(10);
+					this.addChild(sp);
+				}
+			}));
+            system.load(['a.png']);
+        }
+        </script>
+</head>
+<body>
+<canvas id='test'></canvas>
+</body>
+</html>
+```
+<p>・・・ネスト多い。</p>
+							

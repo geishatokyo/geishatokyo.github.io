@@ -1,0 +1,94 @@
+---
+title: Apache SolrをMaven2から実行する
+date: 2011-08-02
+tags: Tips,maven
+authors: takezoux2
+---
+ 
+<h1>1. はじめに</h1>
+<h2>1.1 Apache Solrとは</h2>
+<p><a href="http://lucene.apache.org/solr/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">Apache Solr</a>とはApacheプロジェクトのJavaで書かれた全文検索エンジンです。全文検索機能を実装した<a href="http://lucene.apache.org/java/docs/index.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">Apache Lucene</a>の上に、Webインターフェイスやらクラスタリング機能やら色々な機能を追加したアプリケーションになります。</p>
+<h2>1.2 なぜMaven2?</h2>
+<p>SubversionやGitなどを使って複数人でソース共有するときに、全ての依存したJarを登録しちゃうとSolrの開発に関係ない人も20MB以上のjarをDLすることになり捗らないよね?<br/>
+しかも、ちょっと拡張したい時も依存関係が増えるとその管理めんどくさいよね?<br/>
+ということでMaven使ってHappyになりましょうというのが今回の記事の趣旨です。<br/>
+ただし、初期設定はちょっと面倒かも。。。</p>
+<h1>2. Get Started</h1>
+<h2>2.1 環境</h2>
+<p>Java,<a href="http://maven.apache.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maven.apache.org']);">Maven 2.x</a>がすでに準備できていることが前提です。<br/>
+OSはWindows7で検証していますが、基本JavaなのでUnix系のOSでも問題なく実行できると思います。</p>
+<h2>2.2 Mavenプロジェクトの作成</h2>
+<p>まず、以下のコマンドを実行しプロジェクトの作成を行います。</p>
+```
+mvn archetype:generate -DgroupId=com.geishatokyo -DartifactId=solrwithmaven -DarchetypeArtifactId=maven-archetype-quickstart
+```
+<p>goupId,artifactIdは各自で変更してください。</p>
+<h2>2.3 pom.xmlの編集</h2>
+<ul>
+<li>packagingをwarに変更</li>
+<li>依存関係にSolrの追加</li>
+<li>buildにJettyサーバーを設定</li>
+</ul>
+<p>を行います。packagingは初期はjarに設定されているので、warに変更するだけです。</p>
+<p>変更する部分のみ。</p>
+```
+   <packaging>war</packaging>
+   <dependencies>
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr</artifactId>
+            <version>3.3.0</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <!-- this is relative to the pom.xml directory -->
+                            <directory>src/main/resources2</directory>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.25</version>
+                <configuration>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>solr.solr.home</name>
+                            <value>target/${artifactId}-${version}/solr</value>
+                        </systemProperty>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+```
+<h2>2.4 必要なコンフィグファイルのコピー</h2>
+<p>/src/main/resources2/solr/confフォルダを作成し、そこに必要な全てのコンフィグファイルを置いて下さい。<br/>
+コンフィグファイルは、<a href="http://lucene.apache.org/solr/#getstarted" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">こちら</a>からDLできるSolrのひな形に含まれているもの(example/solr/conf以下のファイル)をまるまるコピーしてくるのが一番楽です。</p>
+<p>また、/src/test/javaフォルダ以下のファイルは今回は必要ないので、削除しておいてください。</p>
+<h1>3. 実行</h1>
+```
+	mvn jetty:run-exploded
+```
+<p>を実行するだけで起動できます。<br/>
+起動が完了したら、<a href="http://localhost:8080/solrwithmaven/admin/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','']);">http://localhost:8080/solrwithmaven/admin/</a>へアクセスしてください。</p>
+<h1>4. おまけ</h1>
+<h2>4.1 pomの設定ってなに？</h2>
+<h3>maven-war-plugin</h3>
+<p>サーバーへの配布形式の際に使用するwarファイルへ固める際の設定を少々変更しています。<br/>
+Solrのsolr.solr.home=./solr/にデフォルトで設定されているので、warにした際にコンフィグファイルがデフォルトのパスに置かれる用にしています。<br/>
+きちんとした説明は<a href="http://maven.apache.org/plugins/maven-war-plugin/examples/adding-filtering-webresources.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maven.apache.org']);">こちら</a>を参考にしてください。</p>
+<h3>maven-jetty-plugin</h3>
+<p>軽量Servletコンテナです。これを設定しておくと、簡単にWebアプリケーションを起動できます。<br/>
+また、通常時にはコンフィグファイルがコピーされる場所がSolrのデフォルトHomeと違うため、その設定を上書きして変更しています。</p>

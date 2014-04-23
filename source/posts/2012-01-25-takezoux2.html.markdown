@@ -1,0 +1,37 @@
+---
+title: MavenからSBTへのビルド環境の移行
+date: 2012-01-25
+tags: Scala,maven,sbt
+authors: takezoux2
+---
+ 
+<p>この記事は、sbt0.11.X系列の記事です。それ以前のバージョンでは正しく動作しません。</p>
+<h2><a href="https://github.com/harrah/xsbt/wiki" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">SBT</a>とは</h2>
+<p>Scala(とついでにJava)のためのビルドツールです。ちなみにSimple Build Toolの略です。<br/>
+特徴としては、設定等全てscalaで書くことができ拡張性が高いビルドツールになっています。</p>
+<p>この記事では、Mavenの主要な機能を順次sbtへと移植していきます。<br/>
+現在ScalaをMavenと連携して使用しているけど、sbtも安定してきた気がするしsbtへ乗り換えてみようかなと思っている人達を対象にしています。<br/>
+sbtに関しては、使う上での最低限の情報と、Mavenからの移植に必要な部分のみ触れています。<br/>
+きちんとsbtの使い方を知りたい方は、本家のWikiを読んでください。</p>
+<h2 id="index">目次</h2>
+<h3><a href="http://blob.geishatokyo.com/?p=23169">SBTのセットアップ</a></h3>
+<ul>
+</ul><ol><a href="http://blob.geishatokyo.com/?p=23169#insall">1. SBTのインストール</a></ol>
+<ol><a href="http://blob.geishatokyo.com/?p=23169#hello">2. Hello sbt</a></ol>
+<ol><a href="http://blob.geishatokyo.com/?p=23169#overview">3. SBTの概要</a></ol>
+
+<h3><a href="http://blob.geishatokyo.com/?p=97411">プロジェクトの準備</a></h3>
+<ul>
+</ul><ol><a href="http://blob.geishatokyo.com/?p=97411#make_project_file">1. SBTプロジェクトファイルの準備</a></ol>
+<ol><a href="http://blob.geishatokyo.com/?p=97411#base_setting">2. 基本設定</a></ol>
+
+<h3><a href="http://blob.geishatokyo.com/?p=101507">依存関係解決</a></h3>
+<ul>
+</ul><ol><a href="http://blob.geishatokyo.com/?p=101507#dependency">1. 依存関係の設定</a></ol>
+<ol><a href="http://blob.geishatokyo.com/?p=101507#external_repo">2. 外部Repositoryの設定</a></ol>
+<ol><a href="http://blob.geishatokyo.com/?p=101507#maven_local">3. MavenLocalRepositoryの設定</a></ol>
+<ol><a href="http://blob.geishatokyo.com/?p=101507#global_setting">4. settings.xmlの置き換え</a></ol>
+
+<h3>デプロイ</h3>
+<p>Comming soon?</p>
+							

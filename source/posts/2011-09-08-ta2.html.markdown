@@ -1,0 +1,71 @@
+---
+title: いろいろなものを解析してみよう(その１)
+date: 2011-09-08
+tags: Uncategorized
+authors: ta2
+---
+ 
+<p>決済系のシステムエンジニア、低レイヤのソフトウェアプログラマを経て、現職では芸者東京エンターテインメントでアプリケーションエンジニアとして働いています、 ta2 と申します。今回は、直近の業務にはほとんど関係しないものの、奥が深いプログラムの解析をテーマにしてみようと思います。</p>
+<p>私自身はそれほど解析に詳しいわけではありませんが、プログラムの解析で必要なのは、その解析で何を達成したいのかが重要だと思います。プログラムの解析に限った話ではないですが。</p>
+<p>そもそも、プログラムの解析を始めたのは、ゲーム中で流れる音楽をゲームプログラムを起動しなくても、個人的に自由に聞きたいということがきっかけです。</p>
+<p><span style="color: red; font-weight: bold;">注意！　一般的には、プログラムの解析では、リスクを伴いますので、あくまで自己責任にてお願いします。</span></p>
+<ol>
+<li style="color: red; font-weight: bold;">法的リスク。ソフトウェア使用許諾契約書などにリバース・エンジニアリングを禁止する条項があり、その内容に同意した場合に、プログラムの解析をすると、問題となる場合があります。</li>
+<li style="color: red; font-weight: bold;">解析にともなうリスク。実行内容を変更するツールを用いるため、実行プログラムが予想しない動作を引き起こす可能性があります。対解析ツール用に防御機構を備えているソフトウェアもあります。</li>
+</ol>
+<p>とはいっても、解析は非常に有用です。例えば以下のようなことに役立つのではないかと考えています。</p>
+<ul>
+<li>外部のモジュールとの関係や動作の仕組みを実際に理解する</li>
+<li>暗号化アルゴリズムで、メモリの内容を嗅ぎ回られるリスクが最小限になっているかどうかの判定</li>
+</ul>
+<p>今回は、自作の Windows(x86) プログラムを解析してみることとします。</p>
+<h2>使用するツール</h2>
+<p>以下に紹介するツールは、Windows 7 SP1 x64 での動作を確認しました。 wow64環境で動作しています。</p>
+<ul>
+<li>バイナリエディタ。私の場合は、<span style="font-family: 'Times New Roman', serif;"><a href="http://www.vector.co.jp/vpack/filearea/win/util/bin/edit/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.vector.co.jp']);">Stirling</a></span>というツールを使います。<a href="/images/2011/09/binary_editor.jpg"><img class="alignnone size-full wp-image-35585" title="binary_editor" src="/images/2011/09/binary_editor.jpg" alt="" width="749" height="578"/></a></li>
+<li><a href="http://www.ollydbg.de/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.ollydbg.de']);">OllyDbg</a>。Windows(x86)で、 C/C++ で作成されたプログラムを強力に解析できるツール。レジスタの内容や、スタック、メモリの内容をのぞけます。対象とするスレッドやモジュールも簡単に切り替えることができます。C# のプログラムを解析することはできないようです。また、x64 native の Windows プログラムも解析できないようです。バージョン2.0 では、様々な機能が追加されているようですが、Windows 7 や x64 上の環境ではあまりテストしてないようです。
+<p>次に OllyDbg の画面の説明を簡単にします。</p>
+<ol>
+<li>逆アセンブルコードの表示。プログラムが実行される様子が追えます。Visual Studio や、 Eclipse などの開発環境と似たような感覚で使用できます。ブレイクポイントを置いたり、実行内容を変更したり、ステップ実行できたりします。</li>
+<li>CPU のレジスタの情報表示。実際にどのような値が演算されているか確認できます。</li>
+<li>メモリ内容の一部が表示されます。ASCII や UNICODE として表示させることが出来ます。</li>
+<li>スタック内容の表示。</li>
+</ol>
+</li>
+<div id="attachment_35713" class="wp-caption alignleft" style="width: 650px"><a href="/images/2011/09/ollydbg.jpg"><img class="size-large wp-image-35713" title="ollydbg" src="/images/2011/09/ollydbg-1024x819.jpg" alt="ollydbg" width="640" height="511"/></a><p class="wp-caption-text">OllyDbg の画面</p></div></ul>
+<h2>解析の目標</h2>
+<p>先ほどダウンロードしていただいたファイルを解凍すると、コンソールプログラム本体「encryptedTexts.exe」と、暗号化済みテキスト「secret.txt」が展開されます。展開された「secret.txt」を復号し、メッセージを見つけることが目標です。</p>
+<h2>解析の手順（前半）</h2>
+<ol>
+<li>先ほどダウンロードしていただいたファイルを解凍し、バイナリエディタで、「secret.txt」を開いてみます。先頭に後述するマジックナンバーが書かれています。今はこういう感じでファイルがセーブされている程度の理解で問題ありません。</li>
+<li>OllyDbg を起動します。Windows Vista や、Windows 7 では、「管理者として実行」を選んで起動してください。</li>
+<li>OllyDbg の EncryptedTexts.exe を実行します。</li>
+<li>OllyDbg が注目しているスレッドを”main”、モジュールを”encryptedTexts.exe” に切り替えます。</li>
+</ol>
+<p> </p>
+<p/><div id="attachment_43393" class="wp-caption aligncenter" style="width: 663px"><a href="/images/2011/09/secret.jpg"><img class="size-full wp-image-43393" title="secret.txt の中身" src="/images/2011/09/secret.jpg" alt="secret.txt" width="653" height="170"/></a><p class="wp-caption-text">secret.txt の中身</p></div>
+<p> </p>
+<p> </p>
+<p lang="ja-JP">このあとどうやって解析を進めればいいでしょうか？私の場合は以下のような方法でプログラムを解析しています。</p>
+<p> </p>
+<h2>方法</h2>
+<ul>
+<li>頻繁に呼び出される箇所を探す。ループ回数がやたら多い、関数呼び出しの多いところを探す。音声データのロードや画像データのロードだと、頻繁に呼び出される関数は、ReadFile 系の関数だと推測ことができます。</li>
+<li>”all referenced text strings” で、プログラムが参照している文字列が見えるので、「マジックナンバー」や、意図を持った文字列がないかどうか確認する。</li>
+</ul>
+<h2>解析の手順（後半）</h2>
+<p>今回の例の場合は、プログラムを参照している文字列を表示させます。すると、文字列の中に 「/decrypt」という、以下にもコマンドのスイッチみたいな表現が見つかります。</p>
+<div id="attachment_43649" class="wp-caption aligncenter" style="width: 698px"><a href="/images/2011/09/all-referenced-texts.jpg"><img src="/images/2011/09/all-referenced-texts.jpg" alt="all-referenced-texts" title="all-referenced-texts" width="688" height="473" class="size-full wp-image-43649"/></a><p class="wp-caption-text">参照されたテキスト文字列</p></div>
+<p>そこで、プログラムを引数付き(/decrypt のスイッチつき)で再スタートさせてみます。すると、以下のように、復号後の文字列が表示されます。これで目的の文字列が得られたため、解析終了です。</p>
+<div id="attachment_43777" class="wp-caption aligncenter" style="width: 687px"><a href="/images/2011/09/plain.jpg"><img src="/images/2011/09/plain.jpg" alt="plain" title="plain" width="677" height="492" class="size-full wp-image-43777"/></a><p class="wp-caption-text">復号されたテキスト</p></div>
+<p><em>マジックナンバーとは？</em>拡張子ogg のファイルをバイナリエディタなどでのぞくと、先頭に “OggS” という文字列が書かれています。また、ビットマップ画像ファイルでは、マジックナンバーは、”BM”に設定されています。メモリ上で、これらのマジックナンバーを探すことで、データ本体に辿りつけることもあります。ファイルフォーマットをよく知っておくことが、データ本体にたどり着く近道です。</p>
+<h2>おまけ</h2>
+<p>実はこの記事を書くために、secret.txt を自作する必要がありました。そのために、広く知られている、RC4 互換のArcFour アルゴリズムを利用して、暗号化を実現しています。初期化キーはプログラムに埋め込まれています。興味のある方は、ここから zip ファイルをダウンロードして、実際に暗号化・復号を確かめることも出来ます。また、「secret.txt」のフォーマットは、次の画像のようにヘッダ部(マジックナンバー：GteT、データ部のテキスト長： 1D 00 00 00)、データ部になっています。</p>
+<div id="attachment_43521" class="wp-caption aligncenter" style="width: 663px"><a href="/images/2011/09/secret-format.jpg"><img src="/images/2011/09/secret-format.jpg" alt="secret-format" title="secret-format" width="653" height="170" class="size-full wp-image-43521"/></a><p class="wp-caption-text">secret.txt のフォーマット</p></div>
+<p>解析の様子を実際に確かめてみたい方は、zip で固めたデータ、<a href="/images/2011/09/encryptedTexts.zip" onclick="javascript:_gaq.push(['_trackEvent','download','/images/2011/09/encryptedTexts.zip']);">encryptedTexts</a> をダウンロードして試してみてください。その際、もしかすると、<a href="http://www.microsoft.com/downloads/ja-jp/details.aspx?familyid=a7b7a05e-6de6-4d3a-a423-37bf0912db84&amp;displaylang=ja-nec" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.microsoft.com']);">Microsoft Visual C++ 2010 再頒布可能パッケージ (x86)</a>などが必要となるかもしれません。なお、注意で書いた防御機構は実装していません。自由に解析していただいて結構です。
+</p>
+<p>※プログラムは、本業の合間を見つけて作ったので、大半のエラーチェックやフォーマットを真面目に考えて実装しているわけではありません。したがって、今回の例程度よりも文字列長が長い文字のエンコード・デコードはうまく動作しないしない場合がありますので、あらかじめご了承ください。
+</p>
+<h2>私の次回の執筆テーマ</h2>
+<p>Wireshark で、パケットをキャプチャして、ダウンロードされるファイルのデータを取得してみるような内容にしようかと考えています。</p>
+							

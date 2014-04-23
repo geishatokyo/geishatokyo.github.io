@@ -1,0 +1,32 @@
+---
+title: スマートフォンサイトでiframeを使い、「戻る」とリダイレクトが再実行される問題の対応
+date: 2011-10-25
+tags: Android,JavaScript,iOS
+authors: kohashi
+---
+ 
+<p>こんにちわ。GTEエンジニアのkohashiです。</p>
+<p>webアプリエンジニアであれば少なからず、サーバー側の処理結果によって、 302  Moved Temporarily で遷移先を振り分けする機会があると思います。<br />
+ASP.netであれば Response.Redirect("test.aspx"); を使いますね。( Server.Transferメソッドはちょっと処理が違います）<br />
+phpであれば header("Location: test.php"); でしょうか。</p>
+<p><img src="/images/2011/10/index.png"/></a></p>
+<p>芸者東京では、たとえばゲームアプリ内の「かいもの」機能でこの振り分けを使っています。<br />
+「購入」ボタンを押すと、所持金額をチェックしてOKならば「購入完了！」ページへ、所持金額が少ない場合などは「お金が足りません」ページへ振り分けるんですね。</p>
+<p>さて、このような 302 Redirectを、Android/iPhone などで、iframeの中で使うとちょっとした問題が起きます。</p>
+<p>なんと、Backボタンを押すと、リダイレクト結果のページではなく、リダイレクト元ページに飛ぶのです！</p>
+<p><img src="/images/2011/10/index1.png"/></p>
+<p>この現象はiOS3/4と、Android2.1/2.2で確認しました。<br />
+※ PCブラウザはもちろん、スマートフォンでもiframe内で行わない限り、戻るボタンはリダイレクト結果のページに遷移するだけです。</p>
+<p>これは、つまりBackボタンを押すと、ユーザが意図せず買い物をしてしまう、ということです。</p>
+<p>iframeを使うスマートフォン向けwebサイトは少ないとはいえ、iframeを使う場合にはちょっとした大問題ですね。</p>
+<p>というわけで修正コードですが、こちらになります。</p>
+```javascript
+    if(document.referrer != location.href){
+       location.href = location.href;
+    }
+```
+<p>簡単ですね。<br />
+なお、この事象ですがiOS5では発生しなくなっているようです。<br />
+mobile safari のバージョンがあがったからでしょうか？</p>
+<p>※ちなみに、このシーケンス図は <a href="http://www.websequencediagrams.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.websequencediagrams.com']);">http://www.websequencediagrams.com/ </a>で作りました！<br />
+基本英語サイトですが、日本語の入力もOK（フォントの種類が少なくなってしまいますが）ですし、テキストからシーケンス図などが作れるのは素敵ですよね。</p>

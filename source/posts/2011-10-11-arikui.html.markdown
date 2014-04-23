@@ -1,0 +1,93 @@
+---
+title: mavenによるAndroidプロジェクトのProfile設定
+date: 2011-10-11
+tags: Android,maven
+authors: arikui
+---
+ 
+<p>初めまして、arikuiと言います。先月くらいからAndroid向けアプリ開発を担当しています。<br/>
+今回はAndroid開発において環境に依存するリソースの切り替え方法、中でもmavenのプロファイルについて書きたいと思います。</p>
+<p><strong>使用した開発環境</strong></p>
+<ul>
+<li>maven2</li>
+<li>maven-android-plugin 2.8.4</li>
+<li>android SDK 2.2</li>
+<li>(Eclipse 3.6 Helios)</li>
+</ul>
+<p>私の環境ではmavenを使用してAndroid開発をしているので、やや限定された環境向けの記事かもしれません。<br/>
+まだ私自身あれこれ試行錯誤している部分もあるので、他にもっといい方法があるかもしれませんがそこはご了承ください。</p>
+<h2>maven-android-pluginの設定</h2>
+<p>弊社では、mavenで設定を切り替える場合にはpom.xmlやprofiles.xml、settings.xmlでプロファイルごとにリソースディレクトリを変数定義して切り替える方法をよく採用しています。<br/>
+Androidプロジェクトではリソースはresディレクトリ以下に配置していきます。Androidプロジェクトにおけるリソースとは、コード以外の全てのファイルであり、リソースの種類によってディレクトリが決まっています。<br/>
+<a href="http://developer.android.com/guide/topics/resources/available-resources.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://developer.android.com']);">Resource Types</a></p>
+<p>このresディレクトリを切り替えればいいわけです。<br/>
+そのためにmaven-android-pluginの要素の子要素として、以下が用意されています。</p>
+<p><strong>resourceDirectory</strong><br/>
+リソースを配置するディレクトリ。デフォルトは${project.basedir}/res<br/>
+<strong>resourceOverlayDirectory</strong><br/>
+リソースディレクトリに上書きする差分ディレクトリ。デフォルトは${project.basedir}/res-overlay<br/>
+同じ名前のファイルがあれば上書きし、違う名前のファイルがあればコピーする。差分だけを置けばよい。<br/>
+<strong>resourceOverlayDirectories</strong><br/>
+上書きするディレクトリを<dir>要素で複数設定可能。こちらを設定した場合、<resourceOverlayDirectory>要素は無視される。<br/>
+同じ名前が競合した場合は、先に設定した方が優先される。</p>
+<p>その他の要素は以下を参照してください。<br/>
+<a href="http://maven-android-plugin-m2site.googlecode.com/svn/apk-mojo.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maven-android-plugin-m2site.googlecode.com']);">android-maven-plugin</a></p>
+<p><resourceDirectory>要素で設定したディレクトリには全てのプロファイルで共通のリソースを入れておきます。そして<resourceOverlayDirectory>もしくは<resourceOverlayDirectories>要素で設定したディレクトリにはプロファイルごとに異なるリソースを入れます。</p>
+<h2>設定例</h2>
+<p><strong>実際に設定したpom.xml</strong></p>
+```xml
+<plugin>
+    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+    <artifactId>maven-android-plugin</artifactId>
+    <version>2.8.4</version>
+    <configuration>
+        <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+        <assetsDirectory>${project.basedir}/src/main/android/assets</assetsDirectory>
+        <resourceDirectory>${project.basedir}/src/main/android/res</resourceDirectory>
+        <resourceOverlayDirectory>${profileResources}</resourceOverlayDirectory>
+        <sdk>
+            <path>${env.ANDROID_HOME}</path>
+            <platform>8</platform>
+        </sdk>
+        <deleteConflictingFiles>true</deleteConflictingFiles>
+        <undeployBeforeDeploy>true</undeployBeforeDeploy>
+    </configuration>
+    <extensions>true</extensions>
+</plugin>
+```
+```xml
+<profile>
+    <id>profile1</id>
+    <activation>
+        <activeByDefault>true</activeByDefault>
+    </activation>
+    <properties>
+        <profileResources>${project.basedir}/src/main/profiles/profile1/res</profileResources>
+    </properties>
+</profile>
+<profile>
+    <id>profile2</id>
+    <properties>
+        <profileResources>${project.basedir}/src/main/profiles/profile2/res</profileResources>
+    </properties>
+</profile>
+```
+<p>この設定では、${project.basedir}/src/main/android以下にassetsディレクトリとresディレクトリを置いて、${project.basedir}/src/main/profiles以下にあるプロファイルごとの設定でresを上書きしています。</p>
+<p>例えば以下のようなディレクトリ構成だったとして、XML設定ファイルを環境ごとに切り替える場合を考えてみます。</p>
+<p><a href="/images/2011/10/sshot-1.jpg"><img src="/images/2011/10/sshot-1-222x300.jpg" alt="" title="sshot-1" width="222" height="300" class="aligncenter size-medium wp-image-58369"/></a></p>
+<p>resourceDirectory(上の設定例では${project.basedir}/src/main/android/res)にはデフォルトでdrawable-hdpi、drawable-ldpi、drawable-mdpi、layout、valuesが作られています。そこにさらにXMLディレクトリを追加しました。<br/>
+そしてresourceOverlayDirectory(上の設定例では${project.basedir}/src/main/profiles以下のres)にはXMLディレクトリだけを作成しました。<br/>
+今回はresourceDirectoryにはsample01.xml、sample02.xmlの2ファイル、resourceOverlayDirectoryにはsample02.xml、sample03.xmlの2ファイルを配置しました。コンパイル後、sample02.xmlが上書きされ、sample03.xmlがコピーされるはずです。</p>
+<p>なおresourceDirectoryディレクトリを直接切り替えることも可能ですが、その場合は全てのプロファイルに全てのリソースを持たないといけないため、プロファイルで異なる差分部分だけをresourceOverlayDirectoryで上書きします。</p>
+<h2>結合</h2>
+<p>それではコンパイルしてみましょう。以下のコマンドで各プロファイルに対応したapkを作成します。</p>
+```
+$ mvn clean install -P プロファイル名
+```
+<p>コンパイルが無事終わると、リソースはapkファイルに固められます。この時、XMLファイルはAndroid XML Binary形式に変換されるので注意してください(CLASSファイルもDalvik VM用にdex形式に変換される)。<br/>
+apkはただのzipファイルなのでアーカイバで中を見ることが出来ます。中を見てみましょう。</p>
+<p><a href="/images/2011/10/sshot-2.jpg"><img src="/images/2011/10/sshot-2-300x166.jpg" alt="" title="sshot-2" width="300" height="166" class="aligncenter size-medium wp-image-58241"/></a></p>
+<p>正しく結合されました。</p>
+<p>res以下にvaluesが見当たりませんが、resources.arscに格納されています。<br/>
+ちなみにvaluesとは別にvalues-jpやvalues-enなどvalues-xx形式で言語別の設定をすることも出来ます。xxにはISO 639-1に定義されているものが使えます。<br/>
+<a href="http://www.loc.gov/standards/iso639-2/php/code_list.php" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.loc.gov']);">Codes for the Representation of Names of Languages</a></p>

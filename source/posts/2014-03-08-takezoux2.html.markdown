@@ -1,0 +1,119 @@
+---
+title: 3分で掴むScalaのコツ
+date: 2014-03-08
+tags: Uncategorized
+authors: takezoux2
+---
+ 
+<p>ある程度Scalaの基本文法を知っている+オブジェクト指向言語を理解している人向けです。<br/>
+独断と偏見で使用頻度の高いものをピックアップしているので、人によって所感は違うかもですが、ご容赦下さい。</p>
+<h2>1. 関数型=関数がファーストクラス+副作用が無い(ようにかける)　であることを心がける</h2>
+<p>Scalaは、オブジェクト指向言語であるとともに、関数型言語でもあります。<br/>
+java likeに書くことは出来ますが、関数型的にかけるとかっこいい、テストしやすい、わかりやすい、などいいことずくめです。</p>
+<hr/>
+<h3>val と varの違い</h3>
+<p>変数の宣言をするときに、valとvarの２種類のキーワードが有ります。<br/>
+違いは、valは変数を定義した後再代入不可、varは再代入可能です。<br/>
+Scalaでは基本的にvalを使うようにしましょう。副作用がないプログラムをかけるようになります。</p>
+```scala
+val a = 1
+var b = 2
+
+a = 334 // Error!
+b = 2183 // OK!
+```
+<hr/>
+<h3>ラムダ式</h3>
+<p>ようは簡単に関数が定義できる機能です。<br/>
+メソッドに関数を渡す時によく利用します。</p>
+```scala
+val nums = List(1,2,3,4,5)
+val evens = nums.map( i => i * 2) // <- i = i * 2がラムダ式
+```
+<hr/>
+<h3>関数を引数に渡せる</h3>
+<p>関数がファーストクラスなので、関数を引数に取るメソッドを定義できます。</p>
+```scala
+def printTime( format : Int => String) = {
+  (1 to 12).foreach( hour => printn(format(hour)) )
+}
+printTime( hour => hour + "時です") // 1時~12時が出力される
+printTime( hour => s"${hour}:00") // 1:00 ~ 12:00が出力される
+```
+<h2>2. <a href="http://www.scala-lang.org/api/current/#scala.collection.immutable.List" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-lang.org']);">Listのメソッド</a>を覚える</h2>
+<p>Scalaは標準ライブラリが非常に強力です。他にも、便利なクラスはいろいろ有りますが、特にListのメソッドは使用頻度が高いので何があるかを把握しておきましょう。特に、次のメソッドはマストラーンです。</p>
+<hr/>
+<h3>foreach</h3>
+<p>要素を一つ一つ処理していきます。</p>
+```scala
+val list = 1 :: 2:: 3 :: Nil
+list.foreach( i => println(i) )
+```
+<hr/>
+<h3>map</h3>
+<p>要素を変換し、新しいリストを返します。</p>
+```scala
+val list = 1 :: List(2,3)
+val odds = list.map(i => i * 2 - 1)
+```
+<hr/>
+<h3>filter</h3>
+<p>trueを返した要素だけを取り出したリストを返します。</p>
+```scala
+val list = (0 to 100).toList
+val evens = list.filter( _ % 2 == 0)
+```
+<hr/>
+<h3>groupBy</h3>
+<p>返した要素をKeyとしてグルーピングしたMapを返す</p>
+```scala
+val objects = List("Apple","Apache","Banana","Bash","Scala","Stash")
+val groupByInitial = objects.groupBy( s => s(0))
+/* 中身はこんな感じになります
+Map(
+  'A' -> List("Apple","Apache"),
+  'B' -> List("Banana","Bash"),
+  'S' -> List("Scala","Stash")
+)
+*/
+```
+<p>※Mapは連想配列のことです。</p>
+<h2>3.パターンマッチング</h2>
+<p>Scalaでは、他の言語でのswitchみたいなものが非常に強力になっています。これを使わなければScalaとは言えないレベルです。</p>
+<hr/>
+<h3>Case class</h3>
+<p>Scalaのパターンマッチングを非常に強力してくれる機能です。だいたい次のように使います。</p>
+```scala
+trait Exp
+case class Add( a : Int, b : Int) extends Exp
+case class Sub(a : Int , b : Int) extends Exp
+
+def calc( exp : Exp) = {
+  exp match{
+    case Add(a,b) => a + b
+    case Sub(a,b) => a - b
+  }
+}
+calc(Add(1,2)) // return 3
+calc(Sub(4,2)) // return 2
+```
+<hr/>
+<h3>Option型</h3>
+<p>Scalaは、nullチェックは基本使いません。nullが入りうる可能性がある変数は、変わりにOption型でラップしパターンマッチングやforeachなどで値を取り出します。</p>
+```scala
+def login( nameOp : Option[String]) = {
+  nameOp match{
+    case Some("ぽこ") => println("ぽこたんインしたお")
+    case Some(name) if name.startsWith("悟") => printnl(s"オッス、オラ${name}")
+    case Some(name) => println(s"${name}さんがログインしました")
+    case None => println("中に誰もいませんよ？")
+  }
+}
+
+login(Some("ぽこ")) // "ぽこたんインしたお"が出力
+login(Some("悟空")) // "オッス、オラ悟空"
+login(Some("太郎")) // "太郎さんがログインしました"
+login(None) // "中に誰もいませんよ？"
+```
+<p>だいたい、このあたりのことを気を付けて書けば、なんかScalaっぽいコードになります。</p>
+							

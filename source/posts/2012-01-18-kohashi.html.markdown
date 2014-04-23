@@ -1,0 +1,160 @@
+---
+title: CSSのベンダープリフィックスを自動で追加するテクニックまとめ
+date: 2012-01-18
+tags: JavaScript,css
+authors: kohashi
+---
+ 
+<p>こんにちわ！GTEエンジニアのkohashiです。</p>
+<p>みなさん、CSS3してますか？CSS3によって表現は大幅に広がりましたが、一方で対応状況はブラウザによって様々…。<br/>
+CSSでベンダープリフィックス(-mozとか、-webkitとか…)を複数記述するのはめんどくさいですよね？<br/>
+というわけで、何とかしてくれる手法をまとめてみました。</p>
+<h2>Prefixr</h2>
+<p>Prefixr : <a href="http://prefixr.com/index.php" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://prefixr.com']);">http://prefixr.com/index.php</a><br/>
+入力したCSSに、ベンダープリフィックスを付与してくれるWebサービスです。<br/>
+こういうCSSを記述すると…</p>
+```css
+#test {
+	border:5px #222 solid;
+	border-radius:10px;
+	transform:skew(5deg,5deg);
+	background: linear-gradient(top,  #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+	}
+```
+<p>こんな形に変換してくれます！</p>
+```css
+#test {
+	border: 5px #222 solid;
+
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+
+	-webkit-transform: skew(5deg,5deg);
+	-moz-transform: skew(5deg,5deg);
+	-o-transform: skew(5deg,5deg);
+	-ms-transform: skew(5deg,5deg);
+	transform: skew(5deg,5deg);
+
+	background: -webkit-linear-gradient(top, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+	background: -moz-linear-gradient(top, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+	background: -o-linear-gradient(top, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+	background: -ms-linear-gradient(top, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+	background: linear-gradient(top, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+}
+```
+<p>また、Prefixrにはcssをワンライナーに圧縮する機能もついています。（”Compress My Code”のチェックを入れるだけ）<br/>
+Webサービスでココまでやってくれるのは嬉しいですね。</p>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=3696" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.vim.org']);">vim用のプラグイン</a>も有るみたいなので、『CSSはvimで書く！』という人には良いですね。</p>
+<h2>-prefix-my css</h2>
+<p>-prefix-my css : <a href="http://prefixmycss.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://prefixmycss.com']);">http://prefixmycss.com/</a><br/>
+Prefixrと同じような感じの、ウェブサービス型。</p>
+```css
+#test{
+border:5px #222 solid;
+/*border-radius*/
+-webkit-border-radius:10px;
+   -moz-border-radius:10px;
+        border-radius:10px;
+/*transform*/
+-webkit-transform:skew(5deg,5deg);
+   -moz-transform:skew(5deg,5deg);
+    -ms-transform:skew(5deg,5deg);
+     -o-transform:skew(5deg,5deg);
+        transform:skew(5deg,5deg);
+/*linear-gradient*/
+background:-webkit-gradient(linear,left top,left bottom,color-stop(#e1ffff,0),color-stop(#e1ffff,0.07),color-stop(#e1ffff,0.12),color-stop(#fdffff,0.12),color-stop(#e6f8fd,0.3),color-stop(#c8eefb,0.54),color-stop(#bee4f8,0.75),color-stop(#b1d8f5,1));
+background:-webkit-linear-gradient(top,  #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+background:   -moz-linear-gradient(top,  #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+background:     -o-linear-gradient(top,  #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+background:        linear-gradient(top,  #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+}
+```
+<p>インデント付けてくれるのでPrefixrと比べて見やすい方をお好みで、でしょうか。<br/>
+※ background:-webkit-gradient の変換などに差異があり、-webkit-gradientのものはうまく動かないですね。</p>
+<h2>-prefix-free</h2>
+<p>-prefix-free : <a href="http://leaverou.github.com/prefixfree/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://leaverou.github.com']);">http://leaverou.github.com/prefixfree/</a><br/>
+javascriptベースでCSSを書き換えてくれます。</p>
+```
+<script src="prefixfree.js"></script>
+```
+<p>このようにjsファイルを読み込むだけで、<style>～</style>で書いたcssや<link rel=”stylesheet” type=”text/css” />で読み込んだcss、DOMエレメントのstyle要素に記述したcssはもちろん、javascript経由で設定するcssまで適用してくれます！<br/>
+ファイルサイズは5KBと軽量なうえ、jQuery等のライブラリに依存することもありません。</p>
+<p>なによりすごいのは、javascript経由で設定したstyleまでベンダープリフィックスをつけた形で適用してくれること。<br/>
+・・・もっとも、この機能はchromeとoperaで正常に動作しないそうです。<br/>
+そのため、<a href="https://raw.github.com/LeaVerou/prefixfree/master/plugins/prefixfree.jquery.js" onclick="javascript:_gaq.push(['_trackEvent','download','http://raw.github.com/LeaVerou/prefixfree/master/plugins/prefixfree.jquery.js']);">-prefix-free の jQueryプラグイン</a>を導入して、<code> $('#obj').css('transform', 'rotate(30deg)') </code>などとするほうが良いようですね。</p>
+<h2>compass</h2>
+<p>compass: <a href="http://compass-style.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://compass-style.org']);">http://compass-style.org/</a><br/>
+これが<strong>ベンダープリフィックス追加も含めた本命</strong>になると思います。</p>
+<p>Rubyベースの、CSS構築フレームワークです。『CSSを生成するためのメタ記述が可能な言語』というところでしょうか。<br/>
+同じシンプルな記述からCSSを生成することで有名な<a href="http://sass-lang.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://sass-lang.com']);">Sass</a>の拡張として作られています。<br/>
+.scssというファイルに記述したCSSっぽい内容のものを、変換（コンパイル）して使います。<br/>
+導入は、Rubyが導入されていれば簡単です。（winの人は適当に導入しておきましょう）</p>
+<pre><code>
+$ gem update --system
+$ gem install compass
+</code></pre>
+<p>たったこれだけで導入完了！</p>
+<p>■はじめて使う</p>
+<pre><code>
+## 基本ファイル作成
+$ compass create
+## 変更監視して、自動コンパイル
+$ compass watch
+</code></pre>
+<p>■Railsプロジェクトに導入</p>
+<pre><code>
+$ rails new <myproject>
+$ compass init rails <myproject>
+</myproject></myproject></code></pre>
+<p>先ほどと同じCSSを変換してみましょう。<br/>
+<code>compass create</code> を実行して出来たファイル /sass/screen.scss を編集します。<br/>
+記述がちょっと違うので注意が必要ですね。</p>
+```css
+@import "compass/css3/";
+#test {
+	border:5px #222 solid;
+	@include border-radius(10px); /* 記述がだいぶ違うので注意です */
+	@include skew(5deg,5deg); /* "transform"が不要です */
+	@include background(linear-gradient(top,  #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%));
+	}
+```
+<p>編集が終わったら、 <code>compass compile</code> です。</p>
+```css
+@charset "Windows-31J";
+/* line 3, ../sass/screen.scss */
+#test {
+  border: 5px #222 solid;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -o-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  border-radius: 10px;
+  /* 記述がだいぶ違うので注意です */
+  -moz-transform: skew(5deg, 5deg);
+  -webkit-transform: skew(5deg, 5deg);
+  -o-transform: skew(5deg, 5deg);
+  -ms-transform: skew(5deg, 5deg);
+  transform: skew(5deg, 5deg);
+  /* "transform"が不要です */
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e1ffff), color-stop(7%, #e1ffff), color-stop(12%, #e1ffff), color-stop(12%, #fdffff), color-stop(30%, #e6f8fd), color-stop(54%, #c8eefb), color-stop(75%, #bee4f8), color-stop(100%, #b1d8f5));
+  background: -webkit-linear-gradient(top, #e1ffff 0%, #e1ffff 7%, #e1ffff 12%, #fdffff 12%, #e6f8fd 30%, #c8eefb 54%, #bee4f8 75%, #b1d8f5 100%);
+  background: -moz-linear-gradient(top, #e1ffff 0%, #e1ffff 7%, #e1ffff 12%, #fdffff 12%, #e6f8fd 30%, #c8eefb 54%, #bee4f8 75%, #b1d8f5 100%);
+  background: -o-linear-gradient(top, #e1ffff 0%, #e1ffff 7%, #e1ffff 12%, #fdffff 12%, #e6f8fd 30%, #c8eefb 54%, #bee4f8 75%, #b1d8f5 100%);
+  background: -ms-linear-gradient(top, #e1ffff 0%, #e1ffff 7%, #e1ffff 12%, #fdffff 12%, #e6f8fd 30%, #c8eefb 54%, #bee4f8 75%, #b1d8f5 100%);
+  background: linear-gradient(top, #e1ffff 0%, #e1ffff 7%, #e1ffff 12%, #fdffff 12%, #e6f8fd 30%, #c8eefb 54%, #bee4f8 75%, #b1d8f5 100%);
+}
+```
+<p>出力結果もだいぶ違いますね！<br/>
+普通にコンパイルすると、このcssは、.scssファイルの何行目か…という情報がコメントとしてついてきます。</p>
+<p>なお、圧縮コンパイルするには <code>compass compile -s compressed sass/*</code> を使います。</p>
+```css
+#test{border:5px #222 solid;-moz-border-radius:10px;-webkit-border-radius:10px;-o-border-radius:10px;-ms-border-radius:10px;-khtml-border-radius:10px;border-radius:10px;-moz-transform:skew(5deg, 5deg);-webkit-transform:skew(5deg, 5deg);-o-transform:skew(5deg, 5deg);-ms-transform:skew(5deg, 5deg);transform:skew(5deg, 5deg);background:-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e1ffff), color-stop(7%, #e1ffff), color-stop(12%, #e1ffff), color-stop(12%, #fdffff), color-stop(30%, #e6f8fd), color-stop(54%, #c8eefb), color-stop(75%, #bee4f8), color-stop(100%, #b1d8f5));background:-webkit-linear-gradient(top, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);background:-moz-linear-gradient(top, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);background:-o-linear-gradient(top, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);background:-ms-linear-gradient(top, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);background:linear-gradient(top, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%)}
+```
+<p>compassには、css3のレイアウトフレームワーク：Blueprintが使えたり、変数などを使ってcssを記述できるscss記法が使えたりと色々高機能ですね！<br/>
+compass watch を使えば、毎回コンパイルする必要なくファイル変更時に自動コンパイルしてくれるのも、開発効率が上がりそうで良い感じです。</p>
+<p>また、コマンドラインが面倒くさい！という人のために、アプリ版がオススメ。<br/>
+<a href="http://mhs.github.com/scout-app/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://mhs.github.com']);">http://mhs.github.com/scout-app/</a><br/>
+こちらはwin版/Mac版があり、Ruby実行環境も不要！<br/>
+デザイナーさん向けにはこちらが良いかもしれませんね。</p>

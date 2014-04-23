@@ -1,0 +1,17 @@
+---
+title: jetty-nosql-memcached のご紹介
+date: 2011-09-16
+tags: Java,jetty
+authors: yyuu
+---
+ 
+<p>yyuu です。前回投稿してから随分と間が空いてしまいました。前回は node.js について書いた気がしますが、続きも書かないままに今回は Java、というか <a href="http://www.eclipse.org/jetty/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.eclipse.org']);">Jetty</a> についてのお話です。</p>
+<p>通常、Jetty で動くアプリケーションのセッションデータは org.eclipse.jetty.server.session.HashSessionManager と呼ばれるセッションマネージャの実装により JVM のヒープ中に保持されます。一台のサーバからなる小規模な環境であればこれでも問題ありませんが、複数台の JVM からなるクラスタなどで障害ノードからセッションのフェイルオーバーを行ないたい場合には、JVM ヒープの外部にセッションデータを保存したうえでクラスタのメンバー間で共有する必要があります。</p>
+<p>このような用途に向けて、Jetty には標準で org.eclipse.jetty.server.session.JDBCSessionManager という実装が含まれています。これはその名の通り JDBC 経由で RDBMS にセッションデータを保存してしまおうというシロモノです。原理的には、参照および更新が十分に高速な RDBMS があればこのセッションマネージャを使ってクラスタを構成させることもできるはずですが、現実的には MySQL などではセッションデータのような不定長の BLOB データを高速に処理することは難しいです。</p>
+<p>そんなわけで、このような場面でこその NoSQL だろうということでセッションデータを memcached に保存するための <a href="https://github.com/yyuu/jetty-nosql-memcached" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">MemcachedSessionManager</a> というものを実装してみました。これはその名の通り memcached 上にセッションを保存するセッションマネージャの実装です。memcached の get/set/add/delete などの基本的なコマンドのみを用いて実装しているため、オリジナルの memcached 以外にも <a href="http://fallabs.com/kyototycoon/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://fallabs.com']);">Kyoto Tycoon</a> など多くの memcached 互換サーバで動作することも期待できます。</p>
+<p>以下の URL でビルド済みの jar ファイルを配布しているので、こちらを Jetty の ./lib/ext 以下に投入することで MemcachedSessionManager を使用することができるようになります。</p>
+<ul>
+<li><a href="https://github.com/downloads/yyuu/jetty-nosql-memcached/jetty-nosql-memcached-0.0.2.jar" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">jetty-nosql-memcached-0.0.2.jar</a></li>
+<li><a href="https://github.com/downloads/yyuu/jetty-nosql-memcached/jetty-nosql-memcached-0.0.2-jar-with-dependencies.jar" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">jetty-nosql-memcached-0.0.2-jar-with-dependencies.jar (依存パッケージ込み)</a></li>
+</ul>
+<p>次回は、設定編として <a href="https://github.com/yyuu/jetty-nosql-memcached" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">MemcachedSessionManager</a> 用の Jetty の設定について解説しようと思います。</p>

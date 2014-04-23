@@ -1,0 +1,117 @@
+---
+title: 「これは絵文字ですか？」「はい、Unicode6.0です」
+date: 2012-05-16
+tags: iOS
+authors: takezoux2
+---
+ 
+<p>携帯向けのWebサービスをやっていく上で、絵文字の対応は頭を悩まされるところです。<br/>
+最近では、ガラケーことFeaturePhoneに加えSmartPhoneも多く普及してきました。<br/>
+そこで、現在の絵文字事情がどうなっているかを調べてみました。</p>
+<h2>現在の絵文字の状況</h2>
+<p>日本では、docomo, au, SoftBankの３キャリアごとにそれぞれ違った文字コードの絵文字が存在します。<br/>
+世界に目を向けると、GoogleとAppleが主体となって絵文字の標準化を行なっており、<br/>
+2010年10月に<a href="http://unicode.org/versions/Unicode6.0.0/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://unicode.org']);">Unicode6.0</a>で絵文字の国際標準が策定されました。<br/>
+そのため、現在のスマートフォンを取り巻く絵文字事情は、docomo, au, SoftBank3キャリアの群雄割拠にUnicode6.0も参戦する太陽曰く(」・ω・)」うー!(/・ω・)/にゃーな状況となっています。<br/>
+最近では、<a href="http://blog.yamk.net/yamk/archives/1675" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://blog.yamk.net']);">iOSが5.1になって他キャリアに絵文字が送れなくなった</a>なんてことも発生していました。</p>
+<p>なお、Unicode6.0で採用された文字コード体系は、Googleの<a href="http://code.google.com/p/emoji4unicode/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://code.google.com']);">emoji4unicode</a>がベースになっています。</p>
+<h2>絵文字の対応方法</h2>
+<p>通常Webサービスなどで絵文字を保存する場合は、</p>
+<ul>
+<li>いずれかのキャリアの文字コードに変換</li>
+<li>独自の形式に変換</li>
+</ul>
+<p>のどちらかを行ない、内部では１種類の絵文字コードで保存を行います。<br/>
+日本ではdocomoユーザーが最も多いため、docomoの絵文字コードに統一して保存を行う場合が多いようです。<br/>
+ちなみに、弊社の提供しているおみせやさんでは内部ではGoogle emoji4unicodeの下位16bitの文字コードに変換して保存をしています。(下位16bitはPUAなのでまず問題は起きません。詳しい説明は後述)</p>
+<div style="text-align:center;">絵文字の変換フロー</div>
+<p><img src="/images/2012/05/flow_emoji_conversion.png"/></p>
+<h2>各機種絵文字対応状況</h2>
+<p>現在の、スマートフォンの絵文字対応状況を紹介しておきます。<br/>
+iPhoneのみが特殊で、OSのバージョンによって送信時の文字コードが違う＋表示はUnicode6.0とSoftBank共に出来る状態になっています。<br/>
+表示確認は周りにおちてた機種のみでしかしていませんのであしからず。</p>
+<table>
+<tr>
+<th>機種</th>
+<th>OS</th>
+<th>キャリア</th>
+<th>入力時の文字コード</th>
+<th>表示できる文字コード</th>
+</tr>
+<tr>
+<td rowspan="2">iPhone4</td>
+<td>iOS 4.X</td>
+<td>SoftBank</td>
+<td>SoftBank</td>
+<td>Unicode6.0,SoftBank</td>
+</tr>
+<tr>
+<td>iOS 5.X</td>
+<td>SoftBank</td>
+<td>Unicode6.0</td>
+<td>Unicode6.0,SoftBank</td>
+</tr>
+<tr>
+<td>iPhone4S</td>
+<td>iOS 5.X</td>
+<td>SoftBank</td>
+<td>Unicode6.0</td>
+<td>Unicode6.0,SoftBank</td>
+</tr>
+<tr>
+<td>Sumsong Galaxy S2 LTE</td>
+<td>Android 2.3</td>
+<td>docomo</td>
+<td>Google</td>
+<td>docomo,Google</td>
+</tr>
+<tr>
+<td>NEC Medias N06c</td>
+<td>Android 2.3</td>
+<td>docomo</td>
+<td>Google</td>
+<td>Google</td>
+</tr>
+<tr>
+<td>Sharp Galapagos</td>
+<td>Android 2.3</td>
+<td>SoftBank</td>
+<td>Google</td>
+<td>SoftBank,Google</td>
+</tr>
+<tr>
+<td>Sharp IS03</td>
+<td>Android 2.2</td>
+<td>au</td>
+<td>Google</td>
+<td>Google</td>
+</tr>
+</table>
+<p>- 5/16 19:00 機種を追加＋間違っていた情報を修正</p>
+<h2>スマートフォン時代の絵文字の取り扱い方は？</h2>
+<p>既存のサービスを持っているところは現状維持が妥当とは思いますが、これから新規にサービスを立ち上げようとする場合はどのようにするのが良いでしょうか？</p>
+<p>方法は、</p>
+<ul>
+<li>Unicode6.0標準をそのまま使用する</li>
+<li>Unicode6.0標準の下位16bitを使う</li>
+</ul>
+<p>のどちらかかと思います。なるべくなら、前者をおすすめします。</p>
+<h3>理由その1 すべての絵文字を網羅している</h3>
+<p>3キャリアの絵文字では相互に変換できない絵文字が存在するため、どうしても特定のキャリアで使えない絵文字が出来てしまいます。<br/>
+Unicode6.0であれば、３キャリアの絵文字 => Unicode6.0への変換はもれなく行うことができます。<br/>
+またUnicode6.0 => 3キャリアの絵文字へは変換できない場合もありますが、絵文字の名前が定義されているので絵文字の変わりにその名前を表示することも可能です。</p>
+<h3>理由その2 今後標準になっていく</h3>
+<p>iOSはUnicode6.0での表示にすでに対応しています。MacでもUnicode6.0ならばそのまま絵文字が表示可能になっています。<br/>
+WindowsPhoneも同様に徐々に対応してきているそうです。(実機では未確認。<a href="http://ja.wikipedia.org/wiki/%E6%90%BA%E5%B8%AF%E9%9B%BB%E8%A9%B1%E3%81%AE%E7%B5%B5%E6%96%87%E5%AD%97" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://ja.wikipedia.org']);">wiki</a>から)<br/>
+また、現在Androidは対応していませんがGoogleが標準化の主要メンバーであるので今後対応していってくれると思います。<br/>
+なのでUnicode6.0にしておくと、将来的にキャリア別に絵文字の文字コードを変換をしなくても良くなる可能性が高いです。</p>
+<h3>ただし・・・</h3>
+<p>Unicode6.0の絵文字はU+1F200 ～　U+1F700台に多くがマップされています。これらのUnicodeはUTF-8でエンコードした場合4byte長になってしまいます。<br/>
+現時点では、4byte長のUTF-8をうまく扱えないor扱うのが面倒なシステムが多く存在します。<br/>
+例えば弊社ではMySQLを利用していますが、MySQLのUTF-8は4Byte長の文字を扱えません。MySQL5.5からは「utf8mb4」というCharacterSetが導入されたので4byte長も扱えるようになっていますが、それ以前のバージョンではBLOBを使ってバイナリとして保存をするしか方法がありませんでした。<br/>
+また、最近はやりのNode.jsも、ベースになってるV8エンジンが4byte長UTF-8を扱えないため、文字列ではなくバイナリデータとして取り扱う必要があります。</p>
+<p>このような事情から、現時点ではシステムによっては絵文字が含まれうる文字列は、バイナリデータとして無理やり使う必要があります。しかし、バイナリデータとしてしまうと、ライブラリ等に用意されている文字列関数が使えなくなってしまい取り扱いが面倒になることがあります。<br/>
+そこで、下位の16bit分だけを利用するというのもひとつの解決策になります。下位16bitはU+F200 ～　U+F700台になり、これはUnicodeのPrivate Use Areaであるので、通常では他の文字とかぶっていません。そのため、下位16bitのみを使用しても問題になることはありません。ただし、入力時や表示時に変換が必須となるのでそのへんの手間を考えて、そのまま使うか下位16bitのみを使うかを決めたほうがいいと思います。</p>
+<h2>参考にしたサイト</h2>
+<p><a href="http://d.hatena.ne.jp/hhelibex/20120110/1326179698" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://d.hatena.ne.jp']);">MySQLで4バイトのUTF-8文字を扱ってみる</a><br/>
+<a href="http://unicode.org/~scherer/emoji4unicode/snapshot/full.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://unicode.org']);">絵文字のUnicode6.0と各キャリアの対応表</a></p>

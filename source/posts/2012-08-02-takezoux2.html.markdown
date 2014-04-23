@@ -1,0 +1,18 @@
+---
+title: Scala勉強会 in 本郷始めました。
+date: 2012-08-02
+tags: Scala
+authors: takezoux2
+---
+ 
+<h2>Scala勉強会 in 本郷　初開催無事終了しました!</h2>
+<p>お越しいただいた方々、ありがとうございます。弊社で勉強会を開催するのは初めてだったので、いろいろいたらない点があったと思いますが、今後もどうぞよろしくお願いします。</p>
+<p>勉強会でやった内容は、<a href="http://scala-users.org/shibuya/index.php?title=%E5%8B%89%E5%BC%B7%E4%BC%9A%E7%AC%AC84%E5%9B%9E" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://scala-users.org']);">こちら</a>にまとめられています。<br/>
+gkojaxさんありがとうございます。</p>
+<h2>みなさんもScala勉強会に参加しませんか？</h2>
+<p>現在、Scala勉強会は毎週赤坂と本郷三丁目で持ち回りで勉強会をやっています。<br/>
+Scalaに興味がある方は、是非ご参加ください。</p>
+<p>Twitter:<a href="https://twitter.com/#!/search/%23rpscala" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://twitter.com']);">#rpscala</a> <a href="https://twitter.com/#!/search/%23akskscala" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://twitter.com']);">#akskscala</a><br/>
+Wiki:<a href="http://scala-users.org/shibuya/index.php?title=%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://scala-users.org']);">wiki</a><br/>
+メーリス:<a href="https://groups.google.com/forum/?hl=ja&amp;fromgroups#!forum/scalatokyo" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://groups.google.com']);">Scala勉強会 in 東京</a></p>
+							

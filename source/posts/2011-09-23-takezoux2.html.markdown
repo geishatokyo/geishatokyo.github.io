@@ -1,0 +1,115 @@
+---
+title: play-scalaをscala 2.9.1でビルドする
+date: 2011-09-23
+tags: Scala,play framework,sbt
+authors: takezoux2
+---
+ 
+<p><em>この記事は2011/09/21頃に書きました。play-scalaの1.0では、scala 2.9.1 に上がるらしいので、将来的には自前でビルドする必要性はなくなっていると思われます。</em></p>
+<p>現在、弊社では Play framework の導入について検討を進めています。<br/>
+これまで開発してきたアプリケーションについては Scala 2.9.x 系統をメインで使用していたのですが、play-scalaのビルドはScala 2.8.1で行われているため、社内のライブラリが使用できないという問題にぶち当たりました。<br/>
+そこで、Scala 2.9.x 向けに play-scalaをビルドし直そうとしたのですが、思いのほか手こずったのでその手順を書いておきます。</p>
+<h2>事前準備</h2>
+<ul>
+<li>scala 2.9.1</li>
+<li>git</li>
+<li>sbt 0.10.x</li>
+<li>sbt 0.7.x</li>
+<li>ant</li>
+</ul>
+<p>が必要です。事前に全てを準備しておいてください。</p>
+<h2>1. githubから依存ライブラリとplay-scalaのソースコードをcloneしてくる。</h2>
+<p>xsbt<br/>
+<a href="https://github.com/harrah/xsbt" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">https://github.com/harrah/xsbt</a></p>
+<p>sbinary<br/>
+<a href="https://github.com/DRMacIver/sbinary" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">https://github.com/DRMacIver/sbinary</a></p>
+<p>sjson<br/>
+<a href="https://github.com/debasishg/sjson" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">https://github.com/debasishg/sjson</a></p>
+<p>play-scala<br/>
+<a href="https://github.com/playframework/play-scala" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">https://github.com/playframework/play-scala</a></p>
+<h2>2. sbtの0.11ブランチ、sbinary,sjsonをビルドする</h2>
+<h3>sbt</h3>
+<p>sbt 0.10.1は、Scala 2.8.1でビルドされているので、そのままでは使用できません。<br/>
+0.11ブランチでは、Scala 2.9.1になっているのでそのブランチに切り替えてビルドをする必要があります。</p>
+```
+> git checkout 0.11
+
+> sbt_0.10.x
+@ sbt console
+> update
+> package
+```
+<h3>sbinary</h3>
+<p>masterでビルドすればOKです。</p>
+```
+> sbt_0.10.x
+@sbt console
+> update
+> ++ 2.9.1 package // scala2.9.1でビルド
+```
+<h3>sjson</h3>
+<p>これもmasterでビルドすればOKです。</p>
+```
+> sbt_0.7.x
+@sbt console
+> update
+> package
+```
+<h2>3. play-scalaの依存ライブラリを置き換え</h2>
+<h3>3.1 libフォルダ内の “*_2.8.1-0.9.10.jar”と名前の付いているjarファイルを新しくビルドしたsbtのjarファイルに置き換える。</h3>
+<p>私の環境では、sbtのビルドで、”*_2.9.1-0.11.0-RC1.jar”と名前の付いたjarファイルが作成されたので、それを全てlibフォルダ内へ入れて、古い”*_2.8.1-0.9.10.jar”のファイルを全て削除しました。<br/>
+ちなみに、30 個弱のjarファイルを入れ替える必要があるので頑張ってください。</p>
+<h3>3.2 libフォルダ内のsjson,sbinaryのjarファイルを置き換える</h3>
+<p>同様に、libフォルダ内のsjson_2.8.1-0.13.jar,sbinary_2.8.1-0.4.0.jarも、先ほどビルドしたscala2.9.1のjarファイルに置き換えてください。微妙な罠として、sbinaryのjarファイルは、$sbinary/core/target/scala-2.9.1.finalフォルダの中に入っています。$sbinary/target/scala-2.9.1.final/sbinary-parent_2.9.1-0.4.0.jarのほうは違うので気をつけてください。</p>
+<h3>3.3 libフォルダ内のscala-compiler.jar,scala-library.jarをScala 2.9.1のものに置き換える</h3>
+<p>はじめに入っているものは、Scala 2.8.1のjarファイルなので、<br/>
+$SCALA2_9_1_HOME/libに入っている同名のjarファイルをコピーしてきてください。</p>
+<h3>3.4 dlibフォルダのcompiler-interface-bin-0.9.10.jarを置き換える</h3>
+<p>こちらのフォルダの中のjarファイルも同様に、先程ビルドした sbt のjarファイルへ置き換えておいてください。</p>
+<h2>4. ソースコードの修正</h2>
+<p>4箇所の修正が必要です。</p>
+<h3>4.1 sbtの Scala バージョンを変更</h3>
+<p>src-compiler/ScalaCompiler.scala 32行目を変更します。</p>
+```scala
+val scalaProvider = sbt.getScala("2.9.1")
+```
+<h3>4.2 SbtCompiler.inputsの引数の変更に対応</h3>
+<p>src-compiler/ScalaCompiler.scala 53行目を変更します。</p>
+```scala
+val inputs = SbtCompiler.inputs(classpath, sources, output, Nil/*Seq("-verbose")*/, Seq("-g"), 1, order)(compilers, SbtLogger)
+```
+<p>を</p>
+```scala
+val inputs = SbtCompiler.inputs(classpath, sources, output, Nil/*Seq("-verbose")*/, Seq("-g"),_root_.sbt.inc.Locate.definesClass, 1, order)(compilers,SbtLogger)
+```
+<p>に書き換えてください。</p>
+<h3>4.3 compiler-interface-srcの変更</h3>
+<p>src-compiler/ScalaCompiler.scala 203行目を変更します。</p>
+```scala
+case "compiler-interface-bin_2.8.1.final" => Array(new File(libs, "../dlib/compiler-interface-bin-0.9.10.jar"))
+```
+<p>を</p>
+```scala
+case "compiler-interface-bin_2.9.1.final" => Array(new File(libs, "../dlib/compiler-interface-bin-0.11.0-RC1.jar"))
+```
+<p>に書き換えてください。書き換えるのはScalaのバージョンと、先ほど3.4でdlibフォルダへ入れたjarファイルの名前です。</p>
+<h3>4.4 xsbti.ScalaProviderの追加されたメソッドを追加</h3>
+<p>新しく、addToComponentと、componentLocationのメソッドが追加されています。この2つのメソッドを実装します。<br/>
+src-compiler/ScalaCompiler.scala 212行目あたりに、以下のコードを挿入してください。使用されてはいないようなので、適当に例外を投げておけば大丈夫そうです。</p>
+```scala
+
+                    def addToComponent( componentID : String, components : Array[File]) = {
+                        throw new Exception("Not implemented")
+                    }
+                    def componentLocation(id : String) = {
+                        throw new Exception("Not implemented")
+                    }
+```
+<h2>5. ビルド</h2>
+<p>以上で完了です。あとは</p>
+```
+ant -Dplay.path=/path/to/your/play/framework/installation
+```
+<p>を実行すると、libフォルダにplay-scala.jarとplay-scala-compiler.jarが作成されます。</p>
+<h2>6. おまけ</h2>
+<p>いろいろめんどくさい人は、上で説明した修正内容を適用した fork を作成したので<a href="https://github.com/takezoux2/play-scala" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">こちらのレポジトリ</a>をcloneしてビルドして使ってみてください。</p>

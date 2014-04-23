@@ -1,0 +1,56 @@
+---
+title: nvmによるnode.js開発環境の構築
+date: 2011-06-29
+tags: nodejs
+authors: yyuu
+---
+ 
+<p>お初にお目にかかります。yyuu と申します。芸者東京では主にインフラエンジニアと呼ばれるような職務を担当しております。今回は、ここしばらく流行っている node.js について書かせて頂きます。</p>
+<p>node.js とは、サーバサイド JavaScript の処理系の一つで、イベントループに基づいて非同期的に処理を実行できる処理系として人気を集めています。node.js の開発は現時点でも非常に活発に行なわれており、2011/6/27 の時点では v0.4.8 がリリースされています。</p>
+<p>システム管理者としては、本来であれば、言語処理系はディストリビューションのパッケージ管理システム経由で導入したいものだと思います。しかし、node.js のように開発が活発な処理系を使う場合には、ディストリビューションに収録された時点でバージョンが陳腐化してしまっていることも少なくありません。このような問題を解決するため、node.js で開発を行なう場合には、以下に挙げるようなツールを使って自らビルドした node.js のバイナリを管理することが多いです。</p>
+<div>
+<dl>
+<dt><a href="https://github.com/isaacs/nave" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">nave</a></dt>
+<dd>node.js 向けのパッケージ管理システムとして有名な <a href="http://npmjs.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://npmjs.org']);">npm</a> の開発者の人が作ったもの。bash 関数として実装されている。</dd>
+<dt><a href="https://github.com/creationix/nvm" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">nvm</a></dt>
+<dd>nave 同様に bash 関数として実装されている。node.js 本体と同時に npm も導入してくれる。</dd>
+</dl>
+</div>
+<p>一般的にどちらがよく使われているのかはよく分からなかったのですが、基本的な機能としてはどちらもほぼ同じようであるように思われたので <a href="http://npmjs.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://npmjs.org']);">npm</a> のインストールも自動でやってくれる <a href="https://github.com/creationix/nvm" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">nvm</a> を使うことにしました。面倒くさがりですみません。</p>
+<p>基本的な導入手順は nvm の README に書かれている通り非常にシンプルです。以下の 2 つのコマンドを実行することで、ユーザ向けの nvm 実行環境を作成することができます。</p>
+<pre><code>## レポジトリを~/.nvm にクローンしてくる
+$ git clone git://github.com/creationix/nvm.git ~/.nvm
+## nvm の bash 関数を現在のセッションに読み込ませる
+$ . ~/.nvm/nvm.sh
+</code></pre>
+<p>利用可能な node.js のバージョンを調べたうえで、最新版をビルドしてから利用できるようにします。</p>
+<pre><code>$ nvm ls
+v0.4.8
+stable: 	v0.4.8
+latest: 	v0.4.8
+current: 	v0.2.6
+# use 'nvm sync' to update from nodejs.org
+$ nvm install v0.4.8
+(... 省略 ...)
+## 先ほどインストールした node.js v0.4.8 を使用する
+$ nvm use v0.4.8
+Now using node v0.4.8
+$ which node
+/home/yyuu/.nvm/v0.4.8/bin/node
+</code></pre>
+<p>これで最新版の node.js を実行できる環境を作ることができました。ぶっちゃけ、私がわざわざチュートリアルを作るまでもない程度に簡単すぎて涙が出そうです。</p>
+<p>このまま終わるのも簡単すぎてアレなので、node.js 本家の master ブランチから最新の HEAD を取得してきてビルドできるように nvm を少しだけ修正してみました。以下の通り実行することで最新版の nvm ソースを取得してビルドすることができるようになります。</p>
+<pre><code>$ nvm ls
+v0.4.8
+stable: 	v0.4.8
+latest: 	v0.4.8
+current: 	v0.4.8
+master: 	master
+# use 'nvm sync' to update from nodejs.org
+## node.js の master ブランチをビルドする
+$ nvm install master
+(... 省略 ...)
+$ nvm use master
+Now using node master </code></pre>
+<p>上記の nvm への修正は <a href="https://github.com/yyuu/nvm" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">github</a> で公開していますので、興味があれば使って頂けるとうれしいです。</p>
+<p>次回は、Capistrano による node.js アプリケーションのデプロイについて書いてみるつもりです。</p>

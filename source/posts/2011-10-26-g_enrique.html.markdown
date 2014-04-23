@@ -1,0 +1,82 @@
+---
+title: NoClassDefFoundError:scala/Serializable when using multiple versions of Scala
+date: 2011-10-26
+tags: Scala,maven
+authors: g_enrique
+---
+ 
+<p>This is esaulgd, application engineer at Geisha Tokyo.</p>
+<p>A while ago, I was working on a web app developed with Scalatra and Maven. Suddenly, the following error started to pop up anytime I tried to build: (edited for brevity)</p>
+```scala
+java.lang.NoClassDefFoundError: scala/Serializable
+  at java.lang.ClassLoader.defineClass1(Native Method)
+  at java.lang.ClassLoader.defineClassCond(ClassLoader.java)
+  at java.lang.ClassLoader.defineClass(ClassLoader.java)
+  at java.security.SecureClassLoader.defineClass(SecureClassLoader.java)
+  at java.net.URLClassLoader.defineClass(URLClassLoader.java)
+  at java.net.URLClassLoader.access$000(URLClassLoader.java)
+  at java.net.URLClassLoader$1.run(URLClassLoader.java)
+```
+<p>A Google search turned up no easily identifiable cause. Most people with similar problems found them to be related to building Lift, so I wondered whether there was an analogous issue with Scalatra. Just when it looked like I would have to roll up my sleeves and start messing with the build process, I found <a href="http://d.hatena.ne.jp/egghour/20110602/1306975302" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://d.hatena.ne.jp']);">this article written in Japanese</a>.</p>
+<p>The article places the blame on simultaneous usage of multiple versions of Scala. When I checked, indeed there it was on the log output:</p>
+```scala
+[WARNING] Multiple versions of scala libraries detected!
+```
+<p>The reason I hadn’t made the connection is that this particular warning had been sitting there for months without any ill consequences. Well, until now.</p>
+<p>As the problem had roots in the dependency chain deeper than the component I was in charge of, I brought the project lead into the fold. After some deliberation, we decided to make everything rely on the then-current Scala 2.9.0.</p>
+<p>The “easy” part was to make sure that the web app, and all internally-developed upstream components, compiled using 2.9.0. In most cases this was as simple as editing the pom.xml as shown below and recompiling.</p>
+```xml
+  <project ...>
+    <properties>
+-      <scala.version>2.8.1</scala.version>
++      <scala.version>2.9.0</scala.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+    </dependencies>
+  </project>
+```
+<p>For externally-made components where a version for Scala 2.9 was available, we updated the dependency info. When this was not the case, for example with Scalatra (scalatra_2.8.1 ver 2.0.0.M3 at the time), we deployed a custom build to our internal repository.</p>
+```xml
+<project ...>
+  <properties>
+-   <scalatra.version>2.0.0.M3</scalatra.version>
++   <scalatra.version>2.0.0-SNAPSHOT</scalatra.version>
+    <scala.version>2.9.0</scala.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.scalatra</groupId>
+-     <artifactId>scalatra_2.8.1</artifactId>
++     <artifactId>scalatra_${scala.version}</artifactId>
+      <version>${scalatra.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scalatra</groupId>
+-     <artifactId>scalatra-scalate_2.8.1</artifactId>
++     <artifactId>scalatra-scalate_${scala.version}</artifactId>
+      <version>${scalatra.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scalatra</groupId>
+-     <artifactId>scalatra-scalatest_2.8.1</artifactId>
++     <artifactId>scalatra-scalatest_${scala.version}</artifactId>
+      <version>${scalatra.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
+```
+<p>Once the entire chain was updated, both the warning and the error disappeared.</p>
+<p>A possible explanation for this phenomenon <a href="http://stackoverflow.com/questions/4955055/scala-question-about-examples-in-programming-scala-book" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://stackoverflow.com']);">lies with the compiler daemon</a>. However, the Maven build wasn’t supposed to be using the daemon in the first place, so either there’s a fault there or another factor is at play.</p>
+<p>In any case, having this information spelled out in English will hopefully help someone else.</p>
+<p>Good luck and happy scala-ing!</p>
