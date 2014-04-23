@@ -8,16 +8,16 @@ activate :blog do |blog|
   # This will add a prefix to all links, template references and source paths
   # blog.prefix = "blog"
 
-  # blog.permalink = "{year}/{month}/{day}/{title}.html"
+  blog.permalink = "archives/{year}/{month}/{day}/{title}.html"
   # Matcher for blog source files
   blog.sources = "posts/{year}-{month}-{day}-{title}.html"
-  # blog.taglink = "tags/{tag}.html"
+  blog.taglink = "archives/tags/{tag}.html"
   blog.layout = "blog_layout"
   # blog.summary_separator = /(READMORE)/
   # blog.summary_length = 250
-  # blog.year_link = "{year}.html"
-  # blog.month_link = "{year}/{month}.html"
-  # blog.day_link = "{year}/{month}/{day}.html"
+  blog.year_link = "archives/{year}.html"
+  blog.month_link = "archives/{year}/{month}.html"
+  blog.day_link = "archives/{year}/{month}/{day}.html"
   # blog.default_extension = ".markdown"
 
   blog.tag_template = "tag.html"
@@ -78,11 +78,11 @@ end
 #   end
 # end
 
-set :css_dir, 'css'
+set :css_dir, 'static/css'
 
-set :js_dir, 'js'
+set :js_dir, 'static/js'
 
-set :images_dir, 'images'
+set :images_dir, 'static/images'
 
 # Build-specific configuration
 configure :build do
@@ -111,7 +111,10 @@ set :markdown, :fenced_code_blocks => true, :smartypants => true
 activate :rouge_syntax, :lineanchor => 'line'
 
 ## authors configuration
-activate :authors
+activate :authors do |authors|
+  authors.author_path = "archives/authors/:author.html"
+  authors.author_template = "author.html"
+end
 ignore "/author.html"
 
 ## deploy configuration
