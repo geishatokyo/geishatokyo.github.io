@@ -82,7 +82,7 @@ Game Object > Create Empty<br/>
 Projectペインで、Assetsディレクトリを右クリックし、Create > C# Scriptを選択してください。<br/>
 作られたファイルはChatぐらいにリネームしてください。(リネームはProjectタブ上でファイルを２回クリックすれば変更できます。ダブルクリックしてしまうとファイルを開いてしまうので注意)</p>
 <p>次に、ProjectペインのChatスクリプトをドラッグして、Hierarchyペインの先ほど作成したChatオブジェクトへドロップしてください。これで、アタッチは完了です。</p>
-<p><img src="/images/2013/06/unitwschat_unity_how_to.png" alt="Operation help"/></p>
+<p><img src="/static/images/2013/06/unitwschat_unity_how_to.png" alt="Operation help"/></p>
 <h3>実装</h3>
 <p>
 いよいよ実装です。<br/>

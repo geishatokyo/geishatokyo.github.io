@@ -9,12 +9,12 @@ authors: kohashi
 <p>webアプリエンジニアであれば少なからず、サーバー側の処理結果によって、 302  Moved Temporarily で遷移先を振り分けする機会があると思います。<br />
 ASP.netであれば Response.Redirect("test.aspx"); を使いますね。( Server.Transferメソッドはちょっと処理が違います）<br />
 phpであれば header("Location: test.php"); でしょうか。</p>
-<p><img src="/images/2011/10/index.png"/></a></p>
+<p><img src="/static/images/2011/10/index.png"/></a></p>
 <p>芸者東京では、たとえばゲームアプリ内の「かいもの」機能でこの振り分けを使っています。<br />
 「購入」ボタンを押すと、所持金額をチェックしてOKならば「購入完了！」ページへ、所持金額が少ない場合などは「お金が足りません」ページへ振り分けるんですね。</p>
 <p>さて、このような 302 Redirectを、Android/iPhone などで、iframeの中で使うとちょっとした問題が起きます。</p>
 <p>なんと、Backボタンを押すと、リダイレクト結果のページではなく、リダイレクト元ページに飛ぶのです！</p>
-<p><img src="/images/2011/10/index1.png"/></p>
+<p><img src="/static/images/2011/10/index1.png"/></p>
 <p>この現象はiOS3/4と、Android2.1/2.2で確認しました。<br />
 ※ PCブラウザはもちろん、スマートフォンでもiframe内で行わない限り、戻るボタンはリダイレクト結果のページに遷移するだけです。</p>
 <p>これは、つまりBackボタンを押すと、ユーザが意図せず買い物をしてしまう、ということです。</p>

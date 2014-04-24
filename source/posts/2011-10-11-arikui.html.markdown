@@ -74,7 +74,7 @@ Androidプロジェクトではリソースはresディレクトリ以下に配�
 ```
 <p>この設定では、${project.basedir}/src/main/android以下にassetsディレクトリとresディレクトリを置いて、${project.basedir}/src/main/profiles以下にあるプロファイルごとの設定でresを上書きしています。</p>
 <p>例えば以下のようなディレクトリ構成だったとして、XML設定ファイルを環境ごとに切り替える場合を考えてみます。</p>
-<p><a href="/images/2011/10/sshot-1.jpg"><img src="/images/2011/10/sshot-1-222x300.jpg" alt="" title="sshot-1" width="222" height="300" class="aligncenter size-medium wp-image-58369"/></a></p>
+<p><a href="/images/2011/10/sshot-1.jpg"><img src="/static/images/2011/10/sshot-1-222x300.jpg" alt="" title="sshot-1" width="222" height="300" class="aligncenter size-medium wp-image-58369"/></a></p>
 <p>resourceDirectory(上の設定例では${project.basedir}/src/main/android/res)にはデフォルトでdrawable-hdpi、drawable-ldpi、drawable-mdpi、layout、valuesが作られています。そこにさらにXMLディレクトリを追加しました。<br/>
 そしてresourceOverlayDirectory(上の設定例では${project.basedir}/src/main/profiles以下のres)にはXMLディレクトリだけを作成しました。<br/>
 今回はresourceDirectoryにはsample01.xml、sample02.xmlの2ファイル、resourceOverlayDirectoryにはsample02.xml、sample03.xmlの2ファイルを配置しました。コンパイル後、sample02.xmlが上書きされ、sample03.xmlがコピーされるはずです。</p>
@@ -86,7 +86,7 @@ $ mvn clean install -P プロファイル名
 ```
 <p>コンパイルが無事終わると、リソースはapkファイルに固められます。この時、XMLファイルはAndroid XML Binary形式に変換されるので注意してください(CLASSファイルもDalvik VM用にdex形式に変換される)。<br/>
 apkはただのzipファイルなのでアーカイバで中を見ることが出来ます。中を見てみましょう。</p>
-<p><a href="/images/2011/10/sshot-2.jpg"><img src="/images/2011/10/sshot-2-300x166.jpg" alt="" title="sshot-2" width="300" height="166" class="aligncenter size-medium wp-image-58241"/></a></p>
+<p><a href="/images/2011/10/sshot-2.jpg"><img src="/static/images/2011/10/sshot-2-300x166.jpg" alt="" title="sshot-2" width="300" height="166" class="aligncenter size-medium wp-image-58241"/></a></p>
 <p>正しく結合されました。</p>
 <p>res以下にvaluesが見当たりませんが、resources.arscに格納されています。<br/>
 ちなみにvaluesとは別にvalues-jpやvalues-enなどvalues-xx形式で言語別の設定をすることも出来ます。xxにはISO 639-1に定義されているものが使えます。<br/>

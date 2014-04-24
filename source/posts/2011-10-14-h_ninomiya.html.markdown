@@ -13,7 +13,7 @@ authors: h_ninomiya
 <p>また、おサイフケータイ機能に使われているモバイルFeliCaや、FeliCa Plugを使用した健康機器など(個人的にはあまり馴染みがありませんが……)もカード型じゃありませんよね。</p>
 <p>また、FeliCaの基本はリーダ／ライタから給電された上で駆動するので比較的シンプルな事しかできないのですが、モバイルFeliCaやFeliCa Plugでは、これらを搭載したデバイスと連携していろいろ面白いことができるようですよ。</p>
 <p>例として、モバイルFeliCaには「カードエミュレーション」「P2P」「リーダ・ライタ」の3つのモードがあります。「カードエミュレーション」以外のモードを意識されていない方も多いのではないでしょうか。私も先日のFeliCaソリューションセミナー2011において、受付証(FeliCa)をAndroid端末で認証された時は「おおっ！」ってなりました。このあたりの技術は今からお話しするNFCとの関連性含めて、今後熱くなっていくんじゃないのかなぁとか思う私なのです。</p>
-<div><img src="/images/2011/10/mobileFelicaMode.png" alt="モバイルFeliCaのモード" title="mobileFelicaMode" /><p class="wp-caption-text">モバイルFeliCaのモード</p></div>
+<div><img src="/static/images/2011/10/mobileFelicaMode.png" alt="モバイルFeliCaのモード" title="mobileFelicaMode" /><p class="wp-caption-text">モバイルFeliCaのモード</p></div>
 <h2>2.RFID やNFC とFeliCa の関係</h2>
 <p>さて、FeliCaといえば、関連してRFIDだとかNFCだとかいうワードを思い浮かべる方もあるかもしれません。結論から言うと、FeliCa はRFID 技術の一例ですし、NFC の一種でもあります。</p>
 <p>まず、RFIDの方からいきましょう。こちらはRadio Frequency IDentification、つまり無線個体識別のことですね。歴史的にはバーコードの系譜から分かれてきたみたいで、最初はバーコードの代替として使われていました。バーコードと違ってタグが隠れていても情報を読み取ることができて便利なのが良かったみたいですね。</p>
@@ -22,7 +22,7 @@ authors: h_ninomiya
 <p>そのRFID というくくりの内にカード型（人用）というジャンルがあり、さらにその中には通信距離に応じた3つのタイプ(密着型：～数mm、近接型：～10cm、近傍型：～70cm)がありました。世間一般で非接触ICカードと呼ばれるもの殆どは3つの内の近傍型(ISO/IEC 14443で標準化)に分類されます。もしかしたら、TypeA、TypeBという規格名を耳にしたことがあるかもしれませんが、これらはISO/IEC 14443内の区分けを指しているのです(<em>*3</em>)。</p>
 <p>実はFeliCaもISO/IEC 14443のTypeCとして、国際規格化を目指していました。しかし、審議の時間切れのために却下されてしまいます。</p>
 <p>どうしてもFeliCaを国際規格にしたい、とソニーが思ったのかは定かでありませんが、その後ソニーはフィリップスとFeliCaやMIFAREと下位互換性のある規格を共同開発し、標準化を目指します。そうして2003年末に国際規格として認められたのがISO/IEC 18092で、これが俗にいうNFC(Near Field Communication)です。NFCの規格は後に、TypeBやISO/IEC 15693（カード型RFIDの近傍型の規格）を含むように拡張されており、ISO/IEC 21481として標準化されています。ですから、現在NFCといえばカード型RFIDのうち、近接型、近傍型をカバーした上にFeliCaも取り扱える規格ということができます。</p>
-<div><img src="/images/2011/10/nfc.png" alt="NFC内でのFeliCaの位置づけ" /><p class="wp-caption-text">NFC内でのFeliCaの位置づけ</p></div>
+<div><img src="/static/images/2011/10/nfc.png" alt="NFC内でのFeliCaの位置づけ" /><p class="wp-caption-text">NFC内でのFeliCaの位置づけ</p></div>
 <p>モバイル国内独自機能の代表格、おサイフケータイ(モバイルFeliCa)のイメージが強いのでしょう、よく「FeliCa vs NFC」なんていう構図を見かけますが、正確にはFeliCaはNFCの一端を担っているため対立するものではありません。</p>
 <p>参考：<a href="http://www.atmarkit.co.jp/frfid/special/5minic/01.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.atmarkit.co.jp']);">http://www.atmarkit.co.jp/frfid/special/5minic/01.html</a> / <a href="http://www.welcat.co.jp/knowledge/rfid/rfid003.php" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.welcat.co.jp']);">http://www.welcat.co.jp/knowledge/rfid/rfid003.php</a></p>
 <h2>3.作成するプログラム</h2>
@@ -63,7 +63,7 @@ namespace FeliCaTest
 ```
 <p>正直、説明するところがなくて困っています。そのくらいにシンプルですね。Pollingメソッドの引数は、システムコード(<em>*6</em>)という値を指しますが、深く気にする必要はありません。ここでは、どんなFeliCaでも反応するような値を入れています。</p>
 <p>あ、felicalibのC#ライブラリを関連付けるのと、実行時にfelicalib.dllを探せる位置に置いておくことをお忘れなく。</p>
-<div><img src="/images/2011/10/FelicaResult.png" alt="実行結果" title="FelicaResult" /><p class="wp-caption-text">実行結果</p></div>
+<div><img src="/static/images/2011/10/FelicaResult.png" alt="実行結果" title="FelicaResult" /><p class="wp-caption-text">実行結果</p></div>
 <p>ここから工夫していく点としては、Pollingコマンドの発信部分をループにしてカード補足時のみイベントを発生させるようにモジュール化する、といったところでしょうか。</p>
 <p>このようにFeliCaからIDmを読むこと自体は非常に簡単にできますが、データベースやネットワークと連携させれば、なかなか面白いことができると思います。<br />
 是非お試しあれ。</p>
