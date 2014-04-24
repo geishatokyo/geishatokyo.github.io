@@ -43,7 +43,7 @@ svn の時代は別に説明しても仕方がないので、git から説明し
 
 <ul>
 図にすると以下のようになります。<br/>
-<a href="/images/2013/01/old-git-flow.png"><img src="/images/2013/01/old-git-flow.png" alt="第一段階フロー図" title="old git flow" width="846" height="655" class="alignnone size-full wp-image-178979"/></a>
+<a href="/images/2013/01/old-git-flow.png"><img src="/static/images/2013/01/old-git-flow.png" alt="第一段階フロー図" title="old git flow" width="846" height="655" class="alignnone size-full wp-image-178979"/></a>
 </ul>
 <ul>
 <li>追記</li>
@@ -99,7 +99,7 @@ develop <strong>or</strong> release_3.0である理由は、release_3.0 はそ�
 
 <ul>
 図にすると以下のようになります。<br/>
-<a href="/images/2013/01/git-flow-2.png"><img src="/images/2013/01/git-flow-2.png" alt="第二段階のフロー図" title="git flow" width="895" height="793" class="alignnone size-full wp-image-179107"/></a>
+<a href="/images/2013/01/git-flow-2.png"><img src="/static/images/2013/01/git-flow-2.png" alt="第二段階のフロー図" title="git flow" width="895" height="793" class="alignnone size-full wp-image-179107"/></a>
 </ul>
 <ul>
 <li>追記</li>

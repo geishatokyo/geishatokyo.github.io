@@ -25,7 +25,7 @@ authors: takezoux2
 日本ではdocomoユーザーが最も多いため、docomoの絵文字コードに統一して保存を行う場合が多いようです。<br/>
 ちなみに、弊社の提供しているおみせやさんでは内部ではGoogle emoji4unicodeの下位16bitの文字コードに変換して保存をしています。(下位16bitはPUAなのでまず問題は起きません。詳しい説明は後述)</p>
 <div style="text-align:center;">絵文字の変換フロー</div>
-<p><img src="/images/2012/05/flow_emoji_conversion.png"/></p>
+<p><img src="/static/images/2012/05/flow_emoji_conversion.png"/></p>
 <h2>各機種絵文字対応状況</h2>
 <p>現在の、スマートフォンの絵文字対応状況を紹介しておきます。<br/>
 iPhoneのみが特殊で、OSのバージョンによって送信時の文字コードが違う＋表示はUnicode6.0とSoftBank共に出来る状態になっています。<br/>
