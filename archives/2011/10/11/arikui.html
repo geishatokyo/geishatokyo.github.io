@@ -339,7 +339,7 @@ Androidプロジェクトではリソースはresディレクトリ以下に配�
 
 <p>例えば以下のようなディレクトリ構成だったとして、XML設定ファイルを環境ごとに切り替える場合を考えてみます。</p>
 
-<p><a href="/images/2011/10/sshot-1.jpg"><img src="/images/2011/10/sshot-1-222x300.jpg" alt="" title="sshot-1" width="222" height="300" class="aligncenter size-medium wp-image-58369"/></a></p>
+<p><a href="/images/2011/10/sshot-1.jpg"><img src="/static/images/2011/10/sshot-1-222x300.jpg" alt="" title="sshot-1" width="222" height="300" class="aligncenter size-medium wp-image-58369"/></a></p>
 
 <p>resourceDirectory(上の設定例では${project.basedir}/src/main/android/res)にはデフォルトでdrawable-hdpi、drawable-ldpi、drawable-mdpi、layout、valuesが作られています。そこにさらにXMLディレクトリを追加しました。<br/>
 そしてresourceOverlayDirectory(上の設定例では${project.basedir}/src/main/profiles以下のres)にはXMLディレクトリだけを作成しました。<br/>
@@ -356,7 +356,7 @@ Androidプロジェクトではリソースはresディレクトリ以下に配�
 <p>コンパイルが無事終わると、リソースはapkファイルに固められます。この時、XMLファイルはAndroid XML Binary形式に変換されるので注意してください(CLASSファイルもDalvik VM用にdex形式に変換される)。<br/>
 apkはただのzipファイルなのでアーカイバで中を見ることが出来ます。中を見てみましょう。</p>
 
-<p><a href="/images/2011/10/sshot-2.jpg"><img src="/images/2011/10/sshot-2-300x166.jpg" alt="" title="sshot-2" width="300" height="166" class="aligncenter size-medium wp-image-58241"/></a></p>
+<p><a href="/images/2011/10/sshot-2.jpg"><img src="/static/images/2011/10/sshot-2-300x166.jpg" alt="" title="sshot-2" width="300" height="166" class="aligncenter size-medium wp-image-58241"/></a></p>
 
 <p>正しく結合されました。</p>
 

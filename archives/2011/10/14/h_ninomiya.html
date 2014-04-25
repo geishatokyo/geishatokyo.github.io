@@ -274,7 +274,7 @@
 
 <p>例として、モバイルFeliCaには「カードエミュレーション」「P2P」「リーダ・ライタ」の3つのモードがあります。「カードエミュレーション」以外のモードを意識されていない方も多いのではないでしょうか。私も先日のFeliCaソリューションセミナー2011において、受付証(FeliCa)をAndroid端末で認証された時は「おおっ！」ってなりました。このあたりの技術は今からお話しするNFCとの関連性含めて、今後熱くなっていくんじゃないのかなぁとか思う私なのです。</p>
 
-<div><img src="/images/2011/10/mobileFelicaMode.png" alt="モバイルFeliCaのモード" title="mobileFelicaMode" /><p class="wp-caption-text">モバイルFeliCaのモード</p></div>
+<div><img src="/static/images/2011/10/mobileFelicaMode.png" alt="モバイルFeliCaのモード" title="mobileFelicaMode" /><p class="wp-caption-text">モバイルFeliCaのモード</p></div>
 
 <h2>2.RFID やNFC とFeliCa の関係</h2>
 
@@ -292,7 +292,7 @@
 
 <p>どうしてもFeliCaを国際規格にしたい、とソニーが思ったのかは定かでありませんが、その後ソニーはフィリップスとFeliCaやMIFAREと下位互換性のある規格を共同開発し、標準化を目指します。そうして2003年末に国際規格として認められたのがISO/IEC 18092で、これが俗にいうNFC(Near Field Communication)です。NFCの規格は後に、TypeBやISO/IEC 15693（カード型RFIDの近傍型の規格）を含むように拡張されており、ISO/IEC 21481として標準化されています。ですから、現在NFCといえばカード型RFIDのうち、近接型、近傍型をカバーした上にFeliCaも取り扱える規格ということができます。</p>
 
-<div><img src="/images/2011/10/nfc.png" alt="NFC内でのFeliCaの位置づけ" /><p class="wp-caption-text">NFC内でのFeliCaの位置づけ</p></div>
+<div><img src="/static/images/2011/10/nfc.png" alt="NFC内でのFeliCaの位置づけ" /><p class="wp-caption-text">NFC内でのFeliCaの位置づけ</p></div>
 
 <p>モバイル国内独自機能の代表格、おサイフケータイ(モバイルFeliCa)のイメージが強いのでしょう、よく「FeliCa vs NFC」なんていう構図を見かけますが、正確にはFeliCaはNFCの一端を担っているため対立するものではありません。</p>
 
@@ -341,7 +341,7 @@
 
 <p>あ、felicalibのC#ライブラリを関連付けるのと、実行時にfelicalib.dllを探せる位置に置いておくことをお忘れなく。</p>
 
-<div><img src="/images/2011/10/FelicaResult.png" alt="実行結果" title="FelicaResult" /><p class="wp-caption-text">実行結果</p></div>
+<div><img src="/static/images/2011/10/FelicaResult.png" alt="実行結果" title="FelicaResult" /><p class="wp-caption-text">実行結果</p></div>
 
 <p>ここから工夫していく点としては、Pollingコマンドの発信部分をループにしてカード補足時のみイベントを発生させるようにモジュール化する、といったところでしょうか。</p>
 
