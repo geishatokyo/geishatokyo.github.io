@@ -22,8 +22,8 @@ Requires Ruby
 
 In develop branch of the repository.
 
-1. Fetch and pull master repository  
-```git fetch && git pull origin master```
+1. Fetch and pull repository  
+```git fetch && git pull origin develop```
 2. Create your branch  
 ```git checkout -b YOUR_NAME/ARTICLE_NAME```
 3. Create a base article  
