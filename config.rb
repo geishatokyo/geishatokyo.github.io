@@ -117,3 +117,10 @@ activate :authors do |authors|
 end
 ignore "/author.html"
 
+## deploy configuration
+activate :deploy do |deploy|
+  deploy.build_before = true
+  deploy.method = :git
+  deploy.branch = 'master'
+end
+
