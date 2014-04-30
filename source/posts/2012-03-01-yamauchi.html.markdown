@@ -42,12 +42,14 @@ githubからcloneします。<br/>
 <h2>Demo</h2>
 <p>SWFとlightningを並べてみました。<br/>
 SafariかChromeで見てください。<br/>
-Firefoxだと下記のサンプルが正常に表示されないようです(WordPressのinline htmlの問題っぽい)</p>
+Firefoxでは下記のサンプルが正常に表示されないようです。</p>
 <p><strong>SWF</strong><br/>
-<object width="240" height="240" type="application/x-shockwave-flash" data="/images/2012/03/lightning_avatar.swf"><br/>
-</object><br/>
+<embed type="application/x-shockwave-flash" src="/static/images/2012/03/lightning_avatar.swf" width="240" height="240"></embed>
+</p>
+<p>
 <strong>Lightning</strong><br/>
-<iframe style="width:320px;height:320px" src="/static/images/2012/03/lightning_avatar.html"/> </p>
+<iframe style="boarder:none;width:320px;height:320px" src="/static/images/2012/03/lightning_avatar.html"></iframe>
+</p>
 <p><strong>使用上の注意</strong><br/>
 Lightningでは、swfmillによってswf素材をxmlに変換する必要があります。<br/>
 <a href="http://swfmill.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://swfmill.org']);">http://swfmill.org/</a> から swfmill をダウンロードしてインストールしましょう。（Linuxだけでなく、WindowsやMacにも対応しています。）<br/>
