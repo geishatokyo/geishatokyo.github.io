@@ -1,0 +1,374 @@
+---
+title: ScalaのParserCombinator実践入門＋
+date: 2013-12-08
+tags: Scala
+authors: takezoux2
+---
+ 
+<p><a href="http://qiita.com/advent-calendar/2013/scala" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://qiita.com']);">Scala advent calendar</a>12月8日の記事です。</p>
+<h2>1. はじめに</h2>
+<p>takezoux2こと竹下です。<br/>
+今回は、ScalaのParserCombinatorの実践入門＋の記事を書きたいと思います。<br/>
+ParserCombinatorの入門記事はだいたい四則演算を例に出しています。<br/>
+入門編の題材として良いとは思いますが正直私は、「いまさら四則演算とかパースしてもしょうがくね？」と思うので、<br/>
+この記事では弊社の実際の活用事例を絡めて、ちょっと突っ込んだ内容を紹介したいと思います。<br/>
+ちなみに、本当の入門には、<a href="https://www.google.co.jp/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=2&amp;ved=0CDUQFjAB&amp;url=http%3A%2F%2Fcappuccino.jp%2Fscala-ja%2F%3Fc%3Dplugin%3Bplugin%3Dattach_download%3Bp%3DScala%25CA%25D9%25B6%25AF%25B2%25F1%25A1%25F7%25B4%25D8%25C5%25EC-2%3Bfile_name%3DScala-parser-combinator.pdf&amp;ei=pT-jUquRCcvfkgXOnIHwBA&amp;usg=AFQjCNH_a6iTgCWyObsTA2REKDnd3N4FdQ&amp;bvm=bv.57752919,d.dGI&amp;cad=rja" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.google.co.jp']);">水島さんのPDF</a>が非常にわかりやすいと思います。</p>
+<h2>2. ParserCombinatorとはなんぞや？</h2>
+<p>ParserCombinatorとは、文字列の構文の解析を行うクラスまたは関数を受け取り、協調させる機能のことです。用は、プログラムとか数式みたいにルールの決まっている文章を簡単に解析できる機能です。Scalaにはかなり高機能なParserCombinatorが標準のライブラリで提供されています。日本語とか英語などの文法がきちんと定義できない自然言語の解析は無理なので、そういう解析に使おうと思っている人は諦めてください。</p>
+<p>弊社では、</p>
+<ul>
+<li>SQLのCreateTable文のパース</li>
+<li>DSLのパース</li>
+</ul>
+<p>に利用しています。今回は、<a href="http://dev.mysql.com/doc/refman/5.1/ja/create-table.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://dev.mysql.com']);">CreateTable文</a>のパースをステップ・バイ・ステップで実装していきます。ただし、CreateTable文を完全にパースしようとするとえらいことになるので、今回は基本的なカラム定義のパースのみの内容になります。</p>
+<h2>3. なぜSQLをパースするの？</h2>
+<p>弊社では現在、SQLのCreateTable文をパースするライブラリを作成、使用しています。<br/>
+二つのCreateTable文の差分を取り、定義ファイルの更新に伴って自動でデータベースを更新したり、データベースのマイグレーションファイルを生成することを目的にしています。</p>
+<p>弊社のライブラリは<a href="https://github.com/geishatokyo/diff-sql-table" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">git-hub</a>に公開しています。<br/>
+(現在、MySQLのみが対象であるのと、まだまだ開発途中であるので使う方は完全に自己責任でお願いします。)<br/>
+が、この記事は、私が練習がてら書いた同様の<a href="https://github.com/takezoux2/sqltool" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">プログラム</a>を元に書いていきます。</p>
+<h2>4. 今回のゴール</h2>
+```scala
+CREATE TABLE IF NOT EXISTS User(
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  nickname VARCHAR(100),
+  age INTEGER
+);
+```
+<p>を正しくパース出来るまでです。</p>
+<h2>5. 環境構築</h2>
+<p>特に依存ライブラリはないし1ファイルで済むので、2.10以降の普通のScalaのコンパイラーかsbtを用意して貰えれば大丈夫です。scala versionは2.10.3です。</p>
+<h2>Step1. ParserCombinatorのクラスを準備</h2>
+<p>普通のパーサーコンビネーターを実装する場合は、<a href="http://www.scala-lang.org/api/current/#scala.util.parsing.combinator.RegexParsers" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-lang.org']);">RegexParsers</a>を使用します。正規表現でParserを定義できるので、だいたいの場合はこれで事足ります。</p>
+<p>まずは、RegexParsersを継承したobjectの作成と、構文解析を行うメソッドを定義してあげます。</p>
+<p>CreateTableParser.scala</p>
+```scala
+import scala.util.parsing.combinator._
+
+object App{
+  def main(args : Array[String]) : Unit = {
+    val r = CreateTableParser("hoge")
+
+    println(s"Success to parse $r")
+
+    CreateTableParser(" hoge \t") // OK
+    CreateTableParser("ho ge") // NG
+    CreateTableParser("fuga") // NG
+  }
+}
+
+object CreateTableParser extends RegexParsers{
+
+  def expr = "hoge"
+
+  def apply(s:String) : String = {
+    parseAll(expr,s) match {
+      case Success(tree, _) => tree
+      case e: NoSuccess =>
+        println(e)
+        throw new IllegalArgumentException("Bad syntax: "+s)
+    }
+  }
+}
+```
+<p>これは、”hoge”という文字列を一つだけ受け取るパーサーになります。<br/>
+“hoge”と空白文字以外を含んだ文字列を渡すと、パースに失敗し例外を投げます。</p>
+<h2>Step2. 解析した結果の定義</h2>
+<p>通常はパース結果は、パースした解析木を返すことになります。<br/>
+今回は、CreateTableSQLクラスを定義し、これを返すことにします。</p>
+<p>CreateTableParser.scala</p>
+```scala
+import scala.util.parsing.combinator._
+
+object App{
+  def main(args : Array[String]) : Unit = {
+    val r = CreateTableParser("hoge")
+
+    println(s"Success to parse $r")
+  }
+}
+case class CreateTableSQL(tableName : String,columns : List[Column])
+case class Column(name : String, columnType: String,options : List[ColumnOption])
+case class ColumnOption(v : String)
+
+object CreateTableParser extends RegexParsers{
+
+  // Parser[String] からParser[CreateTableSQL]へ変換
+  def expr : Parser[CreateTableSQL] = "hoge" ^^^ CreateTableSQL("Unknown",Nil)
+
+  def apply(s:String) : CreateTableSQL = {
+    parseAll(expr,s) match {
+      case Success(tree, _) => tree
+      case e: NoSuccess =>
+        println(e)
+        throw new IllegalArgumentException("Bad syntax: "+s)
+    }
+  }
+}
+```
+<p>※^^^は、パースした内容を受け取らずに別の型を返すときに使用します。普段はあまり使用しないので、適当にこんなもんかで流しておいてください。</p>
+<h2>Step3. とりあえずCREATE TABLEをパース</h2>
+<p>まずは、<a href="http://dev.mysql.com/doc/refman/5.1/ja/create-table.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://dev.mysql.com']);">定義の開始</a>のキーワード部分をパースします。</p>
+```scala
+CREATE [TEMPORARY] TABLE [IF NOT EXISTS]
+```
+<p>の部分です。<br/>
+構文中の空白を取り除いてキーワードを「~」でつなぐことが基本になります。<br/>
+任意出現のキーワードはoptでくるんであげるだけでよしなにやってくれます。</p>
+<p>CreateTableParser.scala</p>
+```scala
+import scala.util.parsing.combinator._
+
+object CreateTableParser extends RegexParsers{
+
+  def createStart= "CREATE" ~ opt("TEMPORARY") ~ "TABLE" ~ opt(ifNotExists)
+  // このように、小分けにして組み合わせることが出来る
+  def ifNotExists = "IF" ~ "NOT" ~ "EXISTS"
+
+  def expr : Parser[CreateTableSQL] = createStart ^^^ CreateTableSQL("Unknown",Nil)
+
+  def apply(s:String) : CreateTableSQL = {
+    parseAll(expr,s) match {
+      case Success(tree, _) => tree
+      case e: NoSuccess =>
+        println(e)
+        throw new IllegalArgumentException("Bad syntax: "+s)
+    }
+  }
+}
+object App{
+  def main(args : Array[String]) : Unit = {
+    val r = CreateTableParser("CREATE TABLE User")
+
+    println(s"Success to parse $r") // Success to parse CreateTableSQL(User,List())
+  }
+}
+
+case class CreateTableSQL(tableName : String,columns : List[Column])
+case class Column(name : String, columnType: String,options : List[ColumnOption])
+case class ColumnOption(v : String)
+```
+<h2>Step4. テーブル名をパース</h2>
+<p>次にテーブル名をパースします。<br/>
+テーブル名は任意の名前を付けることができるので、「任意の文字列」を表すParserを定義します。<br/>
+RegexParsersは、正規表現からParserを生成できるのでテーブル名に使用可能な文字の正規表現を書くだけでOKです。<br/>
+また、パースしたテーブル名を受け取る必要があります。今まで、パース結果を受け取る必要が無かったので<br/>
+「^^^」でパーサーの変換をしていましたが、ほとんどの場合は「^^」を使用してパターンマッチングでパースした結果を受け取ります。</p>
+<p>さらに、キーワード部分は不要でありパターンマッチングに含める必要が無いためパーサーの連結を「~>」にします。<br/>
+「~>」は、この連結より前部分の結果を捨てるという意味になります。同様に「
+</p><p>CreateTableParser.scala</p>
+```scala
+import scala.util.parsing.combinator._
+
+object CreateTableParser extends RegexParsers{
+
+  // .rを付けて正規表現にしておけば、正規表現Parserになる
+  def chars = "[a-zA-Z0-9_]+".r
+
+  def createStart= "CREATE" ~ opt("TEMPORARY") ~ "TABLE" ~ opt(ifNotExists)
+  def ifNotExists = "IF" ~ "NOT" ~ "EXISTS"
+
+  def tableName = chars
+
+  // ~では無く、~>になっていることと、^^と二つになっていることに注意！
+  def expr : Parser[CreateTableSQL] = createStart ~> tableName ^^{
+    case tableName => { CreateTableSQL(tableName,Nil) } // tableName Parserがパースした結果を取り出す
+
+  }
+  def apply(s:String) : CreateTableSQL = {
+    parseAll(expr,s) match {
+      case Success(tree, _) => tree
+      case e: NoSuccess =>
+        println(e)
+        throw new IllegalArgumentException("Bad syntax: "+s)
+    }
+  }
+}
+object App{
+  def main(args : Array[String]) : Unit = {
+    val r = CreateTableParser("CREATE TABLE User")
+
+    println(s"Success to parse $r") // Success to parse CreateTableSQL(User,List())
+  }
+}
+case class CreateTableSQL(tableName : String,columns : List[Column])
+case class Column(name : String, columnType: String,options : List[ColumnOption])
+case class ColumnOption(v : String)
+```
+<h2>Step5. テーブルボディーをパース</h2>
+<p>次に、テーブルボディ部分の定義に移ります。<br/>
+とりあえず、カラムの定義はおいておいて、ボディーは複数のカラム定義のリストであることを定義します。<br/>
+その際に、今回はrep1sep( list_element_parser, separator_parser)というメソッドを使用しています。<br/>
+ほかにも複数回出現する要素をパースするrep系メソッドがいくつかあるのでAPIで確認をしてみてください。</p>
+<p>CreateTableParser.scala</p>
+```scala
+import scala.util.parsing.combinator._
+
+object CreateTableParser extends RegexParsers{
+
+  def chars = "[a-zA-Z0-9_]+".r
+
+  def createStart= "CREATE" ~ opt("TEMPORARY") ~ "TABLE" ~ opt(ifNotExists)
+  def ifNotExists = "IF" ~ "NOT" ~ "EXISTS"
+
+  def tableName = chars
+
+  // rep1sepは指定したセパレーターで区切られたリストをパースできる。
+  def body : Parser[List[Column]] = "(" ~> rep1sep(column,",") <~ ")" ~ opt(";")
+  /* 再帰を使って、こうも書ける
+      複雑なリストのパースを行いたい場合などは、再帰で書くと楽な時も多い。
+  def body = "(" ~> columns <~ ")" ~ opt(")")
+  def columns: Parser[List[Column]] = (column ~ "," ~ columns ^^ {
+    case column ~ "," ~ columns => column :: colmuns
+  }) |
+  (column ^^ {
+    case column => column :: Nil
+  })
+  */
+
+  // とりあえずカラムの定義は後回し。
+  def column : Parser[Column] = success(Column("Unknown","Unkown"))
+
+  def expr : Parser[CreateTableSQL] = createStart ~> tableName ~ body ^^{
+    case tableName ~ columns => { CreateTableSQL(tableName,columns) } // tableName Parserがパースした結果を取り出す
+
+  }
+  def apply(s:String) : CreateTableSQL = {
+    parseAll(expr,s) match {
+      case Success(tree, _) => tree
+      case e: NoSuccess =>
+        println(e)
+        throw new IllegalArgumentException("Bad syntax: "+s)
+    }
+  }
+}
+object App{
+  def main(args : Array[String]) : Unit = {
+    val r = CreateTableParser("""
+CREATE TABLE IF NOT EXISTS User(
+  ,
+);
+""")
+
+    println(s"Success to parse $r")
+  }
+}
+case class CreateTableSQL(tableName : String,columns : List[Column])
+case class Column(name : String, columnType: String,options : List[ColumnOption])
+case class ColumnOption(v : String)
+```
+<h2>Step6. カラム定義をパース</h2>
+<p>最後の仕上げにカラム定義をパースします。<br/>
+カラムは基本</p>
+```scala
+カラム名　カラムタイプ　オプション*
+```
+<p>で定義されます。オプションは数が多いので今回は、PrimaryKeyとAutoIncrementだけにしておきます。</p>
+<p>これで、基本的なCreateTable文のパーサーの完成です。</p>
+<p>CreateTableParser.scala</p>
+```scala
+
+import scala.util.parsing.combinator._
+
+object CreateTableParser extends RegexParsers{
+
+  def chars = "[a-zA-Z0-9_]+".r
+
+  def createStart= "CREATE" ~ opt("TEMPORARY") ~ "TABLE" ~ opt(ifNotExists)
+  def ifNotExists = "IF" ~ "NOT" ~ "EXISTS"
+
+  def tableName = chars
+
+  def body : Parser[List[Column]] = "(" ~> rep1sep(column,",") <~ ")" ~ opt(";")
+
+  def column : Parser[Column] = columnName ~ columnType ~ rep(columnOptions) ^^ {
+    case name ~ columnType ~ options => Column(name,columnType,options)
+  }
+
+  def columnName = chars
+  // INTEGER,VARCHAR(100)など
+  def columnType = """[a-zA-Z]+(\(\d+\))?""".r
+
+  // | でいずれか一つの選択
+  def columnOptions = primaryKey | autoIncrement
+  def primaryKey = "PRIMARY" ~ "KEY" ^^^ { ColumnOption("PrimaryKey") }
+  def autoIncrement = "AUTO_INCREMENT" ^^^ { ColumnOption("AutoIncrement") }
+
+  def expr : Parser[CreateTableSQL] = createStart ~> tableName ~ body ^^{
+    case tableName ~ columns => { CreateTableSQL(tableName,columns) }
+  }
+  def apply(s:String) : CreateTableSQL = {
+    parseAll(expr,s) match {
+      case Success(tree, _) => tree
+      case e: NoSuccess =>
+        println(e)
+        throw new IllegalArgumentException("Bad syntax: "+s)
+    }
+  }
+}
+object App{
+  def main(args : Array[String]) : Unit = {
+    val r = CreateTableParser("""
+CREATE TABLE IF NOT EXISTS User(
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  nickname VARCHAR(100),
+  age INTEGER
+);
+""")
+
+    println(s"Success to parse $r")
+  }
+}
+case class CreateTableSQL(tableName : String,columns : List[Column])
+case class Column(name : String, columnType: String,options : List[ColumnOption])
+case class ColumnOption(v : String)
+```
+<h2>おまけ1. 大文字小文字の無視</h2>
+<p>SQLのキーワードは、実際は大文字小文字を区別しません。<br/>
+大文字小文字の無視設定は、</p>
+<ol>
+<li>Javaの正規表現のiオプション</li>
+<li>大文字小文字を無視してしまうParserを作る</li>
+</ol>
+<p>の二つの方法があります。文字列はimplicit conversionでParser[String]へ変換されているので、<br/>
+ここをオーバーライドしてあげることで、設定変更できます。</p>
+<p>1. Javaの正規表現オプションでの解決方法</p>
+```scala
+
+object CreateTableParser extends RegexParsers{
+  class CaseInsensitive(string: String) {
+    def i = ("(?i)" + string).r
+  }
+  implicit def caseInsensitive(string: String) = new CaseInsensitive(string)
+
+  // 以下略
+}
+```
+<p>2. 大文字小文字無視Parserを作る</p>
+```scala
+
+object CreateTableParser extends RegexParsers{
+  // Make literal case insensitive
+  implicit override def literal(s: String): Parser[String] = new Parser[String] {
+    def apply(in: Input) = {
+      val source = in.source
+      val offset = in.offset
+      val start = handleWhiteSpace(source, offset)
+      var i = 0
+      var j = start
+      while (i < s.length &amp;&amp; j < source.length &amp;&amp; s.charAt(i).toLower == source.charAt(j).toLower) { // 比較時にtoLowerをかけてやる
+        i += 1
+        j += 1
+      }
+      if (i == s.length)
+        Success(source.subSequence(start, j).toString, in.drop(j - offset))
+      else  {
+        val found = if (start == source.length()) "end of source" else "`"+source.charAt(start)+"'"
+        Failure("`"+s+"' expected but "+found+" found", in.drop(start - offset))
+      }
+    }
+  }
+  // 以下略
+}
+```
+							

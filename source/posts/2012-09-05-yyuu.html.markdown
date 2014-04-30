@@ -1,0 +1,37 @@
+---
+title: rbenv – ruby + python => pyenv
+date: 2012-09-05
+tags: Uncategorized
+authors: yyuu
+---
+ 
+<p>yyuu です。今回は、拙作の <a href="https://github.com/yyuu/pyenv" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">pyenv</a> についてご紹介させて頂きます。</p>
+<p>Python でアプリケーション開発をしている際には、特定のバージョンのインタプリタでアプリケーションの動作テストを行ないたくなることが多々あります。特に、複数のアプリケーションから参照されるライブラリを開発する場合などには、Python 2.x/3.x への両対応などを考えると、<a href="http://pypi.python.org/pypi/tox" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://pypi.python.org']);">tox</a> などを使って複数のバージョンを横断してテストを実行できる環境を用意することは重要になります。</p>
+<p>そのような用途向けに、$HOME 以下のユーザ環境に Python インタプリタをセットアップするための補助ツールとして <a href="https://github.com/utahta/pythonbrew" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">pythonbrew</a> や <a href="https://github.com/saghul/pythonz" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">pythonz</a> などといったツールが存在していたのですが、以下の点で不満を感じていました。</p>
+<ol>
+<li>Python で実装されているため、Python をインストールするのに Python が必要になる</li>
+<li>プロジェクトなどの単位で Python バージョンを切り替えることができない (pythonbrew)</li>
+<li>コマンドの検索パス ($PATH) を一切管理してくれない (pythonz)</li>
+</ol>
+<p>これらへの対処のため、Ruby 向けの <a href="https://github.com/sstephenson/rbenv" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">rbenv</a> をベースに Python 向けに作り直した <a href="https://github.com/yyuu/pyenv" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">pyenv</a> というものを作りました。このツールはの特徴としては以下のものがあります。</p>
+<ol>
+<li>bash シェルスクリプトによる実装 (zsh 対応)</li>
+<li>rbenv 流の Python バージョン管理の導入</li>
+<li>rbenv 流のコマンド検索パスの管理の導入</li>
+</ol>
+<p>使いかたなどは基本的に rbenv と同様です。rbenv と違う点としては、pyenv には rbenv における <a href="https://github.com/sstephenson/ruby-build" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">ruby-build</a> に相当する機能がデフォルトのプラグインとして提供されています。そのため、rbenv の場合よりもインストール手順が少しだけ簡素になります。</p>
+<p><code><br/>
+$ cd<br/>
+$ git clone git://github.com/yyuu/pyenv.git .pyenv<br/>
+</code></p>
+<p>インストールが完了したら、~/.pyenv/bin を $PATH に追加してください。</p>
+<p><code>$ echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bash_profile<br/>
+</code></p>
+<p>pyenv を有効化するために以下の設定をログインシェルの設定ファイルに追加してください。</p>
+<p><code>$ echo 'eval "$(pyenv init -)"' >> ~/.bash_profile<br/>
+</code></p>
+<p>設定が完了したらシェルを再起動することで pyenv が使用できるようになります。</p>
+<p><code>$ exec $SHELL<br/>
+</code></p>
+<p>pyenv についてのその他の使いかたなどは <a href="https://github.com/yyuu/pyenv/blob/master/README.md" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">pyenv の README</a> に記載してあるので、そちらを参照してください。それでは。</p>
+							

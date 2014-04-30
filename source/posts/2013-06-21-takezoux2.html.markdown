@@ -1,0 +1,216 @@
+---
+title: UnityでWebSocketを使ってチャット -Playと一緒-
+date: 2013-06-21
+tags: C#,Unity,play framework
+authors: takezoux2
+---
+
+<p>最近は、Unityをいじっているtakezoux2こと竹下です。</p>
+<p>今回は、UnityでWebSocketを使ったチャットを作って動かしてみたいと思います。<br/>
+UnityはC#で実装しています。有料のAssetは使っていません。<br/>
+サーバーにはPlayを使っていますが、scalaのコードは今回全く書かなくてOKです。</p>
+<hr/>
+まず、Unityって何？WebSocketって何？Playって何？っていう人がいるので簡単に説明しておきます。<br/>
+簡単にしか説明はしないので、詳しくは各自ググってください。<br/>
+全部知ってるよって人は、ここは飛ばしてください。
+<h2>Unity</h2>
+<p>
+3Dゲームエンジン。iOS,Androidなど、各種プラットフォームのアプリをワンソースで開発することができるツールです。<br/>
+言語はC#,UnityScript(JavaScriptベース),Boo(Pythonベース)が使えます。<br/>
+3Dオブジェクトの空間配置などはGUIで可能なので、割と非プログラマやスキル不足のプログラマにも優しいです。<br/>
+各種Asset(有料のものが多い;;)で、様々な機能拡張なども可能です。</p>
+<p>無料で３０日のPro版トライアルあります。それ以降は、ライセンスの購入の必要あります。<br/>
+<a href="http://japan.unity3d.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://japan.unity3d.com']);">Unity公式ページ</a></p>
+<h2>WebSocket</h2>
+<p>
+最近流行の双方向通信規格です。同期通信を簡単に行えます。<br/>
+<a href="http://ja.wikipedia.org/wiki/WebSocket" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://ja.wikipedia.org']);">WebSocket(wiki)</a>
+</p>
+<h2>Play</h2>
+<p>
+scalaで書かれたWebサーバーです。WebSocketもNode.js並みに簡単に実装できます。今回のサーバープログラムとして使用しました。<br/>
+この辺のことについてもっと詳しく知りたい方は、弊社でやっているscala勉強会に参加すると<br/>
+ソースコードレベルまで詳しく教えてくれる人がいますw<br/>
+<a href="http://www.playframework.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.playframework.com']);">Play公式</a>
+</p>
+<hr/>
+<h2>検証環境</h2>
+<p>
+Mac上で検証しています。<br/>
+ただ、UnityもPlayもWindows上で動作するので、おそらくWindowsでも動作するとは思います。
+</p>
+<h2>手順</h2>
+<ol>
+<li>Unityの準備</li>
+<li>WebSocketSharpの準備</li>
+<li>クライアント実装</li>
+<li>サーバーの準備</li>
+<li>接続！</li>
+</ol>
+<hr/>
+<h2>1.Unityの準備</h2>
+<h3>Unityのインストール</h3>
+<p>
+<a href="http://japan.unity3d.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://japan.unity3d.com']);">Unity公式</a>からダウンロードをしてきてください。<br/>
+あとは、画面の指示に従ってインストールしましょう。起動すると、シリアルコードが聞かれますが、シリアルコードを持っていない人はtrialで開始してください。機能はトライアル期間はフルで使えます。</p>
+<h3>Unityプロジェクトの準備</h3>
+<p>
+file > New Projectから新しいプロジェクトを作ってください。名前はWebSocketSampleとか適当でいいです。
+</p>
+<hr/>
+<h2>2. WebSocketSharpの準備</h2>
+<h3>WebSocketSharpのビルド</h3>
+<p>
+今回は、UnityでWebSocketを使うために、<a href="https://github.com/sta/websocket-sharp" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">WebSocketSharp</a>というライブラリを使います。</p>
+<p>※2014/1/21追記<br/>
+AssetStoreで15$で販売中だそうです。ビルドが面倒だったり、使ってみて良かったらAssetStoreで購入してあげてください。</p>
+<p>まず、ソースコードをgithubからcloneしてきてください。<br/>
+次に、WebSocketTest.slnを開きます。MonoDevelopで開いてOKです。Windows環境なら、VisualStudioでも大丈夫だと思います。</p>
+<p>プロジェクトが開けたら、ビルドレベルをReleaseにしてビルドします。私の環境では、サブプロジェクトのExampleXでビルドエラーが出たので、websocket-sharpだけビルドできればOKなので、ExampleX達をソリューションから削除してビルドしました。</p>
+<p>ビルドが完了したら、websocket-sharp/bin/Release/websocket-sharp.dllが生成されているので、<br/>
+これを先ほど作ったUnityプロジェクトのAssetsディレクトリ以下にコピーしてください。(Assetsディレクトリ以下に入っていればどこでもいいのでAssets/Dllディレクトリを作ってその下に入れるなどすると、後で整理しやすいです)</p>
+<hr/>
+<h2>3. クライアントの実装</h2>
+<h3>GameObjectの準備とComponentのアタッチ</h3>
+<p>
+Unityで先ほどのプロジェクトを開いたら、<br/>
+Game Object > Create Empty<br/>
+から新しいGameObjectを作成します。<br/>
+名前は何でもいいですが、Chatぐらいにしておきましょう。<br/>
+ヒエラルキーもどこに置いておいても大丈夫なので、作成したままの場所に置いておいてください。</p>
+<p>つぎに、処理を記述するためのスクリプトを作成しChatオブジェクトにアタッチします。<br/>
+Projectペインで、Assetsディレクトリを右クリックし、Create > C# Scriptを選択してください。<br/>
+作られたファイルはChatぐらいにリネームしてください。(リネームはProjectタブ上でファイルを２回クリックすれば変更できます。ダブルクリックしてしまうとファイルを開いてしまうので注意)</p>
+<p>次に、ProjectペインのChatスクリプトをドラッグして、Hierarchyペインの先ほど作成したChatオブジェクトへドロップしてください。これで、アタッチは完了です。</p>
+<p><img src="/static/images/2013/06/unitwschat_unity_how_to.png" alt="Operation help"/></p>
+<h3>実装</h3>
+<p>
+いよいよ実装です。<br/>
+先ほど作成したChatスクリプトをダブルクリックしてください。MonoDevelopが起動するので、Chatスクリプトを編集してください。</p>
+<p>ソースコードは以下の通りです。</p>
+<pre>
+using UnityEngine;
+using System.Collections;
+using WebSocketSharp;
+using System.Collections.Generic;
+
+public class Chat : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		Connect();
+	}
+
+	// Update is called once per frame
+	void Update () {
+
+	}
+
+	/// <summary>
+	/// The message which store current input text.
+	/// </summary>
+	string message = "";
+	/// <summary>
+	/// The list of chat message.
+	/// </summary>
+	List<string> messages = new List<string>();
+
+	/// <summary>
+	/// Raises the GU event.
+	///
+	/// </summary>
+	void OnGUI(){
+
+		// Input text
+		message = GUI.TextArea(new Rect(0,10,Screen.width * 0.7f,Screen.height / 10),message);
+
+		// Send message button
+		if(GUI.Button(new Rect(Screen.width * 0.75f,10,Screen.width * 0.2f,Screen.height / 10),"Send")){
+			SendChatMessage();
+		}
+
+		// Show chat messages
+		var l = string.Join("\n",messages.ToArray());
+		var height = Screen.height * 0.1f * messages.Count;
+		GUI.Label(
+			new Rect(0,Screen.height * 0.1f + 10,Screen.width * 0.8f,height),
+			l);
+
+	}
+
+	WebSocket ws;
+
+	void Connect(){
+		ws =  new WebSocket("ws://localhost:9000/chat/ws");
+
+		// called when websocket messages come.
+		ws.OnMessage += (sender, e) =>
+		{
+			string s = e.Data;
+			Debug.Log(string.Format( "Receive {0}",s));
+			messages.Add("> " + e.Data);
+			if(messages.Count > 10){
+				messages.RemoveAt(0);
+			}
+		};
+
+		ws.Connect();
+		Debug.Log("Connect to " + ws.Url);
+	}
+
+	void SendChatMessage(){
+		Debug.Log("Send message " + message);
+		ws.Send(message);
+		this.message = "";
+	}
+}
+</pre>
+<p>やっていることは、Connect()でWebSocketでサーバーに接続。<br/>
+SendChatMessage()で、WebSocketメッセージの送信。<br/>
+OnGUIで画面の描画を行っています。<br/>
+あまり難しいことはやっていないので、ソースコードを追ってもらえればわかるかと思います。<br/>
+わからなければ、ソースコードをコピペしてください。</p>
+<p>これで、クライアントの実装は完了です。
+</p>
+<hr/>
+<h2>4. サーバーの準備</h2>
+<p>
+最後にサーバーの準備です。githubに用意しているのでコードは書かなくてOKです。<br/>
+sbtで実行していますが、既にplayが入っている人はplayで実行してもらっても大丈夫です。
+</p>
+<h3>sbtの準備</h3>
+<p>
+サーバーの実行に使うので、sbtをインストールしてください。バージョンは、0.12.2以降が入って入ればOKです。<br/>
+なお、sbtはscala向けのビルドツールです。<br/>
+sbtは、<a href="http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-sbt.org']);">公式サイトのここ</a>からダウンロードできます。Jarとシェルスクリプトをダウンロードしてきて、パスを通すだけです。
+</p>
+<h3>プログラムのcloneとサーバーの実行</h3>
+<p>
+サーバープログラムは<a href="https://github.com/takezoux2/play-websocket-chat" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">こちらのgithub</a>からソースコードをcloneしてください。<br/>
+cloneしたらプロジェクトのルートディレクトリで</p>
+```
+sbt run
+```
+<p>を実行してください。<br/>
+初回の起動は、scalaのダウンロードや、playのダウンロード、ライブラリのダウンロードが発生するので、時間がかかります。<br/>
+ネットワーク環境の整っているところで実行してください。<br/>
+以下のようなメッセージが表示されると、起動完了です。</p>
+```
+--- (Running the application from SBT, auto-reloading is enabled) ---
+
+[info] play - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+(Server started, use Ctrl+D to stop and go back to the console...)
+```
+
+<h2>5. 接続!</h2>
+<p>
+Unityクライアントは、Unityの上の方にある三角の再生ボタンを押すと実行できます。<br/>
+テキストボックスに送信したいテキストを入力してボタンを押すせばメッセージを送れます。<br/>
+テキストボックスの下には、チャットで発言されたテキストが表示されます。</p>
+<p>１クライアントだけでやっても何も楽しくないので、<br/>
+<a href="http://localhost:9000/chat" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','']);">http://localhost:9000/chat</a>にアクセスしてください。<br/>
+ここでブラウザからチャットを使えます。</p>
+<p>Unityクライアントで入力した文章が、ブラウザのほうでも表示され、<br/>
+ブラウザで入力した文章がUnityクライアントでも表示されていることが確認できると思います。<br/>
+おつかれさまでした。</p>

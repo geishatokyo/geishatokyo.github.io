@@ -1,0 +1,44 @@
+---
+title: Mavenで、依存ライブラリのjarを含んだ実行可能なjarを生成する方法
+date: 2010-10-05
+tags: Tips
+authors: takezoux2
+---
+ 
+<p>Mavenでpackageを用いて、依存関係のjarを含んだ実行可能なjarファイルを作成する方法の紹介です。</p>
+<p>以下をPOMに設定しておくと、</p>
+<pre>mvn package</pre>
+<p>を実行するだけでよくなります。</p>
+<p>POMサンプル</p>
+```xml
+    <plugins>
+        <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+                <!-- ここはこのままでOK -->
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+            <archive>
+              <manifest>
+                <!-- ここにmain関数のあるクラスを指定。これがManifest.ｍｆに設定されます -->
+                <mainClass>full.package.of.MainClass</mainClass>
+              </manifest>
+            </archive>
+        </configuration>
+            <executions>
+              <!-- ここでpackageのPhaseで実行されるように設定している-->
+              <execution>
+                <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                <phase>package</phase> <!-- append to the packaging phase. -->
+                <goals>
+                  <goal>single</goal> <!-- goals == mojos -->
+                </goals>
+              </execution>
+            </executions>
+        </plugin>
+    </plugins>
+```
+<p>詳しくは<br/>
+<a href="http://maven.apache.org/plugins/maven-assembly-plugin/usage.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maven.apache.org']);">http://maven.apache.org/plugins/maven-assembly-plugin/usage.html</a><br/>
+を参照してください。</p>

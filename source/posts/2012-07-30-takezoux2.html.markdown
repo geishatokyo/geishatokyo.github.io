@@ -1,0 +1,338 @@
+---
+title: javaのExceptionのコストについて
+date: 2012-07-30
+tags: Java
+authors: takezoux2
+---
+ 
+<p>弊社提供サービスのおみせやさんへ負荷テストをかけていた際に、特定の条件で非常にパフォーマンスが悪くなることが発覚しました。<br/>
+調査の結果、根本原因はキャッシュに使用しているMemcachedからオブジェクトをデシリアライズする際のSerializableVersionIDの食い違いにより例外が大量に発生していることが原因でした。<br/>
+それをうけて、Javaの例外はコストが高いということは言われているので、どれほどのコストがかかるかの実験を行ないました。</p>
+<h2>実行環境</h2>
+<p>テストは私の開発機で行いました。<br/>
+実験に使用したコードは、この記事の一番下に記述しています。</p>
+<table>
+<tr>
+<td>OS</td>
+<td>Windows 7 Professional</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Intel Core i7 3.20GHz</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>24G</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>Java7</td>
+</tr>
+</table>
+<h2>実験その１.  例外を投げるコストの検証</h2>
+<p>例外なしのものと、例外ありのものでどれほど実行時間に差が出るかを検証しました。</p>
+<h3>結果</h3>
+<p>実行時間の単位はミリ秒</p>
+<table>
+<tr>
+<td>ループ回数</td>
+<td>100,000</td>
+<td>500,000</td>
+<td>1,000,000</td>
+</tr>
+<tr>
+<td>例外なし、try/catchなし</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>例外なし、try/catchあり</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>例外を握り潰す</td>
+<td>85</td>
+<td>383</td>
+<td>744</td>
+</tr>
+<tr>
+<td>例外のメッセージ(Exception#getMessage)のみを取得</td>
+<td>79</td>
+<td>361</td>
+<td>710</td>
+</tr>
+<tr>
+<td>例外のメッセージと<br/>スタックトレース(Exception#getStackTrace)を取得</td>
+<td>404</td>
+<td>1819</td>
+<td>3688</td>
+</tr>
+</table>
+<p>やはり、例外の処理はコストがかかることがわかります。<br/>
+特にStackTraceを取得してしまうと、ただ例外を処理するだけよりさらに５倍以上の時間がかかってしまっており、非常にパフォーマンスが悪いことがわかりました。<br/>
+例外が投げられない場合は、try/catch clauseの有無については、ほとんど影響は見られませんでした。(多少は影響があるみたいですが、実際の環境ではこんなオーバーヘッドより他の無駄な処理に気を使ったほうがはるかに生産的です。)</p>
+<h2>実験その２. 例外時のStackTraceの深さによる実行時間の変化の検証</h2>
+<p>２つ目の実験は、Methodのネスト数=StackTraceの深さを変えて実験を行なってみました。<br/>
+実験１と同様の処理を行う途中に再帰関数を使って適当な深さをプラスして、例外の処理時間の変化を検証しました。</p>
+<p>実行時間の単位はミリ秒</p>
+<table>
+<tr>
+<td>nest数</td>
+<td>例外</td>
+<td>100,000</td>
+<td>500,000</td>
+<td>1,000,000</td>
+</tr>
+<tr>
+<td rowspan="2">+1</td>
+<td>なし</td>
+<td>1</td>
+<td>3</td>
+<td>6</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>549</td>
+<td>2815</td>
+<td>5436</td>
+</tr>
+<tr>
+<td rowspan="2">+5</td>
+<td>なし</td>
+<td>1</td>
+<td>5</td>
+<td>7</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>819</td>
+<td>4164</td>
+<td>8352</td>
+</tr>
+<tr>
+<td rowspan="2">+10</td>
+<td>なし</td>
+<td>1</td>
+<td>7</td>
+<td>14</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>1195</td>
+<td>6016</td>
+<td>11988</td>
+</tr>
+<tr>
+<td rowspan="2">+20</td>
+<td>なし</td>
+<td>3</td>
+<td>11</td>
+<td>25</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>1904</td>
+<td>9380</td>
+<td>19178</td>
+</tr>
+<tr>
+<td rowspan="2">+50</td>
+<td>なし</td>
+<td>7</td>
+<td>35</td>
+<td>73</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>3992</td>
+<td>19827</td>
+<td>40568</td>
+</tr>
+</table>
+<p>図１:例外発生時のNest数と実行時間の関係<br/>
+<img src="/static/images/2012/07/blog_134019_chart.png"/></p>
+<p/>
+<p>スタックトレースの深さに比例して、実行時間が増加していることがわかります。</p>
+<h1>教訓
+<ul>
+<li>なるべく例外を使わないプログラムを書いたほうが、パフォーマンスは良くなる</li>
+<li>特定の条件で大量に例外が投げられる場合は、StackTraceを出さないようにしておいたほうが良い</li>
+</ul>
+</h1><p>ただし、StackTraceを出力するのはデバッグや問題の調査に非常に有用であるため極力出したほうがいいです。<br/>
+パフォーマンスを気にするあまりに例外関連のログを減らしても、問題がどこで起きているかがわからなくなってしまうと本末転倒なので、例外はコストが高いということは頭の片隅に置きつつ十分にログは出力するようにしましょう。</p>
+<h1>付録</h1>
+<h3>実行結果例</h3>
+
+```
+Each test loops 100000 times.
+
+---- Test exception cost ----
+Not throw exception: 3 msecs
+Not throw exception with try/catch: 4 msecs
+Catch exception and get nothing: 83 msecs
+Catch exception and get only message: 79 msecs
+Catch exception and get message and stacktrace: 385 msecs
+
+---- Test stack trace depth cost ---
+1 nested
+  not throw: 2 msecs
+  throw    : 561 msecs
+5 nested
+  not throw: 1 msecs
+  throw    : 813 msecs
+10 nested
+  not throw: 1 msecs
+  throw    : 1170 msecs
+20 nested
+  not throw: 3 msecs
+  throw    : 1868 msecs
+50 nested
+  not throw: 7 msecs
+  throw    : 3961 msecs
+```
+
+<h3>検証コード</h3>
+```java
+public class ExceptionTest{
+
+	static final int LoopCount = 500000;
+
+	public static void main(String[] args){
+		System.out.println(String.format("Each test loops %s times.",LoopCount));
+
+		System.out.println();
+		System.out.println("---- Test exception cost ----");
+		testExceptionCost();
+
+		System.out.println();
+		System.out.println("---- Test stack trace depth cost ---");
+		testStackDepthCost();
+
+	}
+
+	static void testExceptionCost(){
+
+		doLoop("Not throw exception",new Function(){
+			public void apply(){
+				notThrowException();
+			}
+		});
+		doLoop("Not throw exception with try/catch",new Function(){
+			public void apply(){
+				try{
+					notThrowException();
+				}catch(Exception e){
+					String message = e.getMessage();
+					e.getStackTrace();
+				}
+			}
+		});
+
+		doLoop("Catch exception and get nothing",new Function(){
+			public void apply(){
+				try{
+					throwException();
+				}catch(Exception e){
+				}
+			}
+		});
+
+		doLoop("Catch exception and get only message",new Function(){
+			public void apply(){
+				try{
+					throwException();
+				}catch(Exception e){
+					String message = e.getMessage();
+				}
+			}
+		});
+
+		doLoop("Catch exception and get message and stacktrace",new Function(){
+			public void apply(){
+				try{
+					throwException();
+				}catch(Exception e){
+					String message = e.getMessage();
+					e.getStackTrace();
+				}
+			}
+		});
+	}
+
+	static void testStackDepthCost(){
+		testNested(1);
+		testNested(5);
+		testNested(10);
+		testNested(20);
+		testNested(50);;
+	}
+
+	static interface Function{
+		public void apply();
+	}
+
+	static void doLoop(String message , Function func){
+		long start = System.currentTimeMillis();
+		for(int i = 0;i < LoopCount;i++){
+			func.apply();
+		}
+		long delta = System.currentTimeMillis() - start;
+		System.out.println(String.format("%s: %s msecs",message,delta));
+	}
+
+	static void notThrowException(){
+		someProcess();
+		Object o = new Object();
+	}
+	static void throwException(){
+		someProcess();
+		throw new RuntimeException("Error");
+	}
+
+	static void nestedThrowException(int nest) throws Exception{
+		if(nest <= 0) {
+			someProcess();
+			throw new Exception("Nest " + nest);
+		}
+		else nestedThrowException(nest - 1);
+	}
+	static void nestedNotThrowException(int nest) throws Exception{
+		if(nest <= 0){
+			someProcess();
+		}
+		else nestedNotThrowException(nest - 1);
+	}
+
+	static void testNested(final int nest){
+		System.out.println(nest + " nested");
+		doLoop("  not throw",new Function(){
+			public void apply(){
+				try{
+					nestedNotThrowException(nest);
+				}catch(Exception e){
+					String message = e.getMessage();
+					e.getStackTrace();
+				}
+			}
+		});
+		doLoop("  throw    ",new Function(){
+			public void apply(){
+				try{
+					nestedThrowException(nest);
+				}catch(Exception e){
+					String message = e.getMessage();
+					e.getStackTrace();
+				}
+			}
+		});
+	}
+	static void someProcess(){
+		int a = 1;
+		int b = 1;
+		int c = a + b;
+	}
+}
+```

@@ -1,0 +1,66 @@
+---
+title: JavaのObject.hashCodeは結構衝突する件
+date: 2010-10-07
+tags: Scala,Tips
+authors: takezoux2
+---
+ 
+<p>Hash値の計算手抜きしてObject.hashCode使ってたけど、どうも衝突が発生している疑惑があったので、確かめてみました。結果としては、かなり衝突するということがわかりました。きちんとMD5とかSHAとか使ったほうがいいですねｗ</p>
+<h3>テスト</h3>
+<p>ランダムな20~30文字の小文字アルファベットの文字列からhashCodeを計算し、Hash値の衝突数を調べる</p>
+<h3>テストに使ったコード</h3>
+```scala
+import java.util.Random
+
+object Main{
+
+	def main(args : Array[String]) = {
+
+		var m : Map[Int,String] = Map()
+		var conflict = 0
+
+		def check = {
+			val s = randomString
+			val hashCode = s.hashCode
+			if(m.contains(hashCode)){
+				if(m(hashCode) != s){
+					println("Find same hashCode: " + s + " and " + m(hashCode))
+					conflict += 1
+				}
+			}else{
+			    m = m +( hashCode -> s)
+			}
+		}
+
+		val repeat = if(args.length > 0) args(0).toInt else 100
+
+		(0 until repeat).foreach( _ => check)
+
+		println("%s / %s conflics".format(conflict,repeat))
+
+	}
+	val r = new Random
+	def randomString = {
+		val chars = r.nextInt(10) + 20
+		(0 to chars).foldLeft("")( (s,i) => { s + ('a' + r.nextInt(26)).asInstanceOf[Char]})
+	}
+}
+```
+<h3>実行結果</h3>
+<div class="Console">
+<p>>scala Main 100000<br/>
+0 / 100000 conflics</p>
+<p>>scala Main 100000<br/>
+Find same hashCode: uzaiwypnpcglgjkmfuquogkil and exxjmayuwoperjewrffssstxj<br/>
+Find same hashCode: zxucborhherxalztzlzzdccikx and zcaofzchrqfmpyxkodxnx<br/>
+2 / 100000 conflics</p>
+<p>>scala Main 100000<br/>
+Find same hashCode: krjrsrqyhyejdcrouwmphppwiph and mwjaeywvamrxcyvwzdmlnm<br/>
+1 / 100000 conflics</p>
+<p>>scala Main 200000<br/>
+Find same hashCode: qmwgtgphfadgpuqwdjvbcfwqtdxkt and adwaorxslxsojnkrcxvnchvh<br/>
+Find same hashCode: dncdgmwvrbuzvlhexgawrqqcs and bcutmsquxuawdsvhnicygxzijmsf<br/>
+Find same hashCode: njnokarumjoqgoelirwjeuzkqfj and smavuvcorkdkbjeywqpvmvcnsan<br/>
+Find same hashCode: cyylhuovroawzitfxbellruqam and yznsmzvgcqzwfbgewbupblsuicflzo<br/>
+4 / 200000 conflics
+</p></div>

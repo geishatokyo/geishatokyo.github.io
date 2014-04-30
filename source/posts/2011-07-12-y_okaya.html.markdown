@@ -1,0 +1,96 @@
+---
+title: CoronaSDKを使ってみるその1
+date: 2011-07-12
+tags: Lua
+authors: y_okaya
+---
+ 
+<p>こんにちは。GTEエソヅニアの岡谷です。</p>
+<p>iPhone関連のライブラリは色々と出ていますが、今回は<a href="http://www.anscamobile.com/corona/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.anscamobile.com']);">CoronaSDK</a>というものを使ってみようと思います。</p>
+<p>Luaでスクリプトを書くというイカしたライブラリで、GLベースということも相まって非常に高速らしいです。<br/>
+詳しい説明については<a href="http://j-corona-group.jimdo.com/corona%E3%81%A8%E3%81%AF/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://j-corona-group.jimdo.com']);">こちら</a>をご参照ください。</p>
+<p>簡単なゲームっぽいものを作りたいなーと思った時に知るべき要素として下記がぱっと思いつきます。</p>
+<ul>
+<li>画像描画の方法</li>
+<li>タッチの検出方法</li>
+<li>当たり判定の仕方</li>
+</ul>
+<p>画像描画に関してはそれがないと要素として成り立たないので、適当に調べれば見つかります。<br/>
+色々調べてみると画面遷移を行うテンプレートがあったので、<a href="http://developer.anscamobile.com/code/director-class-10" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://developer.anscamobile.com']);">そちら</a>へのリンクを張っておきます。<br/>
+上記リンク先のテンプレートで、画像の描画とタッチの検出、ついでに画面遷移までクリアになりました。</p>
+<p>あとは当たり判定なのですが、coronaSDKにはBox2Dというライブラリが内包されています。<br/>
+コイツは物理ライブラリで、重力係数や摩擦係数、反発係数とかを設定してやれば勝手によしなに<br/>
+やってくれるこれまたイカしたもの、らしいです。</p>
+<p>コイツを使ってあたり判定を実装します。<br/>
+coronaSDK上はPhysicsというモジュールになっているのでソイツを少しばかりいじってみました。</p>
+<p>一言で当たり判定と言っても、色々あるのですが、下記の二種類で網羅できるでしょう。</p>
+<ul>
+<li>移動できるできないの判定のみ</li>
+<li>当たり判定時に任意の動作をする</li>
+</ul>
+<p>今回は<strong>移動できるできないの判定のみ</strong>について、サラッとコードを書いてみます。</p>
+```scala
+local physics = require("physics")
+physics.start()
+
+-- ボールの設定
+-- density・・・密度、　friction・・・摩擦係数、bounce ・・・反発係数
+local ballProperty = {density = 1.0, friction = 0.3, bounce = 0.2, filter = {categoryBits = 4, maskBits = 3}}
+local ball = display.newCircle(100,100,50)
+ball:setFillColor(128,128,128)
+
+-- 動くものとして物理エンジンに登録
+physics.addBody(ball,"dynamic",ballProperty)
+
+-- 地面の設定
+local horizonProperty = {density = 1.0, friction = 0.3, bounce = 0.2, filter = {categoryBits = 1, maskBits = 4}}
+local horizon = display.newRect( 0, 479, 320, 1 )
+horizon:setFillColor( 0, 0, 0, 0) -- 見えないようにしておく
+
+-- 動かないものとして物理エンジンに登録
+physics.addBody(horizon,"static",horizonProperty )
+
+-- 壁の設定
+local wallProperty = {density = 1.0, friction = 0.3, bounce = 0.2, filter = {categoryBits = 2, maskBits = 4}}
+
+local wallLeft = display.newRect( 0, 1, 1, 480 )
+wallLeft:setFillColor( 0, 0, 0, 0)
+physics.addBody( wallLeft, "static", wallProperty )
+
+local wallRight = display.newRect( 319, 1, 1, 480 )
+wallRight:setFillColor( 0, 0, 0, 0)
+physics.addBody( wallRight, "static", wallProperty )
+```
+<p>デフォルトで重力定数が設定されているので、上記コードを実行するとボールが落ちてくる表現が再生されます。</p>
+<p><img src="/static/images/2011/07/bounce.gif" alt="バウンド"/></p>
+<p>サラッと書きましたが、ちょっぴり理解しづらい部分はありますでしょうか。<br/>
+一般的にプロパティに設定している下記の値が特に理解しづらいポイントかと思います。</p>
+```scala
+filter = {categoryBits = 1, maskBits = 4}
+filter = {categoryBits = 2, maskBits = 4}
+filter = {categoryBits = 4, maskBits = 3}
+```
+<p>上記の値は、当たり判定を行う対象を指定する部分になります。<br/>
+categoryBits は自身のカテゴリを指すBit値、maskBitsは当たる対象を指すBit値になります。<br/>
+例えば</p>
+```scala{categoryBits = 1, maskBits = 4}```
+<p>であれば、自身は<strong>1</strong>というカテゴリでコイツに当れるのはカテゴリが<strong>4</strong>のものだけになります。<br/>
+ややこしいのは</p>
+```scala{categoryBits = 4, maskBits = 3}```
+<p>で、自身は<strong>4</strong>というカテゴリでコイツに当れるのは<strong>3</strong>となっていますが、<br/>
+コイツはbit値なので、カテゴリが<strong>1</strong>と<strong>2</strong>のものになります。</p>
+<p>またこのbitの設定値ですが、相互に指定しあう必要があるようです。<br/>
+どういうことかというと</p>
+```scala
+filter = {categoryBits = 1, maskBits = 0}
+filter = {categoryBits = 4, maskBits = 3}
+```
+<p>や</p>
+```scala
+filter = {categoryBits = 1, maskBits = 4}
+filter = {categoryBits = 4, maskBits = 0}
+```
+<p>のような片側のみ指定しているようなコードでは当たり判定が発生しません。</p>
+<p>そんなこんなで壁にぶつかるだけの判定は、特に自分で物理演算を組むことなく<br/>
+非常にリーズナブルなコードで実現できました。</p>
+<p>次回は当たり判定時に任意のコードを実行する方法を紹介したいと思います。</p>

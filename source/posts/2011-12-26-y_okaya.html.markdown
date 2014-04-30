@@ -1,0 +1,45 @@
+---
+title: Play frameworkで動的にリンクを作る(for scala)
+date: 2011-12-26
+tags: Scala,Tips,play framework
+authors: y_okaya
+---
+ 
+<p>こんにちは。GTEエソヅニアの岡谷です。</p>
+<p>クリスマスはPlay framework(Ver1.2.4)とアツい夜を過ごしたので、その時得た<br/>
+Tipsをご紹介します。弊社ではScalaが最大勢力のメジャー言語なので、Play frameworkでも<br/>
+scalaを使ってみようと検証中です。</p>
+<p>動的にリンクを作りたいケースがあり、テンプレートに実装していたのですが、Java版で書くと<br/>
+下記のようなことをScala版でもしようとしました。</p>
+```html
+　<a href="@{Application.show(_post.id)}"><span>link</span></a>
+```
+<p>参考URL：<a href="http://www.playframework.org/documentation/1.0.1/guide4" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.playframework.org']);">Playframework  tutorial(Java)</a></p>
+<p>このコードはJava版とScala版のリファレンスを見ると、Scala版にはサンプルコードがないのですが、<br/>
+見る限りそのまんま使えそうに見えます。</p>
+<p>参考URL：<a href="http://scala.playframework.org/documentation/scala-0.9.1/templates" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://scala.playframework.org']);">Scala templates</a></p>
+<p>しかしながら、Scala版でそのまんま使おうとしたところ使えませんでした。<br/>
+Application.showのリンク先がこのコードの部分でレンダリングされてしまうのです。</p>
+<p>あれー、と思ってplay-scalaのソースをまさぐってみたら下記のコードを見つけました。</p>
+<p>views.object in ScalaTemplate.scala</p>
+```scala
+        def a(action: => Any)(body: => Html) = Html {
+            var actionDef = new play.mvc.results.ScalaAction(action).actionDefinition
+            if(actionDef.method == "GET") {
+                """<a href="""" + actionDef.url + """">""" + body + """</a>"""
+            } else {
+                val uuid = play.libs.Codec.UUID
+                """<a href="javascript:document.getElementById('""" + uuid + """').submit()">""" + body + """</a><form id="""" + uuid + """" action="""" + actionDef.url + """" method="""" + actionDef.method + """"></form>"""
+            }
+        }
+```
+<p>この機能を使えばうまくいきそうです。<br/>
+書いてみるとこんな感じですね。</p>
+```html
+  @a(Application.show(_post.id)){
+    <span>link</span>
+  }
+```
+<p>動かしてみるときちんと動きました。</p>
+<p>以上、Play framework(for scala)で動的リンクを作るためのちょっとしたTipsでした。</p>
+							

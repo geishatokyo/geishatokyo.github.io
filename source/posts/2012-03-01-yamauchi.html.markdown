@@ -1,0 +1,55 @@
+---
+title: Flash変換ライブラリ「Lightning」を公開しました
+date: 2012-03-01
+tags: Lightning,Python
+authors: yamauchi
+---
+ 
+<p>芸者東京の山内です。<br/>
+弊社にて開発したPythonベースFlash変換ライブラリ「<strong>Lightning</strong>」をオープンソースで公開しました。<br/>
+<a href="https://github.com/geishatokyo-lightning/lightning" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">lightning (github)</a><br/>
+ライセンスはThe MIT Licenseです。</p>
+<p>このライブラリは弊社アプリ「おみせやさん」のiPhone版で店やアバターを表現するのに使っています。<br/>
+Flashで作成したswfファイルを、LightningによってiPhone用のWeb素材に変換します。</p>
+<h2>Lightningのすごい所</h2>
+<p><strong>1. 高い再現率</strong><br/>
+SVGによるベクターグラフィックスと、CSS3-keyframeAnimationを組み合わせて利用し、再現率の高いアニメーションを実現しています。<br/>
+swfとほぼ同等の見た目が再現できます。</p>
+<p><strong>2. 滑らかなアニメーション</strong><br/>
+例えば弊社アプリ「おみせやさん」の素材の内部パーツ点数は80-140程度でとても多く、既存のswf変換ライブラリはコマ落ちが発生してしまうのですが、LightningですとiPhone3GSの性能でも十分な速度でアニメーションを再生できます。<br/>
+「おみせやさん」の10000種類ほどある素材に関してはアニメーション速度が遅れたり、コマ落ちしたりという現象は発生していません。</p>
+<p><strong>3. 高速な動作</strong><br/>
+iPhoneではcanvasを使った描画の場合、CPUの速度の関係で最新の機種でも15fps程度が限界となってしまいます。<br/>
+しかし、Lightningによって生成されたアニメーションはGPUを使うように調整されているため、24fpsやそれ以上の滑らかなアニメーション表示が可能になります。<br/>
+また、iPhoneへのデータは静的なSVG, CSSとして渡されているため、ほかのjavascriptを中心としたライブラリと違い、データ取得完了から描画開始までの待ち時間がありません。</p>
+<p> </p>
+<hr/> 
+<h2>Lightningの使い方</h2>
+<p>LightningはLinux環境での動作を想定しています。<br/>
+Python&gt;=2.5,&lt;3.0がすでにインストールされているものとします。<br/>
+以下の手順にしたがってリポジトリに入っているサンプルファイルを変換してみましょう。</p>
+<p><strong>1. lightningのダウンロード</strong><br/>
+githubからcloneします。<br/>
+<code>git clone git://github.com/geishatokyo-lightning/lightning.git</code></p>
+<p><strong>2. lightningのインストール</strong><br/>
+<code>cd lightning &amp;&amp; python setup.py install</code></p>
+<p><strong>3. サンプル実行</strong></p>
+<p><strong> </strong><code>cd lightning_core/sample &amp;&amp; python xml2html.py sample1.xml sample1.html</code></p>
+<p>同梱してあるサンプルファイルを変換します。sample1.html が生成されます。</p>
+<p>iPhoneをターゲットとしているため、SafariまたはChromeでご確認ください。</p>
+<p> </p>
+<hr/> 
+<h2>Demo</h2>
+<p>SWFとlightningを並べてみました。<br/>
+SafariかChromeで見てください。<br/>
+Firefoxだと下記のサンプルが正常に表示されないようです(WordPressのinline htmlの問題っぽい)</p>
+<p><strong>SWF</strong><br/>
+<object width="240" height="240" type="application/x-shockwave-flash" data="/images/2012/03/lightning_avatar.swf"><br/>
+</object><br/>
+<strong>Lightning</strong><br/>
+<iframe style="width:320px;height:320px" src="/static/images/2012/03/lightning_avatar.html"/> </p>
+<p><strong>使用上の注意</strong><br/>
+Lightningでは、swfmillによってswf素材をxmlに変換する必要があります。<br/>
+<a href="http://swfmill.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://swfmill.org']);">http://swfmill.org/</a> から swfmill をダウンロードしてインストールしましょう。（Linuxだけでなく、WindowsやMacにも対応しています。）<br/>
+以下のコマンドでswfをswfmillでxmlに変換できます。<br/>
+<code>swfmill swf2xml sample.swf sample.xml</code></p>

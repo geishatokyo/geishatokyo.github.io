@@ -1,0 +1,364 @@
+---
+title: MavenからSBTへのビルド環境の移行
+date: 2012-01-25
+tags: Scala,maven,sbt
+authors: takezoux2
+---
+ 
+<p>この記事は、sbt0.11.X系列の記事です。それ以前のバージョンでは正しく動作しません。</p>
+<h2><a href="https://github.com/harrah/xsbt/wiki" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">SBT</a>とは</h2>
+<p>Scala(とついでにJava)のためのビルドツールです。ちなみにSimple Build Toolの略です。<br/>
+特徴としては、設定等全てscalaで書くことができ拡張性が高いビルドツールになっています。</p>
+<p>この記事では、Mavenの主要な機能を順次sbtへと移植していきます。<br/>
+現在ScalaをMavenと連携して使用しているけど、sbtも安定してきた気がするしsbtへ乗り換えてみようかなと思っている人達を対象にしています。<br/>
+sbtに関しては、使う上での最低限の情報と、Mavenからの移植に必要な部分のみ触れています。<br/>
+きちんとsbtの使い方を知りたい方は、本家のWikiを読んでください。</p>
+
+<h2>SBTのセットアップ</h2>
+<h2 id="install">1. SBTのインストール</h2>
+<p>
+sbtは<a href="https://github.com/harrah/xsbt/wiki" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">こちら</a>から取得できます。</p>
+<h3>1.1 Windows</h3>
+<p>まず、<a href="https://github.com/harrah/xsbt/wiki/Getting-Started-Setup" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">Setup</a>のinstalling sbtのところからsbt-launch.jarをダウンロードして適当なフォルダに置いてください。<br />
+次にjarを保存したディレクトリに以下の内容を書いたsbt.batを作ります。</p>
+```
+set SCRIPT_DIR=%~dp0
+java -Xmx512M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
+```
+<p>最後に、コントロールパネルの環境変数でPathにこのsbt.batとsbt-launch.jarをおいたディレクトリを通してください。<br />
+以上でSBTを使う準備は完了です。</p>
+<h3>LinuxとかMacとか</h3>
+<p>だいたい手順は一緒です。書くのがめんどくさいので本家Wikiを参照してください。
+</p>
+<h2 id="hello">2. Hello SBT</h2>
+<h3>2.1 起動</h3>
+<p>sbtを使うだけならば、コマンドプロンプトから適当なディレクトリで</p>
+```
+sbt
+```
+<p>とだけ入力してください。SBTの対話モードが起動します。</p>
+<h3>2.2 ソースコード</h3>
+<p>sbtのプロジェクトのディレクトリ構成は以下のようになります。</p>
+```
+src/
+  main/
+    resources/
+       <リソースファイル>
+    scala/
+       <scalaソースコード>
+    java/
+       <javaソースコード>
+  test/
+    resources
+       <テストリソース>
+    scala/
+       <scalaテストコード>
+    java/
+       <javaテストコード>
+project
+       <sbtプロジェクトファイル>
+target
+       <コンパイルされたクラスファイルなどsbtが自動生成したファイルの出力先>
+```
+<p>Mavenとソースコードのディレクトリ構成は同じです。</p>
+<p>src/main/scalaに以下のようなhellosbt.scalaを入れておいてください。</p>
+```scala
+object App{
+  def main(args : Array[String]) {
+    println("hello sbt!")
+  }
+}
+```
+<h3>2.3 コンパイルと実行</h3>
+<p>実行は次の手順で行えます。</p>
+```
+> sbt
+sbt> reload
+ ...
+sbt> update
+  ...
+  [success] ...
+sbt> compile
+  [success] ...
+sbt> run
+hello sbt!
+```
+
+<p>これでさきほどのScalaプログラムが実行できました。簡単ですね。</p>
+<h2 id="overview">3. SBTの概要</h2>
+<h3>3.1 よく使うSBTコンソールコマンドの説明</h3>
+<p>先ほどHelloWorldで使用した4つのコマンドに加えて、よく使うコマンド5つを簡単に説明しておきます。とりあえずこれだけ覚えとけばsbtは使えます。</p>
+<h3>reload</h3>
+<p>sbtのプロジェクトファイルを再読み込みします。sbtはプロジェクトファイルの変更を監視していないので、依存関係の追加などの設定変更を行った場合、sbt自体を再起動するか、reloadコマンドを実行してやる再読み込みを行う必要があります。(今さっきのHello sbtではこのコマンドは不要でした。)</p>
+<h3>update</h3>
+<p>設定した依存関係を解決し、jarファイルをローカルのIvyレポジトリへダウンロードしてきます。依存関係に変更がない限り、1度だけ実行すれば大丈夫です。(これも先ほどのHello sbtでは不要でした)</p>
+<h3>compile</h3>
+<p>コンパイルをします。</p>
+<h3>test</h3>
+<p>src/test/以下のテストを実行します。</p>
+<h3>run</h3>
+<p>自動でmain関数を探して実行します。</p>
+<h3>console</h3>
+<p>依存関係のjarを全てパスに通した状態でscalaのREPLを起動します。</p>
+<h3>publish</h3>
+<p>プロジェクトのプログラムを、ローカルレポジトリや外部のレポジトリへ配置します。</p>
+<h3>clean</h3>
+<p>target内のファイルを削除し、まっさらな状態にリセットします。全てのソースを再コンパイルしたい場合などに使用します。</p>
+<h3>tasks</h3>
+<p>現在のsbt projectで使用可能なコマンドの一覧が表示されます。他の機能は暇な時にこれで表示させてみてください。</p>
+<p>Mavenの違いとしては、mvn compileやmvn testでは自動で依存関係の更新まで行なってくれますが、sbtでは依存関係の更新は明示的にupdateを実行する必要があります。(そのかわり、testやcompileのときにいちいち依存関係に解決を行わないので早い)<br />
+あとは、sbtには簡単にコードを実行できるrunとconsoleコマンドがあります。とくにconsoleのほうは、ライブラリを試しに使って見るときに非常に重宝します。</p>
+<h3>3.2 pom.xmlに変わるもの</h3>
+<p>sbtでは、</p>
+<ul>
+<li>Build.sbtによる、KeyValue型簡易設定方式</li>
+<li>projectディレクトリに*.scalaを記述する詳細設定方式</li>
+</ul>
+<p>の2種類のプロジェクト設定方法が用意されています。<br />
+今回は、後者の詳細設定方式を使いたいと思います。</p>
+
+<h2>プロジェクトの準備</h2>
+<h2>1. SBTプロジェクトファイルの準備</h2>
+<p>今回は、JSONライブラリの<a href="http://code.google.com/p/google-gson/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://code.google.com']);">GSON</a>を使ってJSONのパースをするプログラムとそのテストを作りたいと思います。<br />
+まず、適当に空のディレクトリを作成しそこへ移動してください。</p>
+<h3 id="make_project_file">1.1 sbtプロジェクトファイルの用意</h3>
+<p>projectディレクトリを作成し、Build.scalaというファイルを作成し以下のコードを書いてください。</p>
+```scala
+import sbt._
+import Keys._
+
+object HelloBuild extends Build {
+  lazy val root = Project(id = "hello",
+    base =  file("."),
+    settings = Project.defaultSettings ++ Seq(
+      version := "0.0.1-SNAPSHOT"
+    )
+  )
+
+}
+```
+<p>あとは、sbtを実行(すでに実行している場合は、reloadで再読み込み)を行なってエラーが起きないことを確認してください。<br />
+これが、最小構成のsbtのプロジェクトファイルになります。<br />
+sbtの思想を簡単に説明しておくと、sbtでは全ての設定がSettingKeyとValueのペアとなっています。この例では、</p>
+```
+version := "0.0.1-SNAPSHOT"
+```
+<p>の部分が設定に相当し、versionというSettingKeyに"0.0.1-SNAPSHOT"というValueを設定しています。その他の設定もこのようにKeyValueのペアとして表現されます。</p>
+<h2 id="base_setting">2. 基本設定</h2>
+<h3>2.1 groupIdやartifactId等の設定</h3>
+<p>mavenのgroupIdやartifactIdなどの基本情報の設定は以下のように対応します。<br />
+これ以外の使用可能なSettingKeyはsbt.Keysに定義されています。</p>
+<table border="1">
+<tr>
+<td>Mavenでのタグ名</td>
+<td>SettingKey</td>
+</tr>
+<tr>
+<td>groupId</td>
+<td>organization</td>
+</tr>
+<tr>
+<td>artifactId</td>
+<td>Project@id + "_" + scalaVersion</td>
+</tr>
+<tr>
+<td>version</td>
+<td>version</td>
+</tr>
+<tr>
+<td>description</td>
+<td>description</td>
+</tr>
+</table>
+```scala
+import sbt._
+import Keys._
+
+object HelloBuild extends Build {
+  lazy val root = Project(id = "sbt-gson",
+    base =  file("."),
+    settings = Project.defaultSettings ++ Seq(
+      version := "0.0.1-SNAPSHOT",
+      organization := "com.geishatokyo",
+      description := "this is gson program"
+    )
+  )
+}
+```
+<p>はpomファイルの</p>
+```xml
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.geishatokyo</groupId>
+    <artifactId>sbt-gson_2.9.1</artifactId>
+    <packaging>jar</packaging>
+    <description>this is gson program</description>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>sbt-gson</name>
+    ...
+</project>
+```
+<p>と等価になります。なお、sbtコンソールで</p>
+```
+make-pom
+```
+<p>コマンドを使用するとpomファイルを生成してくれます。</p>
+<h3>2.2 scala version</h3>
+<p>sbtではコンパイルに使用するscalaのバージョンと、CrossVersionBuildの設定が簡単に行えます。<br />
+現在はデフォルトではscala2.9.1が使用されます。</p>
+<p>SettingKeyは</p>
+<table border="1">
+<tr>
+<td>scalaVersion</td>
+<td>String</td>
+<td>scalaVersion := "2.9.1"</td>
+</tr>
+<tr>
+<td>crossScalaVersions</td>
+<td>Seq[String]</td>
+<td>crossScalaVersion := Seq("2.7.7","2.8.1","2.9.0","2.9.0-1","2.9.1")</td>
+</tr>
+</table>
+<p>crossScalaVersionsを設定しておくと、</p>
+```
++compile
++publish
+```
+<p>と+を付けてコマンド実行すると設定したscala version全てでビルドや配置を行なってくれます。</p>
+<p>今回はscala2.9.1とscala2.9.0でコンパイルします。<br />
+最終的なBuild.scalaは以下のようになります。</p>
+```scala
+import sbt._
+import Keys._
+
+object HelloBuild extends Build {
+  lazy val root = Project(id = "sbt-gson",
+    base =  file("."),
+    settings = Project.defaultSettings ++ Seq(
+      version := "0.0.1-SNAPSHOT",
+      organization := "com.geishatokyo",
+      description := "this is gson program",
+      scalaVersion := "2.9.1",
+      crossScalaVersions := Seq("2.9.0-1","2.9.0")
+    )
+  )
+}
+```
+
+<h2>依存関係解決</h2>
+<p>この項目ではおもに依存関係の解決方法の説明をします。<br />
+sbtは内部で<a href="http://ant.apache.org/ivy/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://ant.apache.org']);">Apache Ivy</a>を使用しています。<br />
+MavenCentralやScala-toolsなどのMavenRepositoryは問題なく使えますが、ローカルのMavenとの連携は多少設定が必要となります。</p>
+<h2 id="dependency">1. 依存関係の設定</h2>
+<p>依存関係は、libraryDependenciesのSettingKeyに設定することになります。<br />
+libraryDependenciesの受け取る型はSeq[ModuleID]となっており、依存するライブラリを全て列挙することとなります。</p>
+<h3>javaのライブラリの場合</h3>
+<p>mavenでは</p>
+```xml
+<dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.1</version>
+</dependency>
+```
+<p>sbtでは</p>
+```scala
+libraryDependencies += "com.google.code.gson" % "gson" % "2.1" % "compile"
+```
+<p>のように書きます。<br />
+まず、演算子が := では無く、 +=になっていることに注意してください。<br />
+:= は代入となり、値を全て上書きしてしまいます。+=は新しい要素の追加になります。<br />
+ModuleIDはimplicit conversionによって変換されています。演算子には%を使います。書式は</p>
+```
+"groupID" % "artifactID" % "version" [% "scope"]
+```
+<p>です。scopeには、"compile","test","provided"が使用可能です。またscopeは省略可能で、デフォルトでは"compile"とみなされます。</p>
+<h3>scalaライブラリの場合</h3>
+<p>scalaのライブラリは慣習的にartifactIDの末尾にscalaのバージョンが付与されます。</p>
+```xml
+<dependency>
+    <groupId>org.scalatest</groupId>
+    <artifactId>scalatest_2.9.1</artifactId>
+    <version>1.7.RC1</version>
+</dependency>
+```
+<p>このようなscalaライブラリの場合、sbtでは</p>
+```scala
+libraryDependencies += "org.scalatest" %% "scalatest" % "1.7.RC1"
+```
+<p>と設定します。注意する点は、groupIDのあとの演算子が % -> %%になっており、artifactIDにscalaVersionをくっつけていないという点です。<br />
+このように記述することで、sbtが依存関係の解決を行う際に自動でartifactIDに現在設定しているscalaのバージョンを付与してくれます。</p>
+<h2 id="external_repo">2. 外部Repositoryの設定</h2>
+<p>デフォルトでMavenCentralRepositoryやScalaToolsが設定されています。<br />
+が場合によっては社内Repositoryや野良Repositoryを使いたくなる場合があると思います。<br />
+このようなRepositoryの設定はresolversのSettingKeyに追加します<br />
+設定方法</p>
+```scala
+resolvers ++= Seq(
+  "Company Repos" at "http://hoge.nexus.com",
+  "Another Company Repos" at "http://another.company.com"
+)
+```
+<p>今回は複数のRepositoryを一括で登録して見ました。<br />
+代入演算子++=はSeq同士を結合する演算子になります。resolversはSeq[Resolver]なのでこの演算子が使用可能です。<br />
+また、今回もimplicit conversionが使用されておりReslverを明示的にインスタンス化する必要はありません。</p>
+<h2 id="maven_local">3. MavenLocalRepositoryの設定</h2>
+<p>Mavenを使っている人はmvn installでローカルにいろいろなライブラリをインストールしている思います。<br />
+しかし、sbtはIvyを使用しているので、デフォルトではMavenのローカルレポジトリを参照してくれません。<br />
+でも安心して下さい。sbtには簡単にMavenLocalRepositoryを追加する手段が用意されています。</p>
+```scala
+resolvers += Resolver.mavenLocal
+```
+<p>を書き加えるだけでMavenLocalRepositoryの設定は完了します。</p>
+<h2 id="global_setting">4. settings.xmlの置き換え</h2>
+<p>Mavenを使っているなら社内レポジトリなどの共通設定は当然settings.xmlに全て設定して無駄な手間をなくしていると思います。<br />
+sbtを使っていても同じ事を思いますよね？sbtにもsettings.xmlのようにグローバルな設定を記述する方法が用意されています。</p>
+<p>ユーザーのホームディレクトリの下に.sbtディレクトリを作り、その中にglobal.sbtファイルを作成してください。</p>
+```
+windows
+C:\Users\{user name}\.sbt\global.sbt
+Linuxなど
+~/.sbt/global.sbt
+```
+<p>global.sbt</p>
+```scala
+resolvers += "Company Repository" at "http://mycompany.nexus.com/maven/snapshot/"
+
+credentials += Credentials("Sonatype Nexus Repository Manager", "mycompany.nexus.com", {user name}, {password})
+```
+<p>設定の方法はBuild.scalaとほぼ一緒です。ただし、Build.sbtと同様な簡易記法になります。そのため、クラスの定義は不要で、SettingKeyとValueだけを列挙すれば大丈夫です。<br />
+注意点は、1設定ごと1行開けないと正しく動きません。</p>
+<p>credentialsは、認証の設定です。APIによると</p>
+```scala
+Credencial.apply(realm : String,host : String, userName : String, password : String)
+```
+<p>となっています。認証のかかっているサーバーごとに正しく設定しましょう。</p>
+<p>現在のBuild.scalaはこのようになっています。<br />
+依存関係は、いくつも列挙することになると思うので別途定義しておいたほうが綺麗になります。</p>
+```scala
+import sbt._
+import Keys._
+
+object HelloBuild extends Build {
+
+  val gson = "com.google.code.gson" % "gson" % "2.1"
+  val scalaTest = "org.scalatest" %% "scalatest" % "1.7.RC1" % "test"
+  lazy val dependencies = Seq(
+    gson,
+    scalaTest
+  )
+
+  lazy val root = Project(id = "sbt-gson",
+    base =  file("."),
+    settings = Project.defaultSettings ++ Seq(
+      version := "0.0.1-SNAPSHOT",
+      organization := "com.geishatokyo",
+      description := "this is gson program",
+      scalaVersion := "2.9.1",
+      crossScalaVersions := Seq("2.9.0-1","2.9.0"),
+      libraryDependencies ++= dependencies,
+      resolvers += Resolver.mavenLocal
+    )
+  )
+}
+```

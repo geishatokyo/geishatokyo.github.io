@@ -1,0 +1,143 @@
+---
+title: GTE Git branching model
+date: 2013-01-30
+tags: git
+authors: k_ryoko
+---
+ 
+<p>こんにちは、アプリ開発プログラマ ryoco と申します。<br/>
+最近 git 開発にして捗ったというスライドを読みまして、実は皆、他社の git の使いかたに興味があるのではと思い書いてみました。<br/>
+まぁ、他社の開発スタイルというのは皆知りたい所ですよね!<br/>
+という訳で、弊社のとあるwebアプリのVCSの歴史と使い方の紹介でございます。</p>
+<p>9ヶ月くらい前まで svn で運用していましたが、開発者が増えたのでブランチを切る事が多くなり、git に変更しました。<br/>
+ブランチ開発をする時は、svnよりgitの方がはるかに便利だからです。例えば、branchを切るのが高速、conflictが少ないなどの点で優れています。他にもありますが色々な所で見るので省略。<br/>
+因みに開発規模は現在5~6人です。<br/>
+主にプログラマが使う、html ファイルとプログラムソースファイルのプロジェクトのみで、仕様書や画像ファイルは相変わらず svn です。</p>
+<ul>
+</ul><ol>
+<li>svn</li>
+<li>適当な branching の git <strong>[git 第一段階]</strong></li>
+<li><a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> ベースのgit <strong>[git 第二段階]</strong> <- イマココ</li>
+</ol>
+
+<p>という風に変わっていきました。<br/>
+サブライブラリに hg を使っていた時代もありますが、省略。<br/>
+svn の時代は別に説明しても仕方がないので、git から説明していきます。</p>
+<h2>git 第一段階</h2>
+<ul>
+<li>ブランチは大きく分けて、3種類あります。</li>
+</ul><ol>
+<li><strong>master</strong> : 開発用</li>
+<li><strong>feature branch</strong> : それぞれの開発用。名前は各自適当に決める</li>
+<li><strong>release_yyMMdd</strong> : yyMMddリリースのリリースブランチ</li>
+</ol>
+
+<ul>
+<li>時系列で使い方を説明していきます。</li>
+</ul><ol>
+<li>それぞれの開発者が master から feature branch を作成し作業する。</li>
+<li>開発が完了、もしくは開発かつデバッグが完了したら master にマージ。デバッグするときは、master から fearure branch にマージしたりしてました。</li>
+<li>リリースするときに master から release 用のブランチを切って本番にリリース。</li>
+<li>リリースが完了したrelease_yyMMdd ブランチは削除していきます。</li>
+</ol>
+
+<ul>
+図にすると以下のようになります。<br/>
+<a href="/images/2013/01/old-git-flow.png"><img src="/static/images/2013/01/old-git-flow.png" alt="第一段階フロー図" title="old git flow" width="846" height="655" class="alignnone size-full wp-image-178979"/></a>
+</ul>
+<ul>
+<li>追記</li>
+</ul><ol>
+<li>releaseyyMMdd を切る前の master に、リリースしてはいけない機能というのがまれに混入します。<br/>
+その時は releaseyyMMdd で revert してしまいます。 releaseyyMMdd はリリース後、捨てられるので躊躇なく revert できるんですね。<br/>
+しかし、リリースしてはいけない機能は基本的に feature branch で管理していたので、revert しない事の方が多かったです。</li>
+<li>リリースする時はもちろん tag を切ります。</li>
+<li>リリースしてからバグに気がついた時は master で修正し、releaseyyMMdd に cherry-pick してました。</li>
+</ol>
+
+<h2>git 第二段階</h2>
+<ul>
+第一段階の運用方法でも手動でデプロイする分にはあんまり問題なかったんですが、システムデプロイの都合上、git の運用方法を変更する事になりました。<br/>
+自分達で考えても良い方法が思いつかなかったので、賢い人が考えたモデルに則り、慣れたら応用するか新しいモデルを考えようと思いました。<br/>
+大体 <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> の通りに運用していますが、運用上での問題点や注意点を書いていきたいので、簡易版で説明します。<a href="http://keijinsonyaban.blogspot.jp/2010/10/successful-git-branching-model.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://keijinsonyaban.blogspot.jp']);">日本語訳</a>もありますし、わざわざ説明する事も無いような気はしてますが。
+</ul>
+<ul>
+できれば <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> を読んでからの方が分かり易いです。
+</ul>
+<ul>
+<blockquote><p>ちょっと休憩<br/>
+	 <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> がなんでこんな複雑で、このモデルで運用しなければならんのだ、という感じなんですが、なぜなんでしょう…。<br/>
+	自分達で git の運用を考える場合は、弊社第一段階みたいな感じか、cherry-pick職人が発生するとか、後々後悔する形になってしまうのだと思います。<br/>
+	master と develop は分離されていた方が安全ですし、コードレビューや gitlab で merge-requestを使った運用とか考えると、<strong>漏れなく master にも develop にも commit を含められる</strong>、今のところこの最強モデルなんでしょうね たぶん。</p></blockquote>
+</ul>
+<ul>
+<li>ブランチは大きく分けて、5種類あります。</li>
+</ul><ol>
+<li><strong>develop</strong> : 開発用</li>
+<li><strong>master</strong> : リリース用</li>
+<li><strong>release_x.x</strong> : x.x (version) リリースのリリースブランチ</li>
+<li><strong>hotfix_x.x</strong> : リリース後の修正ブランチ</li>
+<li><strong>feature branch</strong> : それぞれの開発用。名前は各自適当に決める</li>
+</ol>
+
+<ul>
+<li>同様に時系列で使い方を説明していきます。<br/>
+(日付けからversionに変わったのは、実際の運用でこうしているというだけで、深い意味はありません。)</li>
+<li>version は 1.0 から 2.0 に上がるという体で説明して行きます。</li>
+</ul><ol>
+<li>develop から開発者が feature branch を切り、開発が完了したら develop に戻します。</li>
+<li>develop からrelease_2.0 のブランチを切ります。<br/>
+このブランチで、デバッグ、修正をします。デバッグをしてくれる運営サイドの人とかが説明文などの html を修正したりもします。プログラマ以外も git ブランチくらいは使いこなすスキルが必要です。(誰でもできるよね!)</li>
+<li>release_2.0 用のデバッグか完了し、リリースができる状態になったら develop 、master にマージします。<br/>
+ここで release_2.0 の役目は終わりです。</li>
+<li>最後に master からtagを切り、本番にリリースします。</li>
+<li>本番でバグなど出た場合、master から hotfix ブランチを作成します。<br/>
+master から hotfix_2.1 という感じでマイナーバージョンを付けています。</li>
+<li>バグの修正が完了したら hotfix_2.1 を master、develop <strong>or</strong> release_3.0にマージします。<br/>
+develop <strong>or</strong> release_3.0である理由は、release_3.0 はそのうち develop にmergeされるからですね。</li>
+</ol>
+
+<ul>
+図にすると以下のようになります。<br/>
+<a href="/images/2013/01/git-flow-2.png"><img src="/static/images/2013/01/git-flow-2.png" alt="第二段階のフロー図" title="git flow" width="895" height="793" class="alignnone size-full wp-image-179107"/></a>
+</ul>
+<ul>
+<li>追記</li>
+</ul><ol>
+<li>
+非プログラマ以外への教育コスト<br/>
+がかかるように見えますが、上記モデルを完全に理解させる必要は無く、今はrelease_x.xだからこのブランチで作業してね、という情報共有さえできればなんとかなります。たぶん…</li>
+<li>マージ多くて面倒臭そだし忘れそう…<br/>
+という感じだと思いますが、基本的にマージをしなければいけないのは release_x.x と hotfix_x.x で、しかもこれらは両方とも同じ2箇所にマージしてしまえば良いので、慣れれば楽です。(魔法の言葉ですね)<br/>
+ただ、プロジェクトの git 管理者は立てて置いた方が良いと思います。
+</li>
+<li>破綻するパターン<br/>
+ルールに則らないと破綻します。develop から release_x.x を切らないとか、 release_x.x がいくつも切られてしまう場合などです。release_x.x も2個までだったらマージする人ががんばれば何とか対応ができなくないですが、辞めた方が良いです。</li>
+<li>feature branch の develop へのマージについて<br/>
+release_x.x 上でのデバッグ中に致命的なバグが出て、リリースにまにあわないっていう事があると思います。<br/>
+その場合、release_x.x からは必ず、場合によっては developからも revert 等する必要があります。<br/>
+そういう時の為に、feature branch をdevelop にマージする際は、git merge –squash を使っています。<br/>
+そうするとコミットが纏められるので revert が楽になり、release_x.x の他の機能の修正に影響を出さずにリリースできます。<br/>
+ただコミットログがブランチにしか残らないです。良い方法があったら教えて下さい。<br/>
+revertしたら feature branch に戻ってバグを潰しましょう。</li>
+</ol>
+
+<p>なんとなく掴めたでしょうか。<br/>
+このモデルではスケジュールの関係で無理、という所は無理だと思いますが、そもそも運営もうまく回っていないのではないでしょうか…。<br/>
+弊社プロジェクトでも少し厳しい所があり、頭を使ってミスしないようにイレギュラー対応をしています。<br/>
+イレギュラー対応について書こうかと思ったんですが、長くなるので辞めました。<br/>
+ここの説明は簡易版ですので、実際使う時は<a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">本家</a>や<a href="http://keijinsonyaban.blogspot.jp/2010/10/successful-git-branching-model.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://keijinsonyaban.blogspot.jp']);">日本語訳</a>を読んで自分のプロジェクトでも運用可能か考えて下さい。</p>
+<p>ここまで読んで下さったのにアレですが、開発者が少なければ git 第一段階の運用でも賄えるかと思います。半年くらい第一段階のモデルで運用していました。git の開発モデルからは外れているのですが…</p>
+<p>以上になります。<br/>
+ここまで読んで下さり、ありがとうございました。</p>
+<p>———————–キリトリ———————–</p>
+<p>ここからは書いてみての感想です。(読み飛ばし推奨。下らない事しかかきません)</p>
+<p>最初は、 <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> を読んだ事があるとか、git での運用に興味があるので積極的に読むけど、</p>
+<p>・非エンジニアへの教育コストかけられないとか (エンジニアへの教育コスト? 楽になる為だったらエンジニアは積極的に最先端を学ぶよね!ブーメラン!)<br/>
+・実際これで運用できると言い張れないがために結局適当なモデルで運用せざるを得ない<br/>
+・そもそも git での運用に懐疑的な人ばかりで git にできない</p>
+<p>みたいな人が対象だったんですが、書いているうちに結局簡易な説明くらいはしないといかんな、という所と、<a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> 読んでなくても簡易版で説明できたらPV伸びるかも…という欲が出てきてしまい、すごい長くなってしまいました。<br/>
+なるべく減らしたりしたんですが、すみません。<br/>
+長くした癖に、結局読み手側にあるていど考えて貰わないと無理、という結論に。</p>
+<p>感想というか、長くなった事への言い訳でした。</p>
+							

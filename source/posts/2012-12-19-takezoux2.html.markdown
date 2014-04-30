@@ -1,0 +1,154 @@
+---
+title: scala 2.10のreflectionでorg.apache.commons.beanutils.PropertyUtilsっぽいものを作ってみた
+date: 2012-12-19
+tags: Scala
+authors: takezoux2
+---
+ 
+<h1>自己紹介</h1>
+<p>こんにちは、takezoux2こと竹下です。<br/>
+最近はscala勉強会 in 東京で会場係をさせていただいています。</p>
+<p>今回はscala advent calendar2012に参加することになったので、<br/>
+scala2.10から導入されるReflectionの機能を使ってapache commonsのPropertyUtilsのdescribeメソッドっぽいものとその逆の機能を実装してみました。</p>
+<h1>環境構築</h1>
+<p>scala reflectionはscala2.10からの機能なので、それ以前のバージョンのscalaしか入ってい無い場合は、サンプルコードはコンパイル/実行できません。また、2012/12/19時点では安定版は出ておらず、検証にはscala2.10.0-RC4を使用しています。<br/>
+最新のバイナリは<a href="http://www.scala-lang.org/downloads" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-lang.org']);">scalaのダウンロードページ</a>からダウンロードできます。</p>
+<p><del datetime="2012-12-27T13:34:14+00:00">※sbt0.12.1はscala2.9.2でビルドされているので、scalaVersion := 2.10を設定しても2.10からの新機能を含んだソースはコンパイルエラーになります。</del><br/>
+<a href="https://twitter.com/xuwei_k" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://twitter.com']);">吉田さん</a>からの指摘により修正</p>
+<h3>sbtでのコンパイル方法</h3>
+<p>build.sbt</p>
+```scala
+scalaVersion := "2.10.0-RC4"
+
+libraryDependencies <+= scalaVersion{ scalaVersion => "org.scala-lang" % "scala-reflect" % scalaVersion}
+```
+<p>のようにlibraryDependenciesにscala-reflectを設定してあげるとコンパイルできます。</p>
+<h1>今回実装した機能
+</h1><p>PropertyUtils#describeは、JavaBeansを渡すとgetter/setterの名前と値を列挙したMapを返してくれるメソッドです。<br/>
+<a href="http://commons.apache.org/beanutils/commons-beanutils-1.7.0/docs/api/org/apache/commons/beanutils/PropertyUtils.html#describe%28java.lang.Object%29" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://commons.apache.org']);">PropertyUtils api</a></p>
+<p>今回はこのメソッドと同じように、ScalaObjectのvarを列挙したMap[String,String]を返すメソッドと、<br/>
+その逆のMap[String,String]の値をScalaObjectに代入するメソッドを実装してみたいと思います。(PropertyUtilsはMap<string>を返しますが、型の判定を実装するため今回はMap[String,String]を返すようにしています。)</string></p>
+<h1>Reflectionの概要</h1>
+<p>Reflectionを使用するには、下の簡易図の流れでMethodMirrorを取得し、最終的にMethodMirrorのapplyメソッドを呼ぶことで、メソッドを実行できます。</p>
+```
+TypeTag#mirror                  typeOf[ClassName]
+        |                              |
+Mirror#reflect   Instance        Type#members
+        |-----------┘                  |
+InstanceMirror#reflectMethod 　  MethodSymbol
+        |------------------------------┘　
+MethodMirror@apply
+```
+<h1>コード</h1>
+<p>説明するより、コード読んだほうが早いと思うのでさくっとコードを書いておきます。</p>
+```scala
+import scala.reflect.runtime.universe._
+import scala.reflect._
+
+case class User(var name : String,var gender : Int,var admin_? : Boolean){
+  def this() = this("",1,false)
+}
+
+object App{
+  def main(args : Array[String]){
+
+    val m = toMap(User("Kudo",2,false))
+    println(m)
+    //Map(admin_?  -> false, gender  -> 2, name  -> Kudo)
+
+    val u = new User()
+    fromMap(u,Map("name" -> "Riki","gender" -> "1","admin_?" -> "true"))
+    println(u)
+    //User(Riki,1,true)
+  }
+
+  def toMap[T](v : T)(implicit tt : TypeTag[T],ct : ClassTag[T]) : Map[String,String]= {
+    val t = typeOf[T]
+    // var だけを抽出
+    val vars = t.members.filter( _ match{
+      case t : TermSymbol => t.isVar
+      case _ => false
+    })
+
+    // Reflection実行のためのMirrorを取得
+    val mirror = tt.mirror // runtimeMirror(getClass.getClassLoader)でもOK
+
+    // インスタンス操作のためのReflectionを取得
+    val rf = mirror.reflect(v)
+
+    var fieldValues : Map[String,String] = Map.empty
+
+    vars.foreach( v => v match{
+      case v : TermSymbol => {
+        // GetterMethodを取得
+        val getterMethod = rf.reflectMethod(v.getter.asMethod)
+        fieldValues += ( v.name.decoded.trim -> getterMethod().toString) //nameを取得すると末尾にスペースが入るのでtrimしておく
+      }
+    })
+    fieldValues
+  }
+
+  def fromMap[T]( v : T , map : Map[String,String] )(implicit tt : TypeTag[T],ct : ClassTag[T]) = {
+    val t = typeOf[T]
+
+    // var だけを抽出
+    val vars = t.members.filter( _ match{
+      case t : TermSymbol => t.isVar
+      case _ => false
+    })
+    // Reflection実行のためのMirrorを取得
+    val mirror = tt.mirror // runtimeMirror(getClass.getClassLoader)でもOK
+
+    // インスタンス操作のためのReflectionを取得
+    val rf = mirror.reflect(v)
+
+    vars.foreach( v => v match{
+      case t : TermSymbol => {
+        map.get(t.name.decoded.trim) match{
+          case Some(v) =>{
+            val setterMethod = rf.reflectMethod(t.setter.asMethod)
+
+            // 型に合わせて文字列から変換する
+            t.getter.asMethod.returnType match{
+              case t if t =:= typeOf[String] => {
+                setterMethod(v)
+              }
+              // Primitive型に当たるものは、JavaUniverse.definitionsに定義されている
+              case definitions.IntTpe => {
+                setterMethod(v.toInt)
+              }
+              case definitions.BooleanTpe => {
+                setterMethod(v.toBoolean)
+              }
+              // 他の型は今回は割愛
+              case t => println("Unknown type " + t)
+            }
+          }
+          case None => println("Value not found:" + t.name.decoded)
+        }
+      }
+    })
+    v
+  }
+}
+```
+<p>ソースコードは<a href="https://gist.github.com/4311905" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://gist.github.com']);">Gist</a>にも公開しています。<br/>
+説明は、コード中に書いているので特段解説は不要かと思います。</p>
+<h2>感想</h2>
+<p>javaのreflectionを使っていたときは、scalaのpropertyの列挙に一苦労していましたが、scala reflectionでは簡単に列挙できます。他にも、implicitやscalaのEnumerationなどjavaのreflectionでは扱えなかった情報も扱うことができるようになるため、夢がひろがりんぐです。</p>
+<h3>参考にした資料</h3>
+<ul>
+<li>
+<span style="color:red">PDF注意</span><a href="http://scalamacros.org/talks/2012-04-28-MetaprogrammingInScala210.pdf" onclick="javascript:_gaq.push(['_trackEvent','download','http://scalamacros.org/talks/2012-04-28-MetaprogrammingInScala210.pdf']);">Metaprogramming in Scala 2.10</a>
+</li>
+<li>
+<a href="http://www.scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/index.html#scala.reflect.api.Mirrors" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-lang.org']);">Mirrors@scala api</a>
+</li>
+<li>
+<a href="http://hexx.github.com/pshow-scala-reflection/out" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://hexx.github.com']);">PABさんのスライド</a>
+</li>
+<li>
+<a href="http://lampwww.epfl.ch/~michelou/scala/scala-reflection.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lampwww.epfl.ch']);">Stephane Micheloudさんのブログ？</a>
+</li>
+</ul>
+							
