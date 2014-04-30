@@ -20,7 +20,7 @@ Requires Ruby
 
 ## Create articles
 
-In master branch of the repository.
+In develop branch of the repository.
 
 1. Fetch and pull master repository  
 ```git fetch && git pull origin master```
@@ -35,4 +35,4 @@ In master branch of the repository.
     3. Describe contents
 5. Add and commit  
 ```git add source/posts/. && git commit```
-6. Send pull request to master branch  
+6. Send pull request to develop branch  
