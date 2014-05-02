@@ -1,0 +1,115 @@
+---
+title: ブログを自社サーバの WordPress から Middleman + GitHub Pages へ移行しました
+date: 2014-05-02 16:44 JST
+tags: blog,middleman,github pages
+authors: yamauchi
+---
+
+芸者東京の山内です。  
+この記事では弊社の[エンジニアブログ](http://blob.geishatokyo.com)(つまりこのブログ)のシステムを移行した話を紹介します。  
+芸者東京エンジニアブログはこれまで自社サーバの WordPress で運用していました。  
+数年間運用してみて、サーバやプラグインの更新の煩わしさや WordPress の使い勝手の良くないところが見えてきました。  
+今回思い切って [Middleman](http://middlemanapp.com/) + [GitHub Pages](https://pages.github.com/)へ移行することにしました。
+
+## なぜ GitHub Pages を使うのか？
+
+新しいブログの条件として、以下の3つの制限を課しました。  
+
+1. 特定のサービスに依存しない汎用性の高いデータ形式にすること  
+WordPress のようなツールやブログホスティングサービスなどは、ブログを開始するまでの敷居は低いというメリットがある。
+しかしそれらは同時に、記事データの汎用性・移行性が低かったり、デザインで制約を受けたりするデメリットもある。
+汎用性の高いデータ形式にしておくことで、別のツールやホスティングサービスへ移行しやすくなる。
+2. サーバ管理コストを減らすこと  
+サーバの保守にコストをかけないように、出来る限り自社のサーバに依存しないで運用したい。
+3. 記事ファイルをバージョン管理すること  
+オフラインでも使えて他の記事のレビューもしやすい Git を使いたい。
+ついでにバックアップも容易にできる。
+
+上記の条件を満たすように運用することを考えると、「静的コンテンツを配信できるWebホスティング」を使うのが良さそうです。
+静的コンテンツであれば汎用性が高く、容易に移行できますし、そのままバージョン管理もできます。無料または安価なホスティングサービスを使えばコストはほとんどかかりません。  
+というわけで、それらの条件を満たす GitHub Pages を使うことにしました。
+Amazon S3 も選択肢としてはあったのですが、Git との親和性の高さやアップロードの手間を考えて GitHub Pages を選びました。
+
+## なぜ Middleman を使うのか？
+
+静的コンテンツ生成ツールとして Middleman を使うことにしました。  
+他にも Jekyll やその他のツールがありますが、Middleman (middleman-blog) には以下のようなメリットがあるので採用することにしました。
+
+- Pager や Tag を生成できる  
+Pager はページごと項目数を決めるだけで自動的にページが作成される。
+Tag は記事に含めたものを自動でまとめてくれる。
+- Markdown が使える  
+記事の生成が好きなエディタでできる。
+- Plugin 追加でさらに便利にできる  
+middleman-blog-authors で著者ごとのページ分類が作れる。
+他にも syntax highlighting や deploy 機能の拡張ができるようになる。  
+
+```ruby
+#  config.rb
+## authors configuration
+activate :authors do |authors|
+  authors.author_path = "archives/authors/:author.html"
+  authors.author_template = "author.html"
+end
+ignore "/author.html"
+```
+
+## データの移行と運用について
+
+- WordPress からのデータ移行  
+WordPress の Html をパースしてブログ用のヘッダーをつけています。
+適当にスクリプトを作って変換を実施しました。
+正常に変換できなかった一部のデータは手動で直してあります。
+- layout は bootstrap をベースに自前で実装  
+元のデザインを一部踏襲しつつ、bootstrap で作り直しました。
+- GitHub pages  
+Organization/User page 機能を使っています。
+master ブランチに html ファイルなどのリソースを置くだけです。
+- 2 ブランチ運用  
+master ブランチだけでも運用は可能です。
+しかし、ブランチが1つだけでは変換前後のデータが混じってしまい、しかもそれがすべてWebから見えてしまう状態になります。
+そこで変換前後のデータを分けるために、変換前のブランチを master ブランチとは別に用意しています。
+- middleman-deploy によるデプロイ  
+上記のようにブランチを2つに分けていますが、変換後のデータを master branch へコピーする必要があります。
+ブランチの切り替えとコピーだけではなく git commit & push を実行するのは手間がかかります。
+middleman-deploy を使えば、数行の設定を書くだけでこの作業を実現できます。  
+弊社では Jenkins に middleman deploy コマンドを仕込んでいて、ソース用ブランチに記事が merge されると自動的に反映されるように設定しています。  
+
+```ruby
+#  config.rb
+## deployment configuration
+activate :deploy do |deploy|
+  deploy.build_before = true
+  deploy.method = :git
+  deploy.branch = 'master'
+end
+```
+- カスタムドメイン設定  
+Organization/User page では http://(user).github.io/ というドメイン名が割り当てられます。
+これを DNS の CNAME ファイルの設定で独自ドメインを割り当てています。
+弊社の場合には http://geishatokyo.github.io/ を [http://blob.geishatokyo.com/](http://blob.geishatokyo.com/) に設定しています。
+
+## ハマったところ
+
+- Middleman のインストール  
+Ruby と Node.js の両方が必要です。特に npm の依存性解決に時間がかかりました。
+- CNAME ファイル  
+DNS の設定だけでは不十分です。リポジトリのトップディレクトリに CNAME という名前のファイルを置く必要があります。  
+[https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages)
+CNAME ファイルには独自ドメインを書きます。  
+```
+blob.geishatokyo.com
+```
+- 記事内参照リンク  
+未解決。記事内リンクを使わないように記事を書き換えました。
+
+## 最後に
+
+この記事では弊社エンジニアブログを、自社サーバの WordPress から Middleman + GitHub Pages に乗り換えた事例を紹介しました。  
+本記事はこの新しいシステムで運用されています。
+まだいくつか実現したい機能はありますが、最低限の機能は実装できました。  
+現状では git repository を private にしていて、記事のみを公開する形にしています。
+private repository で github pages を作ると自然にそのようになります。  
+[http://stackoverflow.com/questions/10748082/private-pages-for-a-private-github-repo](http://stackoverflow.com/questions/10748082/private-pages-for-a-private-github-repo)  
+private repository で運用している理由は、事前に社内でレビューをしてから公開する運用にしているからです。  
+将来的には repository を public にして記事の修正やコメントを github 上でも受け付けるのもありかなー、と思っています。
