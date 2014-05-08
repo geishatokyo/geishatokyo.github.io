@@ -42,3 +42,14 @@ article table {
   text-align: left;
   width: 100%;
 }
+
+.social-button {
+  list-style-type: none;
+  margin-top: 10px;
+  padding: 0;
+  overflow: hidden;
+}
+.social-button li {
+  float: left;
+  margin-right: 10px;
+}
