@@ -13,8 +13,8 @@ activate :blog do |blog|
   blog.sources = "posts/{year}-{month}-{day}-{title}.html"
   blog.taglink = "archives/tags/{tag}.html"
   blog.layout = "blog_layout"
-  # blog.summary_separator = /(READMORE)/
-  # blog.summary_length = 250
+  blog.summary_separator = /(READMORE)/
+  blog.summary_length = 250
   blog.year_link = "archives/{year}.html"
   blog.month_link = "archives/{year}/{month}.html"
   blog.day_link = "archives/{year}/{month}/{day}.html"
