@@ -1,8 +1,8 @@
 ---
 title: Presentaion at Play meetup
 date: 2014-06-02 15:21 JST
-tags:scala,play,dsl
-authors:takezoux2
+tags: scala,play,dsl
+authors: takezoux2
 ---
 
 ## [Play Framework 2 Meetup](http://connpass.com/event/6020/)で発表してきました。
@@ -10,6 +10,8 @@ authors:takezoux2
 5月24日に開催されたPlay Framework 2 Meetupで発表してきました。  
 内容は、[DSLからのコードジェネレーションで楽々Play開発](http://www.slideshare.net/yoshiterutakeshita3/dslplay)です。
 イベントページのほうで、他の人の発表資料もだいたいみれるので、興味がある方は見てみて下さい。
+
+イベント中にライブコーディングした部分は、スライド中にのせてある[githubのレポジトリ](https://github.com/takezoux2/dslgen-at-play-meetup)にコミットしてあります。
 
 会場や懇親会で出た質問や、補足を書いておきます。
 
