@@ -27,6 +27,8 @@ activate :blog do |blog|
   blog.paginate = true
   blog.per_page = 5
   blog.page_link = "page/{num}"
+
+  blog.decapitalize_tags = true
 end
 
 # page "/feed.xml", layout: false
