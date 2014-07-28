@@ -33,6 +33,7 @@ GEM
     erubis (2.7.0)
     execjs (2.2.0)
     ffi (1.9.3)
+    ffi (1.9.3-x86-mingw32)
     fssm (0.2.10)
     haml (4.0.5)
       tilt
@@ -92,6 +93,8 @@ GEM
     net-ssh (2.9.1)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
+    nokogiri (1.6.2.1-x86-mingw32)
+      mini_portile (= 0.6.0)
     padrino-helpers (0.12.2)
       i18n (~> 0.6, >= 0.6.7)
       padrino-support (= 0.12.2)
@@ -99,6 +102,8 @@ GEM
     padrino-support (0.12.2)
       activesupport (>= 3.1)
     ptools (1.2.4)
+    ptools (1.2.4-x86-mingw32)
+      win32-file (>= 0.7.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -125,13 +130,21 @@ GEM
     tilt (1.4.1)
     tzinfo (1.2.1)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2014.5)
+      tzinfo (>= 1.0.0)
     uber (0.0.6)
     uglifier (2.5.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    win32-file (0.7.1)
+      ffi
+      win32-file-stat (>= 1.4.0)
+    win32-file-stat (1.4.3)
+      ffi
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   builder (~> 3.0)
@@ -142,3 +155,4 @@ DEPENDENCIES
   middleman-rouge (~> 0.0.1)
   nokogiri (~> 1.6.1)
   redcarpet (~> 3.1.1)
+  tzinfo-data
