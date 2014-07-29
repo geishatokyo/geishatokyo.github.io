@@ -31,14 +31,14 @@ IAMには基本となる概念として
 複数のPolicyを一つにまとめることが出来ます。
 例えば、アプリサーバー用なら、
 
-* RDSへのRead/Write Policy
-* S3へのRead/Write Policy
+* DynamoDBへのRead/Write権限を付けたPolicy
+* S3へのRead/Write権限を付けてPolicy
 
 管理サーバー用なら
 
-* RDSへのフルアクセス Policy
-* S3へのフルアクセス Policy
-* EC2へのフルアクセス Policy
+* DynamoDBへのフルアクセス権限を付けたPolicy
+* S3へのフルアクセス権限を付けたPolicy
+* EC2へのフルアクセス権限を付けたPolicy
 
 のように作ることになると思います。
 
@@ -47,7 +47,7 @@ IAMには基本となる概念として
 
 Userには複数のPolicyと複数のGroupを設定することが出来ます。  
 通常はGroupを適切に作っておき、管理者には管理者Groupを、一般開発者には開発者Groupを追加するみたいなことになると思います。  
-また、UserにはAccessKeyとSecretKeyが設定されます。このAccessKeyとSecretKeyを使うことによってAWSConsoleにアクセスしたり、AWS APIにアクセスしたりすることが出来ます。その際、与えられている権限以上のことは行えません。  
+また、UserにはAccessKeyとSecretKeyが設定されます。このAccessKeyとSecretKeyを使うことによってAWS APIにアクセスすることが出来ます。その際、与えられている権限以上のことは行えません。  
 
 ### Role
 
@@ -100,7 +100,7 @@ val client = new AmazonS3Client(provider)
 ```
 
 だけです。InstanceProfileCredentialsProviderが1行でやってくれました。  
-ちなみに、AmazonXXXClient()の引数なしコンストラクタも、CredentialsProviderChainの中にInstanceProfileCredentialsProviderが含まれているので、そちらでも大丈夫です。ただし、環境変数やシステムプロパティなどからAccessKeyを取得してくるProviderもチェインに含まれているので、その辺を設定してしまっていると混乱の元になる可能性があります。
+ちなみに、AmazonXXXClient()の引数なしコンストラクタも、CredentialsProviderChainの中にInstanceProfileCredentialsProviderが含まれているので、そちらでも大丈夫です。こちらの場合、環境変数やシステムプロパティなどからAccessKeyを取得してくるProviderもチェインに含まれているため、EC2以外動かすことが想定される場合などにはこちらを使っておくと便利かと思います。
 
 ## InstanceProfileCredentialsProviderは中で何やってるの？
 
