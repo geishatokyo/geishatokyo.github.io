@@ -1,0 +1,118 @@
+---
+title: Using AWS Java SDK with AWS IAM Role.
+date: 2014-07-29 01:01 JST
+tags: aws,IAM,java,scala
+authors: takezoux2
+---
+
+
+## AWS IAMとは？
+
+詳しいことは[公式ドキュメント](http://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/IAM_Introduction.html)にお任せして、簡単に説明するとAWSのS3やDynamoDBと言った各サービスへのアクセス制御を行うためのサービスです。
+
+## AWS IAMの基本概念、そしてRoleとは？
+
+IAMには基本となる概念として
+
+* Policy
+* Group
+* User
+* Role
+
+という4つの概念があります。
+
+### Policy
+
+このPolicy一つ一つがサービスへのアクセス制御の設定となります。ちなみに、書式はJSON形式です。
+今回はこれに関しては詳しくは説明しません。
+
+### Group
+
+複数のPolicyを一つにまとめることが出来ます。
+例えば、アプリサーバー用なら、
+
+* RDSへのRead/Write Policy
+* S3へのRead/Write Policy
+
+管理サーバー用なら
+
+* RDSへのフルアクセス Policy
+* S3へのフルアクセス Policy
+* EC2へのフルアクセス Policy
+
+のように作ることになると思います。
+
+
+### User
+
+Userには複数のPolicyと複数のGroupを設定することが出来ます。  
+通常はGroupを適切に作っておき、管理者には管理者Groupを、一般開発者には開発者Groupを追加するみたいなことになると思います。  
+また、UserにはAccessKeyとSecretKeyが設定されます。このAccessKeyとSecretKeyを使うことによってAWSConsoleにアクセスしたり、AWS APIにアクセスしたりすることが出来ます。その際、与えられている権限以上のことは行えません。  
+
+### Role
+
+Roleには複数のPolicyを設定することが出来ます。  
+そして、RoleはEC2インスタンスに与える事ができます。
+指定は、EC2のインスタンスを生成するときにしかできませんので、Configure Instance Details中のIAM roleを忘れずに設定しましょう。  
+設定されたRoleのアクセス権限がそのEC2インスタンスに付与されることになります。
+
+## Roleを使うと何が嬉しいの？
+
+Roleは、EC2でアプリサーバーや管理サーバーを動かすときに意味があります。  
+別にサーバーからAWSにアクセスする場合は「application-server」とかのUserを作って、そのAccessKeyを使えばいいじゃないと思うかもしれませんが、
+一つ大きな違いがあります。それは、
+
+* 各サーバーにAccessKeyとSecretKeyの情報を配る必要がなくなる
+
+ということです。
+各サーバーにAccessKeyを配布することも面倒ですし、このAccessKeyがバレてしまうと外部からAWSにアクセスされてしまいます。(もちろんRevokeできるので流出したのが分かればなんとかはなります)  
+Roleを使うことで、このAccessKey配布の手間を省き、AccessKeyの流出も食い止められて安全性が増します。
+
+
+## AWS Java SDKからはどうやって接続すればいいの？
+
+通常AmazonS3ClientなどのAmazonXXXClient系には、AmazonXXXClient(AWSCredentialsProvider)のコンストラクタが用意されています。  
+この引数にcom.amazonaws.auth.InstanceProfileCredentialsProviderを渡すことになります。
+
+S3を例にすると  
+javaだと
+
+```java
+import com.amazonaws.auth.InstanceProfileCredentialsProvider;
+import com.amazonaws.service.s3.AmazonS3Client;
+
+InstanceProfileCredentialsProvider provider = new InstanceProfileCredentialsProvider()
+AmazonS3Client client = new AmazonS3Client(provider);
+
+
+```
+
+scalaだと
+
+```scala
+
+import com.amazonaws.auth.InstanceProfileCredentialsProvider
+import com.amazonaws.service.s3.AmazonS3Client
+
+val provider = new InstanceProfileCredentialsProvider()
+val client = new AmazonS3Client(provider)
+
+```
+
+だけです。InstanceProfileCredentialsProviderが1行でやってくれました。  
+ちなみに、AmazonXXXClient()の引数なしコンストラクタも、CredentialsProviderChainの中にInstanceProfileCredentialsProviderが含まれているので、そちらでも大丈夫です。ただし、環境変数やシステムプロパティなどからAccessKeyを取得してくるProviderもチェインに含まれているので、その辺を設定してしまっていると混乱の元になる可能性があります。
+
+## InstanceProfileCredentialsProviderは中で何やってるの？
+
+内部ではEC2のMetadataを取得し、そこに含まれているAccessKeyとSecretKeyを取得して使用しています。  
+またこのAccessKeyとSecretKeyは有効期限が決められており、有効期限が切れた場合にはInstanceProfileCredentialsProviderが自動でリフレッシュしてくれるようになっています。
+
+# Roleの使い方まとめ
+
+1. AWS ConsoleのIAMから、Groupを作成
+2. 作成したGroupに適切なアクセス権限のPolicyを設定
+3. EC2インスタンス生成時にIAM Groupを指定して起動
+4. EC2インスタンス上で動かすプログラムでは、InstanceProfileCredentialsProviderを使ってClientを作るようにする
+
+
+
