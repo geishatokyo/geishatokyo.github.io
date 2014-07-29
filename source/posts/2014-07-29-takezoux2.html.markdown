@@ -100,7 +100,7 @@ val client = new AmazonS3Client(provider)
 ```
 
 だけです。InstanceProfileCredentialsProviderが1行でやってくれました。  
-ちなみに、AmazonXXXClient()の引数なしコンストラクタも、CredentialsProviderChainの中にInstanceProfileCredentialsProviderが含まれているので、そちらでも大丈夫です。こちらの場合、環境変数やシステムプロパティなどからAccessKeyを取得してくるProviderもチェインに含まれているため、EC2以外動かすことが想定される場合などにはこちらを使っておくと便利かと思います。
+ちなみに、AmazonXXXClient()の引数なしコンストラクタも、CredentialsProviderChainの中にInstanceProfileCredentialsProviderが含まれているので、そちらでも大丈夫です。こちらの場合、環境変数やシステムプロパティなどからAccessKeyを取得してくるProviderもチェインに含まれているため、EC2以外でも動かすことが想定される場合などにはこちらを使っておくと便利かと思います。
 
 ## InstanceProfileCredentialsProviderは中で何やってるの？
 
