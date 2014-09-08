@@ -1,0 +1,57 @@
+---
+title: 第3回芸者東京ハンズオン勉強会
+date: 2014-09-08 12:16 JST
+tags: scala,android,geishastudy
+---
+
+2014-08-30 に開催した [第3回芸者東京ハンズオン勉強会](http://geishatokyo.doorkeeper.jp/events/14138) のまとめ記事です。  
+今回は16人の方に参加していただきました！ 前回と同じく Android アプリを Scala で開発するという内容でした。前回とは違うゲームを用意しました。
+
+## 勉強会の内容
+
+今回の勉強会の課題内容は 「ScalappyBird」 というゲームを作るという内容でした。
+どんなゲームかはタイトルから察してください。  
+課題の内容とソースコードは github で公開してあります。  
+[https://github.com/geishatokyo/scalappybird](https://github.com/geishatokyo/scalappybird)  
+キャラクターの操作および地面との当たり判定が実装してあり、残りの部分を自分で実装することでゲームを完成させるのが目標です。  
+タイトル画面や終了画面を作って本物っぽく作れていた参加者も何人かいました。
+当たり判定まで作りこむのは時間的に難しかった様子。  
+今回は Scala 経験者が 4人いました。
+
+## ハマったこと
+
+課題をこなしていく中で発生した問題
+
+### git
+
+git が使えない参加者も何人かいました。  
+公開鍵が登録してないので git プロトコルでは github からダウンロードできないとか。
+あらかじめ zip でのダウンロードも書いておくべきでした。
+
+### 環境構築
+
+前回と同じく環境構築で半分くらいの人がつまづいていた。反省点が生かされていない・・・。
+
+* Perm Gen Error
+* 環境変数
+* Java 8 非対応
+* Android OS バージョン不整合
+
+## 懇親会
+
+今回も勉強会後に近所の居酒屋で懇親会を開催しました。講師側も含めて13人でした。  
+業務で Scala を使っているとか、実際に使っている上での苦労話とか、コンパイル遅いとかの話で盛り上がりましたね。  
+店員の女性に「何の集まりですか？」と聞かれたので「勉強会」ですと答えて、やりとりをしていたらこんなのを作っていただきました。
+
+勉強会から本をイメージしたというチャーハン  
+![book](/static/images/2014/09/geishastudy3-1.jpg)  
+
+「意識高い勉強会()」  
+![heart](/static/images/2014/09/geishastudy3-2.jpg)  
+
+## その他告知など
+
+第4回勉強会も今月末あたりに開催する予定です。前回参加出来なかった人もお楽しみに！  
+前回までの勉強会の資料などは以下に掲載しています。  
+geishastudy repository: [https://github.com/geishatokyo/geishastudy](https://github.com/geishatokyo/geishastudy)  
+twitteハッシュタグ: [#geishastudy](http://twitter.com/search?q=%23geishastudy)
