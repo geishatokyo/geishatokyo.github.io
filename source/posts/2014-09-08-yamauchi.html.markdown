@@ -46,7 +46,7 @@ git が使えない参加者も何人かいました。
 勉強会から本をイメージしたというチャーハン  
 ![book](/static/images/2014/09/geishastudy3-1.jpg)  
 
-「意識高い勉強会()」  
+意識高いのは我々ではなくて店員さんの方  
 ![heart](/static/images/2014/09/geishastudy3-2.jpg)  
 
 ## その他告知など
@@ -54,4 +54,4 @@ git が使えない参加者も何人かいました。
 第4回勉強会も今月末あたりに開催する予定です。前回参加出来なかった人もお楽しみに！  
 前回までの勉強会の資料などは以下に掲載しています。  
 geishastudy repository: [https://github.com/geishatokyo/geishastudy](https://github.com/geishatokyo/geishastudy)  
-twitteハッシュタグ: [#geishastudy](http://twitter.com/search?q=%23geishastudy)
+twitterハッシュタグ: [#geishastudy](http://twitter.com/search?q=%23geishastudy)
