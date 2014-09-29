@@ -2,6 +2,7 @@
 title: 第3回芸者東京ハンズオン勉強会
 date: 2014-09-08 12:16 JST
 tags: scala,android,geishastudy
+authors: yamauchi
 ---
 
 2014-08-30 に開催した [第3回芸者東京ハンズオン勉強会](http://geishatokyo.doorkeeper.jp/events/14138) のまとめ記事です。  
