@@ -1,0 +1,154 @@
+---
+title: Dockerfile を書かなくてもできる Docker コンテナ運用
+date: 2014-09-29 20:36 JST
+tags: docker,dokku-alt
+authors: yamauchi
+---
+
+Dockerfile を書くのが面倒じゃないですか？  
+Docker は使いたいけど Dockerfile は書きたくない。そんなあなたにオススメの解決策があります！  
+
+＿人人人人人人＿  
+＞　[dokku-alt](https://github.com/dokku-alt/dokku-alt)　＜  
+￣Y^Y^Y^Y^Y￣  
+
+dokku-alt を使えば Dockerfile を1行も書くことなく Docker コンテナを生成できます。  
+しかも Docker コンテナを運用するための様々なコマンドまで簡単に用意されています。
+
+## dokku-alt とは？
+
+dokku-alt は自前で構築できる heroku のようなサーバを構築できるスクリプトです。  
+dokku-alt をインストールしたサーバに対して heroku と同じように git push するだけでアプリケーションの構築(デプロイ)ができます。  
+アプリケーションを Docker コンテナとして配備するだけではなく、 nginx によるプロキシまで設定してくれます。  
+heroku と同様の buildpack を使えるので、同じ仕組みでビルドができます。  
+RDB なども dokku コマンドを使って docker コンテナで構築でき、
+共有ディレクトリやDBへの接続クライアントも何でもコンテナにしてしまうすごいやつです。  
+ステージング環境として使うとものすごく捗ります。
+
+## dokku-alt の使い方
+
+dokku-alt を使うには、サーバにインストールして ssh 公開鍵を配置し git push するだけです。  
+dokku-alt のインストールが必要な以外には heroku アプリを用意するのとほとんど同じ手間しかかかりません。  
+以下ではサンプルアプリをデプロイするための手順を説明します。
+
+1. ホストOSの準備  
+Debian/Ubuntu のインストールされたホストを1台用意します。  
+仮想マシンやVPSをホストにしても問題ありません。  
+2. dokku-alt のインストール
+以下のコマンドでインストールを実行します。  
+```
+$ sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/dokku-alt/dokku-alt/master/bootstrap.sh)"
+```
+3. SSH公開鍵の配置  
+デプロイを実施するために ssh 公開鍵を配置します。  
+dokku-alt をインストールしたサーバのポート 2000 にブラウザでアクセスして、web から ssh 公開鍵を配置できます。  
+セキュリティ上の理由などで 2000 番にアクセスできない、またはインストール時に web を止めてしまった場合には以下のコマンドでも公開鍵を配置できます。  
+```
+$ cat ~/.ssh/id_rsa.pub | ssh (HOSTNAME) "sudo sshcommand acl-add dokku (USERNAME)"
+```  
+HOSTNAME, USERNAME は dokku-alt をセットアップしたホスト名、デプロイに使うユーザ名を適切に設定します。
+4. ドメイン名の割り当て  
+サーバに独自ドメインを割り当てられる場合には /home/dokku/VHOST にドメイン名を書くと便利です。  
+もしドメインを取得していない場合には xip.io を使いましょう。  
+`dokku.xxx.xxx.xxx.xxx.xip.io` を VHOST に書きましょう。  
+xip.io は ip address からドメイン名を割り当てられる魔法のサービスです。
+5. アプリケーションのデプロイ  
+
+```shell
+$ git clone https://github.com/heroku/node-js-sample  
+$ cd node-js-sample  
+$ git remote add dokku dokku@dokku.xxx.xxx.xxx.xxx.xip.io:node-js-app  
+$ git push dokku master  
+```
+
+デプロイが正常に終了したら、web ブラウザで以下にアクセスできることを確認しましょう。  
+```
+http://node-js-appdokku.xxx.xxx.xxx.xxx.xip.io
+```
+
+## アプリケーションのデプロイ
+heroku にデプロイするための環境と同じファイルを用意します。
+アプリケーションやバックエンドジョブを起動するコマンドは Procfile に記述します。
+buildpack の設定は .env ファイルに記述できます。  
+例えば python 用の buildpack を明示する場合は .env に以下を追記します。  
+```
+BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-python.git
+```
+
+## 便利な機能の紹介
+
+各種 dokku コマンドは dokku コマンドを引数なしで実行することで確認できます。
+
+* ベータ版  
+以下のコマンドを実行することでベータ版にアップグレードできます。いくつかの便利な機能やプラグインが追加されます。
+```
+$ sudo apt-get update && sudo apt-get install dokku-alt-bet
+```
+* プラグイン  
+dokku 向けの plugin を使うことで dokku コマンドを拡張できます。
+* 環境変数  
+dokku config コマンドで環境変数を設定できます。
+ステージング環境ごとに設定ファイルを切り替えるなどの処理を環境変数で変えられるようにしておくと同じ Docker イメージを複数の環境で使いまわすことができます。  
+```
+$ dokku config:set app-name KEY1=VALUE1 KEY2=VALUE2
+```
+* 共有ディレクトリ  
+dokku volume コマンドによってアプリケーション間で共有できるディレクトリを設定できます。
+volume にはコンテナを使う方法とホストのディレクトリを使う方法の2種類があります。
+データを永続化するためにはホストディレクトリを使うべきです。
+ホストとの共有ディレクトリを生成するには root 権限 (sudo) が必要です。
+
+```
+$ sudo dokku volume:create volume-name /path/to/host/volume:/path/to/volume/in/container
+$ dokku volume:link app-name volume-name
+```
+* データベース  
+dokku-alt では何種類かのデータベースコンテナを dokku コマンドで作成できます。
+もし自分が使いたい種類のデータベースコマンドが用意されていなければ、プラグインを探してインストールしましょう。
+mariadb のデータベースを作成するためには以下のコマンドを実行します。
+dokku config で DB への接続設定を含む環境変数が表示されます。
+
+```
+$ dokku mariadb:create app-name db-name
+$ dokku mariadb:console < /path/to/create.sql
+$ dokku config app-name
+```
+
+* シェルログイン  
+```
+$ dokku enter app-name
+```  
+* ログの表示  
+```
+$ dokku logs app-name
+```  
+* ベースイメージの更新  
+執筆時点での dokku 用コンテナのベースイメージは Ubuntu 12.04 になっている。
+以下の設定を /home/dokku/dokkurc に追記することで Ubuntu 14.04 上にアプリケーションを構築した docker イメージを作成できます。  
+```
+export BUILDSTEP_IMAGE="algas/dokku-alt-buildstep:foreman-14.04"
+```  
+上記の Dockerfile も公開しています。  
+[https://registry.hub.docker.com/u/algas/dokku-alt-buildstep/](https://registry.hub.docker.com/u/algas/dokku-alt-buildstep/)  
+[https://github.com/algas/dokku-alt-buildstep](https://github.com/algas/dokku-alt-buildstep)  
+* Dockerfile の利用  
+dokku-alt にデプロイするのに Dockerfile を使うこともできます。
+
+その他にも dokku-alt にはたくさん便利な機能はあります。  
+詳しくは[公式ドキュメント](https://github.com/dokku-alt/dokku-alt)を参考にしてください。
+
+
+## 本番環境でもdockerを使う
+ステージング環境だけじゃなくて本番環境でも dokku-alt というか docker を使えます。  
+dokku-alt で動かしている docker コンテナを export して本番環境へ持っていくだけです。
+AWS なら Elastic Beanstalk で配布することで簡単に docker コンテナを複数台に配備できます。
+ここでは Elastic Beanstalk 自体の詳しい説明は省略します。
+
+## 運用して気づいた問題点
+* プラグインによっては異常系の処理が不完全  
+いくつかのプラグインで特別な手順を踏まないと作成した環境を削除できなかったりすることがある。特にホストOSの再起動時に問題が発生しやすい。
+* デプロイを中断するとプロセスが残る  
+プロセスが残っているとアプリがデプロイできなくなったりホストの挙動が不安定になったりすることがある。
+
+Dokku に似ている(より複雑なサービス?) Flynn はまだ試していません。
+その他にも便利なシステムなどを知っている方はぜひご連絡いただけると嬉しいです。
