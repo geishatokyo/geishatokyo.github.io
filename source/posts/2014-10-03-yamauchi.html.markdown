@@ -1,0 +1,39 @@
+---
+title: 第4回芸者東京ハンズオン勉強会
+date: 2014-10-03 16:00 JST
+tags: scala.js,enchant.js
+authors: yamauchi
+---
+
+2014-09-27 に開催した [第4回芸者東京ハンズオン勉強会](http://geishatokyo.doorkeeper.jp/events/15355) のまとめ記事です。  
+今回は Scala.js + Enchant.js でゲームを開発するという内容でした。  
+前回と異なり Scala 以外に環境構築でハマる所がなかったので、ほとんどの参加者が開発に時間を使えたのが良かったです。
+
+## 勉強会の内容
+
+課題の内容とソースコードは github で公開してあります。  
+[https://github.com/geishatokyo/scalachant-example](https://github.com/geishatokyo/scalachant-example)  
+未完成のシューティングゲームの素が実装してあり、残りの部分を自分で実装することでゲームを完成させるのが目標です。  
+
+## 参加者の作品
+
+aspipp 氏の開発したゲームの画面(掲載許可は取ってあります)  
+![game](/static/images/2014/10/game1.png)  
+
+* [aspipp](https://github.com/aspipp/scalachant-example)
+* [gutio](https://github.com/gutio/scalachant-example)
+* [yoshimune](https://github.com/yoshimune/scalachant-example)
+
+作ったゲームをブログに紹介して欲しい方は [#geishastudy](http://twitter.com/search?q=%23geishastudy) ハッシュタグつきで tweet していただければ捕捉します。
+
+## 懇親会
+
+今月の塚田農場  
+![heart](/static/images/2014/10/geishastudy4.jpg)  
+
+## その他告知など
+
+次の [第5回ハンズオン勉強会(swift)](http://geishatokyo.doorkeeper.jp/events/15992) は10月18日(土)に開催する予定です。Swiftでゲームを作りますよ！  
+前回までの勉強会の資料などは以下に掲載しています。  
+geishastudy repository: [https://github.com/geishatokyo/geishastudy](https://github.com/geishatokyo/geishastudy)  
+twitterハッシュタグ: [#geishastudy](http://twitter.com/search?q=%23geishastudy)
