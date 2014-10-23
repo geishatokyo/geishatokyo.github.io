@@ -12,7 +12,7 @@ Requires Ruby
 2. Setup bundler (First time only)  
 ```gem install bundler```
 3. Install dependencies  
-```cd engineerblog && bundle install```
+```cd engineerblog && git checkout develop && bundle install```
 4. Start server  
 ```bundle exec middleman server```
 5. Access to (local) blog site  
