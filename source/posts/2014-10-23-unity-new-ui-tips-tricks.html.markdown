@@ -11,8 +11,6 @@ However, as a beta, there are still a number of features that are not fully expl
 
 ## Override sorting with Canvas
 
-### Basic workings
-
 When working with 2D spaces, sorting and layering of objects is always a problem; usually in Unity you can do this either using sorting layers, or by setting the Z coordinate of game objects.
 
 The new UI, however, is designed to sort itself based on the transform order of game objects; that is to say, UI objects (in the same canvas) will be drawn based on their order in the Hierarchy tab, with objects being lower being drawn later, on top of earlier ones. This is actually a fairly handy system: you'll be using a lot of UI objects and not having to worry about setting layers or Z coordinates makes things convenient; it does lead to some, at first, counter-intuitive situations like backgrounds being *above* foreground elements in the Hierarchy, but this is easy enough to get used to.
@@ -30,6 +28,18 @@ The solution is actually quite simple: all you need to do is add a Canvas compon
 ![canvas2](/static/images/2014/10/UnityUI/canvas2.png)
 
 ## Reference Resolution
+
+One of the most common problems when designing user interfaces, especially on mobile platforms, is compatibility with multiple display sizes and aspect ratios. Unity UI does allow you to overcome this to some extent by using anchors, but this can lead to unwanted stretching and distortion of images, or simply problematic placement of UI elements when aspect ratio is drastically different. Not setting anchors to stretch, on the other hand, will mean that UI elements maintain their set pixel-size, meaning they will seem very small on a larger display (or very large on a smaller display).
+
+![refres1](/static/images/2014/10/UnityUI/refres1.png)
+
+This issue can be solved through the (currently undocumented) *Reference Resolution* component, attached to your root Canvas, which must be set to Overlay mode. In essence, this component takes Width and Height parameters, then changes the effective pixel size of the Canvas to match these as closely as possible. For example, if you set the parameters to be `800x600` while your actual display is `1600x1200`, in the Editor you will still see the size of the Canvas as `800x600` and will be able to design your UI elements accordingly. When the Canvas is set to Overlay mode, its size will follow the size of your Game screen in the editor, so you can easily test various sizes.
+
+This only works if the aspect ratio isn't changed, however. With different aspect ratios, the Canvas Scale Mode setting comes into play:
+
+- When set to **Expand**, the *shorter* of the width/height of the Canvas's rectangle will be set to be equal to the appropriate parameter; the other one will *expand* to whatever is required to match the aspect ratio of the screen.
+- When set to **Shrink**, the *longer* of the width/height of the Canvas's rectangle will be set to be equal to the appropriate parameter; the other one will *shrink* to whatever is required to match the aspect ratio of the screen.
+- When set to **MatchWidthOrHeight**, there is an extra parameter, *Match*; setting this to 0 (Width) will make the width of the Canvas match the parameter and stretch or shrink the height to match the screen's aspect ratio; setting it to 1 (Height) will do the opposite; setting it to a value between the two will stretch or shrink both sides to some degree.
 
 ### Instantiate issues
 
