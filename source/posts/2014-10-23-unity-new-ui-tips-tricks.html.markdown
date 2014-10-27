@@ -65,3 +65,11 @@ The best solution for this issue is to, after setting the `parent`, reset all pa
     }
 
 ## Animation
+
+The single most obvious change made compared to the way Unity previous did GUI is the fact that every UI element is now a GameObject; compared to the old `OnGUI()` code-based UI, this has the obvious effects of making things significantly easier to oversee, maintain, and to add new elements and set up their relationships precisely; but one happy side effect is that because everything is a GameObject, we can now use an Animator to create UI animations!
+
+This is briefly explained in the [UI Button tutorial video](http://unity3d.com/learn/tutorials/modules/beginner/ui/ui-button), specifically for the case of Buttons, which have a built-in transition system using automatically generated *Animator Controller*s. There's no reason why you can't do the same in the general case, however, and here is how:
+
+### Animate using state transitions
+
+### Animate within states
