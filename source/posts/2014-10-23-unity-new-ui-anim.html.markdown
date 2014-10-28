@@ -1,6 +1,6 @@
 ---
-title: Unity 4.6 UI Tip Animation
-date: 2014-10-23 19:50 JST
+title: Unity 4.6 UI Tip&#58 Animation
+date: 2014-10-23 19:51 JST
 tags:
 authors: marconius
 ---
