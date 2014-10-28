@@ -56,3 +56,21 @@ Now all we need to do is call [`Animator.SetBool(string name, bool value)`](http
 ![anim9](/static/images/2014/10/UnityUI/anim9.png)
 
 ## Animate within states
+
+What if we don't want our UI elements to be completely static? Sure, we can transition between two states now, but perhaps in a highlighted state we'd like our button to be glowing or such. The *Animation window* can help us here; like before, select the appropriate element in the hierarchy, then the appropriate state in the top left of the window.
+
+Before, we created only one column of little dots, at `0:00`, which meant there was really no animation; these little dots, called keys (as in [key frame](https://en.wikipedia.org/wiki/Key_frame)), are the basic elements of animation. If we want some animation, we first need to create a new key at some other point in time; do this by right-clicking or simply double-clicking. Then, like before, we can use the record button (the little red circle) to set properties for the key; clicking on a key will start recording automatically. We can then click the play button (the little arrow) next to the record button to see our new animation in the *Game window*!
+
+![anim10](/static/images/2014/10/UnityUI/anim10.png)
+
+If we want more precise control over our animation, we can click the *Curves button* at the bottom of the screen. This will bring up a curve generated for each property we're modifying; we can drag the values of each key here, or double-click to add more keys if we want more precision.
+
+![anim11](/static/images/2014/10/UnityUI/anim11.png)
+
+Normally this animation will only play once; if we want it to loop, we can set that up in the properties of the *Animation* itself:
+
+![anim12](/static/images/2014/10/UnityUI/anim12.png)
+
+Of course, this animation and the transition from another state we did before can be used in combination; just be careful that the transition will overlap with the animation defined in a stance, which normally leads to a nice, smooth transition, but sometimes can end up looking odd; we can adjust timings carefully, or even consider adding an extra state (with a 0 time transition) if this becomes a problem.
+
+![anim13](/static/images/2014/10/UnityUI/anim13.png)
