@@ -22,3 +22,9 @@ Here, what we want is for the red child images to be always on top of the parent
 The solution is actually quite simple: all you need to do is add a Canvas component to the child objects; then you just tick the Override Sorting checkbox and make sure the Sort Order parameter is larger than that of your root Canvas.
 
 ![canvas2](/static/images/2014/10/UnityUI/canvas2.png)
+
+-----
+
+Created for [Unity 4.6](http://unity3d.com/unity/beta/4.6) beta version 20.
+
+This post is meant for advanced users; for basic information on the new UI features, please check the [offical tutorial videos](http://unity3d.com/learn/tutorials/modules/beginner/ui)!

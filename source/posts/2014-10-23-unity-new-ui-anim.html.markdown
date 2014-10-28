@@ -5,8 +5,6 @@ tags:
 authors: marconius
 ---
 
-Intro goes here
-
 The single most obvious change made compared to the way Unity previous did GUI is the fact that every UI element is now a GameObject; compared to the old `OnGUI()` code-based UI, this has the obvious effects of making things significantly easier to oversee, maintain, and to add new elements and set up their relationships precisely; but one happy side effect is that because everything is a GameObject, we can now use an Animator to create UI animations!
 
 This is briefly explained in the [UI Button tutorial video](http://unity3d.com/learn/tutorials/modules/beginner/ui/ui-button), specifically for the case of Buttons, which have a built-in transition system using automatically generated *Animator Controller*s. There's no reason why you can't do the same in the general case, however, and here is how:
@@ -74,3 +72,9 @@ Normally this animation will only play once; if we want it to loop, we can set t
 Of course, this animation and the transition from another state we did before can be used in combination; just be careful that the transition will overlap with the animation defined in a stance, which normally leads to a nice, smooth transition, but sometimes can end up looking odd; we can adjust timings carefully, or even consider adding an extra state (with a 0 time transition) if this becomes a problem.
 
 ![anim13](/static/images/2014/10/UnityUI/anim13.png)
+
+-----
+
+Created for [Unity 4.6](http://unity3d.com/unity/beta/4.6) beta version 20.
+
+This post is meant for advanced users; for basic information on the new UI features, please check the [offical tutorial videos](http://unity3d.com/learn/tutorials/modules/beginner/ui)!

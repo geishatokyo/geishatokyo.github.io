@@ -41,3 +41,9 @@ The best solution for this issue is to, after setting the `parent`, reset all pa
         
         return newRectTransform;
     }
+    
+-----
+
+Created for [Unity 4.6](http://unity3d.com/unity/beta/4.6) beta version 20.
+
+This post is meant for advanced users; for basic information on the new UI features, please check the [offical tutorial videos](http://unity3d.com/learn/tutorials/modules/beginner/ui)!
