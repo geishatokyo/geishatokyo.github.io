@@ -1,7 +1,7 @@
 ---
 title: Unity 4.6 UI Tip&#58 Override sorting with Canvas
 date: 2014-10-23 19:49 JST
-tags:
+tags: unity, unity 4.6, unity beta, ui, unity new ui, canvas, sorting
 authors: marconius
 ---
 

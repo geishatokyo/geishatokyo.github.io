@@ -1,7 +1,7 @@
 ---
 title: Unity 4.6 UI Tip&#58 Reference Resolution
 date: 2014-10-23 19:50 JST
-tags:
+tags: unity, unity 4.6, unity beta, ui, unity new ui, reference resolution, resolution, scaling
 authors: marconius
 ---
 
