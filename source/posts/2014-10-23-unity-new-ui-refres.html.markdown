@@ -5,15 +5,13 @@ tags: unity, unity 4.6, unity beta, ui, unity new ui, reference resolution, reso
 authors: marconius
 ---
 
-Intro goes here
-
-One of the most common problems when designing user interfaces, especially on mobile platforms, is compatibility with multiple display sizes and aspect ratios. Unity UI does allow you to overcome this to some extent by using anchors, but this can lead to unwanted stretching and distortion of images, or simply problematic placement of UI elements when aspect ratio is drastically different. Not setting anchors to stretch, on the other hand, will mean that UI elements maintain their set pixel-size, meaning they will seem very small on a larger display (or very large on a smaller display).
+One of the most common problems when designing user interfaces, especially on mobile platforms, is compatibility with multiple display sizes and aspect ratios. The new Unity UI does allow us to overcome this to some extent by using anchors, but this can lead to unwanted stretching and distortion of images, or simply problematic placement of UI elements when aspect ratio is drastically different. Not setting anchors to stretch, on the other hand, will mean that UI elements maintain their set pixel-size, meaning they will seem very small on a larger display (or very large on a smaller display).
 
 ![refres1](/static/images/2014/10/UnityUI/refres1.png)
 
-This issue can be solved through the (currently undocumented) **Reference Resolution** component, attached to your root Canvas, which must be set to Overlay mode. In essence, this component takes Width and Height parameters, then changes the effective pixel size of the Canvas to match these as closely as possible. For example, if you set the parameters to be `800x600` while your actual display is `1600x1200`, in the Editor you will still see the size of the Canvas as `800x600` and will be able to design your UI elements accordingly. When the Canvas is set to Overlay mode, its size will follow the size of your Game screen in the editor, so you can easily test various sizes.
+This issue can be solved through the (currently undocumented) **Reference Resolution** component, attached to our root *Canvas*, which must be set to *Overlay* mode. In essence, this component takes *Width* and *Height* parameters, then changes the effective pixel size of the *Canvas* to match these as closely as possible. For example, if you set the parameters to be `800x600` while your actual display is `1600x1200`, in the Editor you will still see the size of the *Canvas* as `800x600` and will be able to design your UI elements accordingly. When the *Canvas* is set to *Overlay* mode, its size will follow the size of your Game screen in the editor, so we can easily test various sizes.
 
-This only works if the aspect ratio isn't changed, however. With different aspect ratios, the Canvas Scale Mode setting comes into play:
+This only works if the aspect ratio isn't changed, however. With different aspect ratios, the **Canvas Scale Mode** setting comes into play:
 
 - When set to **Expand**, the *shorter* of the width/height of the Canvas's rectangle will be set to be equal to the appropriate parameter; the other one will *expand* to whatever is required to match the aspect ratio of the screen.
 - When set to **Shrink**, the *longer* of the width/height of the Canvas's rectangle will be set to be equal to the appropriate parameter; the other one will *shrink* to whatever is required to match the aspect ratio of the screen.
@@ -21,7 +19,7 @@ This only works if the aspect ratio isn't changed, however. With different aspec
 
 ## Instantiate issues
 
-There is a small problem with *Reference Resolution*: because there is no method in Unity to Instantiate a GameObject from code already as a child of another object, new objects must be made first, then their `transform.parent` needs to be set. Unfortunately because of the way Canvas objects work, this causes the newly created object to distort, its position, scale or other parameters potentially changing.
+There is a small problem with *Reference Resolution*: because there is no method in Unity to *Instantiate* a *GameObject* from code already as a child of another object, new objects must be made first, then their `transform.parent` needs to be set. Unfortunately because of the way *Canvas* objects work, this causes the newly created object to distort, its position, scale or other parameters potentially changing.
 
 The best solution for this issue is to, after setting the `parent`, reset all parameters of the new object to those of its prefab:
 
