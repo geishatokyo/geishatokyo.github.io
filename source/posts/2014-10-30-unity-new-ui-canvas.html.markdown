@@ -5,6 +5,9 @@ tags: unity, unity 4.6, unity beta, ui, unity new ui, canvas, sorting
 authors: marconius
 ---
 
+初めまして、marconius又の名サボー・マルセイロです。ハンガリーから来日して、今年の４月から芸者東京に新卒で入って、
+エンジニアとしてUnityの新規を開発中です。今回、英語の記事ですが、Unityの新機能について３つを提供させていただきます。
+
 When working with 2D spaces, sorting and layering of objects is always a problem; usually in Unity we can do this either using sorting layers, or by setting the Z coordinate of game objects. The new UI, however, is designed to sort itself based on the transform order of game objects: that is to say, UI objects (in the same canvas) will be drawn based on their order in the *Hierarchy window*, with objects being lower being drawn later, on top of earlier ones.
 
 This is actually a fairly handy system: we'll be using a lot of UI objects and not having to worry about setting layers or Z coordinates makes things convenient; it does lead to some, at first, counter-intuitive situations like backgrounds being *above* foreground elements in the *Hierarchy*, but this is easy enough to get used to.
