@@ -1,5 +1,5 @@
 ---
-title: Unity 4.6 UI Tip&#58 Animation
+title: Unity 4.6 UI Tip&#58 UI Animation
 date: 2014-11-07 19:51 JST
 tags: unity, unity 4.6, unity beta, ui, unity new ui, animation
 authors: marconius
