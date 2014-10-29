@@ -23,22 +23,24 @@ There is a small problem with *Reference Resolution*: because there is no method
 
 The best solution for this issue is to, after setting the `parent`, reset all parameters of the new object to those of its prefab:
 
-	public RectTransform InstantiateUI (RectTransform prefab, Transform parent)
-	{
-		GameObject newGameObject = Instantiate (prefab) as GameObject;
-        newGameObject.transform.parent = parent;
-        
-        RectTransform newRectTransform = newGameObject.transform as RectTransform;
-        newRectTransform.anchoredPosition = prefab.anchoredPosition;
-        newRectTransform.anchorMax = prefab.anchorMax;
-        newRectTransform.anchorMin = prefab.anchorMin;
-        newRectTransform.localRotation = prefab.localRotation;
-        newRectTransform.localScale = prefab.localScale;
-        newRectTransform.pivot = prefab.pivot;
-        newRectTransform.sizeDelta = prefab.sizeDelta;
-        
-        return newRectTransform;
-    }
+```csharp
+public RectTransform InstantiateUI (RectTransform prefab, Transform parent)
+{
+	GameObject newGameObject = Instantiate (prefab) as GameObject;
+	newGameObject.transform.parent = parent;
+       
+    RectTransform newRectTransform = newGameObject.transform as RectTransform;
+   	newRectTransform.anchoredPosition = prefab.anchoredPosition;
+   	newRectTransform.anchorMax = prefab.anchorMax;
+    newRectTransform.anchorMin = prefab.anchorMin;
+    newRectTransform.localRotation = prefab.localRotation;
+    newRectTransform.localScale = prefab.localScale;
+    newRectTransform.pivot = prefab.pivot;
+    newRectTransform.sizeDelta = prefab.sizeDelta;
+       
+    return newRectTransform;
+}
+```
     
 -----
 
