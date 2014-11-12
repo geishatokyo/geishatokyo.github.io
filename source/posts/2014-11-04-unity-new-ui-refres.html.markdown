@@ -1,7 +1,7 @@
 ---
-title: Unity 4.6 UI Tip&#58 Reference Resolution
+title: Unity 4.6 UI Tip&#58 Canvas Scaler (formerly Reference Resolution)
 date: 2014-11-04 19:50 JST
-tags: unity, unity 4.6, unity beta, ui, unity new ui, reference resolution, resolution, scaling
+tags: unity, unity 4.6, unity beta, ui, unity new ui, canvas scaler, reference resolution, resolution, scaling
 authors: marconius
 ---
 
@@ -47,3 +47,9 @@ public RectTransform InstantiateUI (RectTransform prefab, Transform parent)
 Created for [Unity 4.6](http://unity3d.com/unity/beta/4.6) beta version 20.
 
 This post is meant for advanced users; for basic information on the new UI features, please check the [offical tutorial videos](http://unity3d.com/learn/tutorials/modules/beginner/ui)!
+
+-----
+
+**Update:** [Unity 4.6](http://unity3d.com/unity/beta/4.6) beta version 21 updated the old *Reference Resolution* component and renamed it **Canvas Scaler**, merging its functionality with *Physical Resolution*, now providing multiple *Scale Mode*s; the functionality described above is still the same when set to *Scale With Screen Size*. The component is now properly documented as well.
+
+The newly added **Reference Pixels Per Unit** parameter is essentially a simple way to scale imported sprites and has an effect on the *Native Size* of Images.
