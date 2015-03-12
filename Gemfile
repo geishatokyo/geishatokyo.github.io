@@ -9,6 +9,7 @@ gem "redcarpet", "~> 3.1.1"
 gem "middleman-blog-authors", "~> 0.0.1"
 gem "middleman-deploy", "~> 0.2.3"
 gem "nokogiri", "~> 1.6.1"
+gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 # For feed.xml.builder
 gem "builder", "~> 3.0"
