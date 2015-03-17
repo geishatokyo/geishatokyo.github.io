@@ -1,5 +1,5 @@
 ---
-title: Scala で作る Android ゲーム
+title: Scala で作る Android ゲームアプリ
 date: 2015-03-14 18:20 JST
 tags: geishastudy,scala,android
 authors: yamauchi
@@ -14,14 +14,14 @@ Android のみでアプリ開発をしたい人には役に立つと思います
 Scala で Android アプリを開発するには以下のものが必要です。
 
 1. JDK (Java Development Kit) 7  
-[Oracleのサイト](http://www.oracle.com/technetwork/java/javase/downloads/index.html) からインストーラをダウンロードする。  
+[Oracleのサイト](http://www.oracle.com/technetwork/java/javase/downloads/index.html) からインストーラをダウンロードします。  
 JDK8だと動かないので注意。
 2. SBT (Simple Build Tool)  
-Windowsユーザは [公式サイト](http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html) からインストーラをダウンロードする。  
-それ以外のユーザは[sbt-extras](https://github.com/paulp/sbt-extras) を使う。
+Windowsユーザは [公式サイト](http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html) からインストーラをダウンロードします。  
+それ以外のユーザは[sbt-extras](https://github.com/paulp/sbt-extras) を使いましょう。
 3. Android SDK  
-Windows ユーザは [公式サイト](http://developer.android.com/sdk/index.html) からインストーラをダウンロードする。  
-Mac ユーザは brew でインストールする。  
+Windows ユーザは [公式サイト](http://developer.android.com/sdk/index.html) からインストーラをダウンロードします。  
+Mac ユーザは brew でインストールします。  
 `brew install android-sdk`
 4. Android emulator (または Android 実機)  
 Android SDK 付属のエミュレータは重たいので、Android 実機 か [Genymotion](https://www.genymotion.com/) を使うのがオススメ。  
@@ -40,7 +40,7 @@ Android アプリを動かしてみましょう。
 1. サンプルアプリのダウンロード  
 `git clone git@github.com:geishatokyo/scalappybird.git`
 2. Android の起動  
-実機をPCにUSB接続する。もしくはエミュレータを起動する。
+実機をPCにUSB接続します。もしくはエミュレータを起動します。
 3. デバイスの割り当て  
 `cd scalappybird`  
 `sbt devices`  
@@ -51,6 +51,8 @@ Android アプリを動かしてみましょう。
 `sbt android:run`
 
 ## アプリの開発
+
+![scalappybird](/static/images/2015/03/scalappybird.png)
 
 基本的には MaihThread.scala を編集するだけで開発を進められるように設計してあります。  
 ソースコードを編集したら `sbt android:run` で動作を確認するのを繰り返します。
@@ -73,5 +75,6 @@ ANDROID SDK への PATH に日本語文字列やスペースを含むと動か�
 
 ## 勉強会情報
 
-上記の内容で 2015-03-14 に [第1回ゲーム開発ハンズオンin仙台](http://geishatokyo.doorkeeper.jp/events/20899) を行いました。
+上記の内容で 2015-03-14 に [第1回ゲーム開発ハンズオン(in仙台)](http://geishatokyo.doorkeeper.jp/events/20899) を行いました。  
+芸者東京エンターテインメントでは今後も定期的にゲーム開発ハンズオンを各地で行います。よろしくお願いします。
 
