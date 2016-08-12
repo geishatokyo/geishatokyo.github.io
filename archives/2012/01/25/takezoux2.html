@@ -1,0 +1,833 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog - MavenからSBTへのビルド環境の移行</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="https://github.com/geishatokyo/geishastudy" target="_blank">勉強会資料</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <article> 
+    <h1>MavenからSBTへのビルド環境の移行 </h1>
+    <span>Posted on 2012-01-25
+      by <a href="../../../authors/takezoux2.html">takezoux2</a>
+    </span>
+    <p>この記事は、sbt0.11.X系列の記事です。それ以前のバージョンでは正しく動作しません。</p>
+
+<h2><a href="https://github.com/harrah/xsbt/wiki" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">SBT</a>とは</h2>
+
+<p>Scala(とついでにJava)のためのビルドツールです。ちなみにSimple Build Toolの略です。<br/>
+特徴としては、設定等全てscalaで書くことができ拡張性が高いビルドツールになっています。</p>
+<p>この記事では、Mavenの主要な機能を順次sbtへと移植していきます。<br/>
+現在ScalaをMavenと連携して使用しているけど、sbtも安定してきた気がするしsbtへ乗り換えてみようかなと思っている人達を対象にしています。<br/>
+sbtに関しては、使う上での最低限の情報と、Mavenからの移植に必要な部分のみ触れています。<br/>
+きちんとsbtの使い方を知りたい方は、本家のWikiを読んでください。</p>
+
+<h2>SBTのセットアップ</h2>
+<h2 id="install">1. SBTのインストール</h2>
+<p>
+sbtは<a href="https://github.com/harrah/xsbt/wiki" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">こちら</a>から取得できます。</p>
+<h3>1.1 Windows</h3>
+<p>まず、<a href="https://github.com/harrah/xsbt/wiki/Getting-Started-Setup" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">Setup</a>のinstalling sbtのところからsbt-launch.jarをダウンロードして適当なフォルダに置いてください。<br />
+次にjarを保存したディレクトリに以下の内容を書いたsbt.batを作ります。</p>
+&ldquo;`
+set SCRIPT_DIR=%~dp0
+java -Xmx512M -jar &rdquo;%SCRIPT_DIR%sbt-launch.jar&quot; %*
+&ldquo;`
+<p>最後に、コントロールパネルの環境変数でPathにこのsbt.batとsbt-launch.jarをおいたディレクトリを通してください。<br />
+以上でSBTを使う準備は完了です。</p>
+<h3>LinuxとかMacとか</h3>
+<p>だいたい手順は一緒です。書くのがめんどくさいので本家Wikiを参照してください。
+</p>
+
+<h2 id="hello">2. Hello SBT</h2>
+
+<h3>2.1 起動</h3>
+
+<p>sbtを使うだけならば、コマンドプロンプトから適当なディレクトリで</p>
+<pre class="highlight plaintext"><code>sbt
+</code></pre>
+
+<p>とだけ入力してください。SBTの対話モードが起動します。</p>
+
+<h3>2.2 ソースコード</h3>
+
+<p>sbtのプロジェクトのディレクトリ構成は以下のようになります。</p>
+<pre class="highlight plaintext"><code>src/
+  main/
+    resources/
+       &lt;リソースファイル&gt;
+    scala/
+       &lt;scalaソースコード&gt;
+    java/
+       &lt;javaソースコード&gt;
+  test/
+    resources
+       &lt;テストリソース&gt;
+    scala/
+       &lt;scalaテストコード&gt;
+    java/
+       &lt;javaテストコード&gt;
+project
+       &lt;sbtプロジェクトファイル&gt;
+target
+       &lt;コンパイルされたクラスファイルなどsbtが自動生成したファイルの出力先&gt;
+</code></pre>
+
+<p>Mavenとソースコードのディレクトリ構成は同じです。</p>
+
+<p>src/main/scalaに以下のようなhellosbt.scalaを入れておいてください。</p>
+<pre class="highlight scala"><code><span class="k">object</span> <span class="nc">App</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span> <span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">"hello sbt!"</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+
+<h3>2.3 コンパイルと実行</h3>
+
+<p>実行は次の手順で行えます。</p>
+<pre class="highlight plaintext"><code>&gt; sbt
+sbt&gt; reload
+ ...
+sbt&gt; update
+  ...
+  [success] ...
+sbt&gt; compile
+  [success] ...
+sbt&gt; run
+hello sbt!
+</code></pre>
+
+<p>これでさきほどのScalaプログラムが実行できました。簡単ですね。</p>
+
+<h2 id="overview">3. SBTの概要</h2>
+
+<h3>3.1 よく使うSBTコンソールコマンドの説明</h3>
+
+<p>先ほどHelloWorldで使用した4つのコマンドに加えて、よく使うコマンド5つを簡単に説明しておきます。とりあえずこれだけ覚えとけばsbtは使えます。</p>
+
+<h3>reload</h3>
+
+<p>sbtのプロジェクトファイルを再読み込みします。sbtはプロジェクトファイルの変更を監視していないので、依存関係の追加などの設定変更を行った場合、sbt自体を再起動するか、reloadコマンドを実行してやる再読み込みを行う必要があります。(今さっきのHello sbtではこのコマンドは不要でした。)</p>
+
+<h3>update</h3>
+
+<p>設定した依存関係を解決し、jarファイルをローカルのIvyレポジトリへダウンロードしてきます。依存関係に変更がない限り、1度だけ実行すれば大丈夫です。(これも先ほどのHello sbtでは不要でした)</p>
+
+<h3>compile</h3>
+
+<p>コンパイルをします。</p>
+
+<h3>test</h3>
+
+<p>src/test/以下のテストを実行します。</p>
+
+<h3>run</h3>
+
+<p>自動でmain関数を探して実行します。</p>
+
+<h3>console</h3>
+
+<p>依存関係のjarを全てパスに通した状態でscalaのREPLを起動します。</p>
+
+<h3>publish</h3>
+
+<p>プロジェクトのプログラムを、ローカルレポジトリや外部のレポジトリへ配置します。</p>
+
+<h3>clean</h3>
+
+<p>target内のファイルを削除し、まっさらな状態にリセットします。全てのソースを再コンパイルしたい場合などに使用します。</p>
+
+<h3>tasks</h3>
+
+<p>現在のsbt projectで使用可能なコマンドの一覧が表示されます。他の機能は暇な時にこれで表示させてみてください。</p>
+
+<p>Mavenの違いとしては、mvn compileやmvn testでは自動で依存関係の更新まで行なってくれますが、sbtでは依存関係の更新は明示的にupdateを実行する必要があります。(そのかわり、testやcompileのときにいちいち依存関係に解決を行わないので早い)<br />
+あとは、sbtには簡単にコードを実行できるrunとconsoleコマンドがあります。とくにconsoleのほうは、ライブラリを試しに使って見るときに非常に重宝します。</p>
+
+<h3>3.2 pom.xmlに変わるもの</h3>
+
+<p>sbtでは、</p>
+
+<ul>
+<li>Build.sbtによる、KeyValue型簡易設定方式</li>
+<li>projectディレクトリに*.scalaを記述する詳細設定方式</li>
+</ul>
+
+<p>の2種類のプロジェクト設定方法が用意されています。<br />
+今回は、後者の詳細設定方式を使いたいと思います。</p>
+
+<h2>プロジェクトの準備</h2>
+
+<h2>1. SBTプロジェクトファイルの準備</h2>
+
+<p>今回は、JSONライブラリの<a href="http://code.google.com/p/google-gson/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://code.google.com']);">GSON</a>を使ってJSONのパースをするプログラムとそのテストを作りたいと思います。<br />
+まず、適当に空のディレクトリを作成しそこへ移動してください。</p>
+
+<h3 id="make_project_file">1.1 sbtプロジェクトファイルの用意</h3>
+
+<p>projectディレクトリを作成し、Build.scalaというファイルを作成し以下のコードを書いてください。</p>
+<pre class="highlight scala"><code><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">HelloBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="n">id</span> <span class="k">=</span> <span class="s">"hello"</span><span class="o">,</span>
+    <span class="n">base</span> <span class="k">=</span>  <span class="n">file</span><span class="o">(</span><span class="s">"."</span><span class="o">),</span>
+    <span class="n">settings</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">.</span><span class="n">defaultSettings</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span>
+      <span class="n">version</span> <span class="o">:=</span> <span class="s">"0.0.1-SNAPSHOT"</span>
+    <span class="o">)</span>
+  <span class="o">)</span>
+
+<span class="o">}</span>
+</code></pre>
+
+<p>あとは、sbtを実行(すでに実行している場合は、reloadで再読み込み)を行なってエラーが起きないことを確認してください。<br />
+これが、最小構成のsbtのプロジェクトファイルになります。<br />
+sbtの思想を簡単に説明しておくと、sbtでは全ての設定がSettingKeyとValueのペアとなっています。この例では、</p>
+<pre class="highlight plaintext"><code>version := "0.0.1-SNAPSHOT"
+</code></pre>
+
+<p>の部分が設定に相当し、versionというSettingKeyに&quot;0.0.1-SNAPSHOT&quot;というValueを設定しています。その他の設定もこのようにKeyValueのペアとして表現されます。</p>
+
+<h2 id="base_setting">2. 基本設定</h2>
+
+<h3>2.1 groupIdやartifactId等の設定</h3>
+
+<p>mavenのgroupIdやartifactIdなどの基本情報の設定は以下のように対応します。<br />
+これ以外の使用可能なSettingKeyはsbt.Keysに定義されています。</p>
+
+<table border="1">
+<tr>
+<td>Mavenでのタグ名</td>
+<td>SettingKey</td>
+</tr>
+<tr>
+<td>groupId</td>
+<td>organization</td>
+</tr>
+<tr>
+<td>artifactId</td>
+<td>Project@id + &rdquo;_&ldquo; + scalaVersion</td>
+</tr>
+<tr>
+<td>version</td>
+<td>version</td>
+</tr>
+<tr>
+<td>description</td>
+<td>description</td>
+</tr>
+</table>
+<pre class="highlight scala"><code><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">HelloBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="n">id</span> <span class="k">=</span> <span class="s">"sbt-gson"</span><span class="o">,</span>
+    <span class="n">base</span> <span class="k">=</span>  <span class="n">file</span><span class="o">(</span><span class="s">"."</span><span class="o">),</span>
+    <span class="n">settings</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">.</span><span class="n">defaultSettings</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span>
+      <span class="n">version</span> <span class="o">:=</span> <span class="s">"0.0.1-SNAPSHOT"</span><span class="o">,</span>
+      <span class="n">organization</span> <span class="o">:=</span> <span class="s">"com.geishatokyo"</span><span class="o">,</span>
+      <span class="n">description</span> <span class="o">:=</span> <span class="s">"this is gson program"</span>
+    <span class="o">)</span>
+  <span class="o">)</span>
+<span class="o">}</span>
+</code></pre>
+
+<p>はpomファイルの</p>
+<pre class="highlight xml"><code><span class="nt">&lt;project</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.geishatokyo<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>sbt-gson_2.9.1<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;packaging&gt;</span>jar<span class="nt">&lt;/packaging&gt;</span>
+    <span class="nt">&lt;description&gt;</span>this is gson program<span class="nt">&lt;/description&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;name&gt;</span>sbt-gson<span class="nt">&lt;/name&gt;</span>
+    ...
+<span class="nt">&lt;/project&gt;</span>
+</code></pre>
+
+<p>と等価になります。なお、sbtコンソールで</p>
+<pre class="highlight plaintext"><code>make-pom
+</code></pre>
+
+<p>コマンドを使用するとpomファイルを生成してくれます。</p>
+
+<h3>2.2 scala version</h3>
+
+<p>sbtではコンパイルに使用するscalaのバージョンと、CrossVersionBuildの設定が簡単に行えます。<br />
+現在はデフォルトではscala2.9.1が使用されます。</p>
+
+<p>SettingKeyは</p>
+
+<table border="1">
+<tr>
+<td>scalaVersion</td>
+<td>String</td>
+<td>scalaVersion := &quot;2.9.1&rdquo;</td>
+</tr>
+<tr>
+<td>crossScalaVersions</td>
+<td>Seq[String]</td>
+<td>crossScalaVersion := Seq(&ldquo;2.7.7&rdquo;,&ldquo;2.8.1&rdquo;,&ldquo;2.9.0&rdquo;,&ldquo;2.9.0-1&rdquo;,&ldquo;2.9.1&rdquo;)</td>
+</tr>
+</table>
+
+<p>crossScalaVersionsを設定しておくと、</p>
+<pre class="highlight plaintext"><code>+compile
++publish
+</code></pre>
+
+<p>と+を付けてコマンド実行すると設定したscala version全てでビルドや配置を行なってくれます。</p>
+
+<p>今回はscala2.9.1とscala2.9.0でコンパイルします。<br />
+最終的なBuild.scalaは以下のようになります。</p>
+<pre class="highlight scala"><code><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">HelloBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="n">id</span> <span class="k">=</span> <span class="s">"sbt-gson"</span><span class="o">,</span>
+    <span class="n">base</span> <span class="k">=</span>  <span class="n">file</span><span class="o">(</span><span class="s">"."</span><span class="o">),</span>
+    <span class="n">settings</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">.</span><span class="n">defaultSettings</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span>
+      <span class="n">version</span> <span class="o">:=</span> <span class="s">"0.0.1-SNAPSHOT"</span><span class="o">,</span>
+      <span class="n">organization</span> <span class="o">:=</span> <span class="s">"com.geishatokyo"</span><span class="o">,</span>
+      <span class="n">description</span> <span class="o">:=</span> <span class="s">"this is gson program"</span><span class="o">,</span>
+      <span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">"2.9.1"</span><span class="o">,</span>
+      <span class="n">crossScalaVersions</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">"2.9.0-1"</span><span class="o">,</span><span class="s">"2.9.0"</span><span class="o">)</span>
+    <span class="o">)</span>
+  <span class="o">)</span>
+<span class="o">}</span>
+</code></pre>
+
+<h2>依存関係解決</h2>
+
+<p>この項目ではおもに依存関係の解決方法の説明をします。<br />
+sbtは内部で<a href="http://ant.apache.org/ivy/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://ant.apache.org']);">Apache Ivy</a>を使用しています。<br />
+MavenCentralやScala-toolsなどのMavenRepositoryは問題なく使えますが、ローカルのMavenとの連携は多少設定が必要となります。</p>
+
+<h2 id="dependency">1. 依存関係の設定</h2>
+
+<p>依存関係は、libraryDependenciesのSettingKeyに設定することになります。<br />
+libraryDependenciesの受け取る型はSeq[ModuleID]となっており、依存するライブラリを全て列挙することとなります。</p>
+
+<h3>javaのライブラリの場合</h3>
+
+<p>mavenでは</p>
+<pre class="highlight xml"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.google.code.gson<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>gson<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre>
+
+<p>sbtでは</p>
+<pre class="highlight scala"><code><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"com.google.code.gson"</span> <span class="o">%</span> <span class="s">"gson"</span> <span class="o">%</span> <span class="s">"2.1"</span> <span class="o">%</span> <span class="s">"compile"</span>
+</code></pre>
+
+<p>のように書きます。<br />
+まず、演算子が := では無く、 +=になっていることに注意してください。<br />
+:= は代入となり、値を全て上書きしてしまいます。+=は新しい要素の追加になります。<br />
+ModuleIDはimplicit conversionによって変換されています。演算子には%を使います。書式は</p>
+<pre class="highlight plaintext"><code>"groupID" % "artifactID" % "version" [% "scope"]
+</code></pre>
+
+<p>です。scopeには、&quot;compile&quot;,&ldquo;test&rdquo;,&ldquo;provided&quot;が使用可能です。またscopeは省略可能で、デフォルトでは&quot;compile&quot;とみなされます。</p>
+
+<h3>scalaライブラリの場合</h3>
+
+<p>scalaのライブラリは慣習的にartifactIDの末尾にscalaのバージョンが付与されます。</p>
+<pre class="highlight xml"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.scalatest<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>scalatest_2.9.1<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.7.RC1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre>
+
+<p>このようなscalaライブラリの場合、sbtでは</p>
+<pre class="highlight scala"><code><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"org.scalatest"</span> <span class="o">%%</span> <span class="s">"scalatest"</span> <span class="o">%</span> <span class="s">"1.7.RC1"</span>
+</code></pre>
+
+<p>と設定します。注意する点は、groupIDのあとの演算子が % -> %%になっており、artifactIDにscalaVersionをくっつけていないという点です。<br />
+このように記述することで、sbtが依存関係の解決を行う際に自動でartifactIDに現在設定しているscalaのバージョンを付与してくれます。</p>
+
+<h2 id="external_repo">2. 外部Repositoryの設定</h2>
+
+<p>デフォルトでMavenCentralRepositoryやScalaToolsが設定されています。<br />
+が場合によっては社内Repositoryや野良Repositoryを使いたくなる場合があると思います。<br />
+このようなRepositoryの設定はresolversのSettingKeyに追加します<br />
+設定方法</p>
+<pre class="highlight scala"><code><span class="n">resolvers</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+  <span class="s">"Company Repos"</span> <span class="n">at</span> <span class="s">"http://hoge.nexus.com"</span><span class="o">,</span>
+  <span class="s">"Another Company Repos"</span> <span class="n">at</span> <span class="s">"http://another.company.com"</span>
+<span class="o">)</span>
+</code></pre>
+
+<p>今回は複数のRepositoryを一括で登録して見ました。<br />
+代入演算子++=はSeq同士を結合する演算子になります。resolversはSeq[Resolver]なのでこの演算子が使用可能です。<br />
+また、今回もimplicit conversionが使用されておりReslverを明示的にインスタンス化する必要はありません。</p>
+
+<h2 id="maven_local">3. MavenLocalRepositoryの設定</h2>
+
+<p>Mavenを使っている人はmvn installでローカルにいろいろなライブラリをインストールしている思います。<br />
+しかし、sbtはIvyを使用しているので、デフォルトではMavenのローカルレポジトリを参照してくれません。<br />
+でも安心して下さい。sbtには簡単にMavenLocalRepositoryを追加する手段が用意されています。</p>
+<pre class="highlight scala"><code><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">mavenLocal</span>
+</code></pre>
+
+<p>を書き加えるだけでMavenLocalRepositoryの設定は完了します。</p>
+
+<h2 id="global_setting">4. settings.xmlの置き換え</h2>
+
+<p>Mavenを使っているなら社内レポジトリなどの共通設定は当然settings.xmlに全て設定して無駄な手間をなくしていると思います。<br />
+sbtを使っていても同じ事を思いますよね？sbtにもsettings.xmlのようにグローバルな設定を記述する方法が用意されています。</p>
+
+<p>ユーザーのホームディレクトリの下に.sbtディレクトリを作り、その中にglobal.sbtファイルを作成してください。</p>
+<pre class="highlight plaintext"><code>windows
+C:\Users\{user name}\.sbt\global.sbt
+Linuxなど
+~/.sbt/global.sbt
+</code></pre>
+
+<p>global.sbt</p>
+<pre class="highlight scala"><code><span class="n">resolvers</span> <span class="o">+=</span> <span class="s">"Company Repository"</span> <span class="n">at</span> <span class="s">"http://mycompany.nexus.com/maven/snapshot/"</span>
+
+<span class="n">credentials</span> <span class="o">+=</span> <span class="nc">Credentials</span><span class="o">(</span><span class="s">"Sonatype Nexus Repository Manager"</span><span class="o">,</span> <span class="s">"mycompany.nexus.com"</span><span class="o">,</span> <span class="o">{</span><span class="n">user</span> <span class="n">name</span><span class="o">},</span> <span class="o">{</span><span class="n">password</span><span class="o">})</span>
+</code></pre>
+
+<p>設定の方法はBuild.scalaとほぼ一緒です。ただし、Build.sbtと同様な簡易記法になります。そのため、クラスの定義は不要で、SettingKeyとValueだけを列挙すれば大丈夫です。<br />
+注意点は、1設定ごと1行開けないと正しく動きません。</p>
+
+<p>credentialsは、認証の設定です。APIによると</p>
+<pre class="highlight scala"><code><span class="nc">Credencial</span><span class="o">.</span><span class="n">apply</span><span class="o">(</span><span class="n">realm</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span><span class="n">host</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">userName</span> <span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">password</span> <span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</code></pre>
+
+<p>となっています。認証のかかっているサーバーごとに正しく設定しましょう。</p>
+
+<p>現在のBuild.scalaはこのようになっています。<br />
+依存関係は、いくつも列挙することになると思うので別途定義しておいたほうが綺麗になります。</p>
+<pre class="highlight scala"><code><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">HelloBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+
+  <span class="k">val</span> <span class="n">gson</span> <span class="k">=</span> <span class="s">"com.google.code.gson"</span> <span class="o">%</span> <span class="s">"gson"</span> <span class="o">%</span> <span class="s">"2.1"</span>
+  <span class="k">val</span> <span class="n">scalaTest</span> <span class="k">=</span> <span class="s">"org.scalatest"</span> <span class="o">%%</span> <span class="s">"scalatest"</span> <span class="o">%</span> <span class="s">"1.7.RC1"</span> <span class="o">%</span> <span class="s">"test"</span>
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">dependencies</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span>
+    <span class="n">gson</span><span class="o">,</span>
+    <span class="n">scalaTest</span>
+  <span class="o">)</span>
+
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="n">id</span> <span class="k">=</span> <span class="s">"sbt-gson"</span><span class="o">,</span>
+    <span class="n">base</span> <span class="k">=</span>  <span class="n">file</span><span class="o">(</span><span class="s">"."</span><span class="o">),</span>
+    <span class="n">settings</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">.</span><span class="n">defaultSettings</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span>
+      <span class="n">version</span> <span class="o">:=</span> <span class="s">"0.0.1-SNAPSHOT"</span><span class="o">,</span>
+      <span class="n">organization</span> <span class="o">:=</span> <span class="s">"com.geishatokyo"</span><span class="o">,</span>
+      <span class="n">description</span> <span class="o">:=</span> <span class="s">"this is gson program"</span><span class="o">,</span>
+      <span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">"2.9.1"</span><span class="o">,</span>
+      <span class="n">crossScalaVersions</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">"2.9.0-1"</span><span class="o">,</span><span class="s">"2.9.0"</span><span class="o">),</span>
+      <span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="n">dependencies</span><span class="o">,</span>
+      <span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">mavenLocal</span>
+    <span class="o">)</span>
+  <span class="o">)</span>
+<span class="o">}</span>
+</code></pre>
+
+    <hr>
+    <h2>Tags</h2>
+      <a href="../../../tags/scala.html">Scala</a>
+      <a href="../../../tags/maven.html">maven</a>
+      <a href="../../../tags/sbt.html">sbt</a>
+    <hr>
+    <ul class="social-button">
+      <li>
+        <div class="fb-share-button" data-type="button_count"></div>
+      </li>
+      <li>
+        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+      </li>
+    </ul>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </article>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015/03/14/scala-android.html">Scala で作る Android ゲームアプリ</a> <span>2015-03-14</span></li>
+                  <li><a href="../../../2014/11/07/unity-new-ui-anim.html">Unity 4.6 UI Tip&#58 UI Animation</a> <span>2014-11-07</span></li>
+                  <li><a href="../../../2014/11/04/unity-new-ui-refres.html">Unity 4.6 UI Tip&#58 Canvas Scaler (formerly Reference Resolution)</a> <span>2014-11-04</span></li>
+                  <li><a href="../../../2014/10/30/unity-new-ui-canvas.html">Unity 4.6 UI Tip&#58 Override sorting with Canvas</a> <span>2014-10-30</span></li>
+                  <li><a href="../../../2014/10/03/yamauchi.html">第4回芸者東京ハンズオン勉強会</a> <span>2014-10-03</span></li>
+                  <li><a href="../../../2014/09/29/yamauchi.html">Dockerfile を書かなくてもできる Docker コンテナ運用</a> <span>2014-09-29</span></li>
+                  <li><a href="../../../2014/09/08/yamauchi.html">第3回芸者東京ハンズオン勉強会</a> <span>2014-09-08</span></li>
+                  <li><a href="../../../2014/07/29/takezoux2.html">Using AWS Java SDK with AWS IAM Role.</a> <span>2014-07-29</span></li>
+                  <li><a href="../../../2014/06/24/yamauchi.html">第2回Scalaハンズオン勉強会2014-06-21</a> <span>2014-06-24</span></li>
+                  <li><a href="../../../2014/06/02/presentaion-at-play-meetup.html">Presentaion at Play meetup</a> <span>2014-06-02</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015.html">2015 (1)</a></li>
+                  <li><a href="../../../2014.html">2014 (13)</a></li>
+                  <li><a href="../../../2013.html">2013 (3)</a></li>
+                  <li><a href="../../../2012.html">2012 (10)</a></li>
+                  <li><a href="../../../2011.html">2011 (11)</a></li>
+                  <li><a href="../../../2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/java.html">Java (2)</a></li>
+                      <li><a href="../../../tags/jetty.html">jetty (1)</a></li>
+                      <li><a href="../../../tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../../tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../../tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../../tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../../tags/unity.html">unity (3)</a></li>
+                      <li><a href="../../../tags/unity-4-6.html">unity 4.6 (3)</a></li>
+                      <li><a href="../../../tags/unity-beta.html">unity beta (3)</a></li>
+                      <li><a href="../../../tags/ui.html">ui (3)</a></li>
+                      <li><a href="../../../tags/unity-new-ui.html">unity new ui (3)</a></li>
+                      <li><a href="../../../tags/canvas-scaler.html">canvas scaler (1)</a></li>
+                      <li><a href="../../../tags/reference-resolution.html">reference resolution (1)</a></li>
+                      <li><a href="../../../tags/resolution.html">resolution (1)</a></li>
+                      <li><a href="../../../tags/scaling.html">scaling (1)</a></li>
+                      <li><a href="../../../tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../../tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../../tags/python.html">Python (1)</a></li>
+                      <li><a href="../../../tags/geishastudy.html">geishastudy (3)</a></li>
+                      <li><a href="../../../tags/scala.html">scala (6)</a></li>
+                      <li><a href="../../../tags/android.html">android (2)</a></li>
+                      <li><a href="../../../tags/hands-on.html">hands-on (2)</a></li>
+                      <li><a href="../../../tags/seminar.html">seminar (2)</a></li>
+                      <li><a href="../../../tags/blog.html">blog (1)</a></li>
+                      <li><a href="../../../tags/middleman.html">middleman (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/github-pages.html">github pages (1)</a></li>
+                      <li><a href="../../../tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../../tags/aws.html">aws (1)</a></li>
+                      <li><a href="../../../tags/iam.html">IAM (1)</a></li>
+                      <li><a href="../../../tags/java.html">java (1)</a></li>
+                      <li><a href="../../../tags/scala-js.html">scala.js (1)</a></li>
+                      <li><a href="../../../tags/enchant-js.html">enchant.js (1)</a></li>
+                      <li><a href="../../../tags/android.html">Android (3)</a></li>
+                      <li><a href="../../../tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../../tags/docker.html">docker (1)</a></li>
+                      <li><a href="../../../tags/dokku-alt.html">dokku-alt (1)</a></li>
+                      <li><a href="../../../tags/git.html">git (1)</a></li>
+                      <li><a href="../../../tags/c.html">C# (1)</a></li>
+                      <li><a href="../../../tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../../tags/canvas.html">canvas (1)</a></li>
+                      <li><a href="../../../tags/sorting.html">sorting (1)</a></li>
+                      <li><a href="../../../tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../../tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../../tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../../tags/css.html">css (1)</a></li>
+                      <li><a href="../../../tags/animation.html">animation (1)</a></li>
+                      <li><a href="../../../tags/play.html">play (1)</a></li>
+                      <li><a href="../../../tags/dsl.html">dsl (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../../authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../../authors/marconius.html">marconius</a></li>
+                      <li><a href="../../../authors/yamauchi.html">yamauchi</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/ta2.html">ta2</a></li>
+                      <li><a href="../../../authors/arikui.html">arikui</a></li>
+                      <li><a href="../../../authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../../authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../../authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../../authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

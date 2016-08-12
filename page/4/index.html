@@ -1,0 +1,532 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="https://github.com/geishatokyo/geishastudy" target="_blank">勉強会資料</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <p>Page 4 of 5</p>
+    <p><a href="../3/">Previous page</a></p>
+
+  <h1><a href="../../archives/2011/10/14/h_ninomiya.html">NFC業界の基礎知識</a></h1>
+  <span>Posted on 2011-10-14
+    by <a href="../../archives/authors/h_ninomiya.html">h_ninomiya</a>
+  </span>
+  <p>初めまして、こんにちは。GTEインターン生の二宮と申します。今回は私、二宮が個人的に興味のあるFeliCa についてお話ししたいと思います。</p>
+
+<p>流れとしては、まずはFeliCa周りの基礎知識を紹介し、それからFeliCaの識別番号を取得するような簡単なプログラムを組んでみます。記事を通じて、FeliCa / NFCを取り巻くドキドキ感を読者の方にお伝えできれば幸いです。</p>
+
+<h2>1.FeliCaってなぁに？</h2>
+
+<p>そもそも皆さん、FeliCa をご存知でしょうか。……おっしゃる通り、SuicaやらWAON...</p>
+  <a href="../../archives/2011/10/14/h_ninomiya.html">Read more...</a>
+  <hr/>
+  <h1><a href="../../archives/2011/10/11/arikui.html">mavenによるAndroidプロジェクトのProfile設定</a></h1>
+  <span>Posted on 2011-10-11
+    by <a href="../../archives/authors/arikui.html">arikui</a>
+  </span>
+  <p>初めまして、arikuiと言います。先月くらいからAndroid向けアプリ開発を担当しています。<br>
+今回はAndroid開発において環境に依存するリソースの切り替え方法、中でもmavenのプロファイルについて書きたいと思います。</p>
+
+<p><strong>使用した開発環境</strong></p>
+
+<ul>
+<li>maven2</li>
+<li>maven-android-plugin 2.8.4</li>
+<li>android SDK 2.2</li>
+<li>(Eclipse 3.6 Helios)</li>
+</ul>
+
+<p>私の環境ではmavenを使用してAndroid開発をしているので、やや限定された環境向けの記事か...</p>
+  <a href="../../archives/2011/10/11/arikui.html">Read more...</a>
+  <hr/>
+  <h1><a href="../../archives/2011/09/23/takezoux2.html">play-scalaをscala 2.9.1でビルドする</a></h1>
+  <span>Posted on 2011-09-23
+    by <a href="../../archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <p><em>この記事は2011/09/21頃に書きました。play-scalaの1.0では、scala 2.9.1 に上がるらしいので、将来的には自前でビルドする必要性はなくなっていると思われます。</em></p>
+
+<p>現在、弊社では Play framework の導入について検討を進めています。<br>
+これまで開発してきたアプリケーションについては Scala 2.9.x 系統をメインで使用していたのですが、play-scalaのビルドはScala 2.8.1で行われているため、社内のライブラリが使用できないという問題に...</p>
+  <a href="../../archives/2011/09/23/takezoux2.html">Read more...</a>
+  <hr/>
+  <h1><a href="../../archives/2011/09/16/yyuu.html">jetty-nosql-memcached のご紹介</a></h1>
+  <span>Posted on 2011-09-16
+    by <a href="../../archives/authors/yyuu.html">yyuu</a>
+  </span>
+  <p>yyuu です。前回投稿してから随分と間が空いてしまいました。前回は node.js について書いた気がしますが、続きも書かないままに今回は Java、というか <a href="http://www.eclipse.org/jetty/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.eclipse.org']);">Jetty</a> についてのお話です。</p>
+
+<p>通常、Jetty で動くアプリケーションのセッションデータは org.eclipse.jetty.server.session.HashSessionManager と呼ばれるセッションマネージャの実装により JVM のヒープ中に保持されます。一台のサーバからなる小規模な環境であればこれでも問題...</p>
+  <a href="../../archives/2011/09/16/yyuu.html">Read more...</a>
+  <hr/>
+  <h1><a href="../../archives/2011/09/08/ta2.html">いろいろなものを解析してみよう(その１)</a></h1>
+  <span>Posted on 2011-09-08
+    by <a href="../../archives/authors/ta2.html">ta2</a>
+  </span>
+  <p>決済系のシステムエンジニア、低レイヤのソフトウェアプログラマを経て、現職では芸者東京エンターテインメントでアプリケーションエンジニアとして働いています、 ta2 と申します。今回は、直近の業務にはほとんど関係しないものの、奥が深いプログラムの解析をテーマにしてみようと思います。</p>
+
+<p>私自身はそれほど解析に詳しいわけではありませんが、プログラムの解析で必要なのは、その解析で何を達成したいのかが重要だと思います。プログラムの解析に限った話ではないですが。</p>
+
+<p>そもそも、プログラムの解析を始めたのは...</p>
+  <a href="../../archives/2011/09/08/ta2.html">Read more...</a>
+  <hr/>
+  <h1><a href="../../archives/2011/08/02/takezoux2.html">Apache SolrをMaven2から実行する</a></h1>
+  <span>Posted on 2011-08-02
+    by <a href="../../archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <h1>1. はじめに</h1>
+
+<h2>1.1 Apache Solrとは</h2>
+
+<p><a href="http://lucene.apache.org/solr/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">Apache Solr</a>とはApacheプロジェクトのJavaで書かれた全文検索エンジンです。全文検索機能を実装した<a href="http://lucene.apache.org/java/docs/index.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://lucene.apache.org']);">Apache Lucene</a>の上に、Webインターフェイスやらクラスタリング機能やら色々な機能を追加したアプリケーションになります。</p>
+
+<h2>1.2 なぜMaven2?</h2>
+
+<p>SubversionやGitなどを使って複数人でソース共有するときに、全ての依存したJarを登録しちゃうとSolrの開発に関係ない人も20MB以上のjarをDL...</p>
+  <a href="../../archives/2011/08/02/takezoux2.html">Read more...</a>
+  <hr/>
+  <h1><a href="../../archives/2011/07/12/y_okaya.html">CoronaSDKを使ってみるその1</a></h1>
+  <span>Posted on 2011-07-12
+    by <a href="../../archives/authors/y_okaya.html">y_okaya</a>
+  </span>
+  <p>こんにちは。GTEエソヅニアの岡谷です。</p>
+
+<p>iPhone関連のライブラリは色々と出ていますが、今回は<a href="http://www.anscamobile.com/corona/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.anscamobile.com']);">CoronaSDK</a>というものを使ってみようと思います。</p>
+
+<p>Luaでスクリプトを書くというイカしたライブラリで、GLベースということも相まって非常に高速らしいです。<br>
+詳しい説明については<a href="http://j-corona-group.jimdo.com/corona%E3%81%A8%E3%81%AF/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://j-corona-group.jimdo.com']);">こちら</a>をご参照ください。</p>
+
+<p>簡単なゲームっぽいものを作りたいなーと思った時に知るべき要素として下記がぱっと思いつきます。</p>
+
+<ul>
+<li>画像描画の方法</li>
+<li>タッチの検出方法</li>
+<li>当たり判定の仕方</li>
+</ul>
+
+<p>画像描画に関してはそれがない...</p>
+  <a href="../../archives/2011/07/12/y_okaya.html">Read more...</a>
+  <hr/>
+  <h1><a href="../../archives/2011/06/29/yyuu.html">nvmによるnode.js開発環境の構築</a></h1>
+  <span>Posted on 2011-06-29
+    by <a href="../../archives/authors/yyuu.html">yyuu</a>
+  </span>
+  <p>お初にお目にかかります。yyuu と申します。芸者東京では主にインフラエンジニアと呼ばれるような職務を担当しております。今回は、ここしばらく流行っている node.js について書かせて頂きます。</p>
+
+<p>node.js とは、サーバサイド JavaScript の処理系の一つで、イベントループに基づいて非同期的に処理を実行できる処理系として人気を集めています。node.js の開発は現時点でも非常に活発に行なわれており、2011/6/27 の時点では v0.4.8 がリリースされています。</p>
+
+
+  <a href="../../archives/2011/06/29/yyuu.html">Read more...</a>
+  <hr/>
+  <h1><a href="../../archives/2010/10/08/takezoux2.html">Scala web framework Scalatraを使ってみる</a></h1>
+  <span>Posted on 2010-10-08
+    by <a href="../../archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <p>超簡易Scala Web Frameworkの紹介です。</p>
+
+<p><a href="http://www.scalatra.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scalatra.org']);">Scalatra</a><br>
+A tiny, Sinatra-like web framework for Scala</p>
+
+<p>とりあえず、高機能なものはいらないから、サクッとプロトとか作りたいってときとかにはかなりよさそうです。</p>
+
+<p>他の紹介サイトでは、だいたいScalatraServletが使われているけど、<br>
+ServletFilterとして実行したい場合は、ScalatraServletの代わりにScalatraFilterを継承すればOKです...</p>
+  <a href="../../archives/2010/10/08/takezoux2.html">Read more...</a>
+  <hr/>
+  <h1><a href="../../archives/2010/10/07/takezoux2.html">JavaのObject.hashCodeは結構衝突する件</a></h1>
+  <span>Posted on 2010-10-07
+    by <a href="../../archives/authors/takezoux2.html">takezoux2</a>
+  </span>
+  <p>Hash値の計算手抜きしてObject.hashCode使ってたけど、どうも衝突が発生している疑惑があったので、確かめてみました。結果としては、かなり衝突するということがわかりました。きちんとMD5とかSHAとか使ったほうがいいですねｗ</p>
+
+<h3>テスト</h3>
+
+<p>ランダムな20~30文字の小文字アルファベットの文字列からhashCodeを計算し、Hash値の衝突数を調べる</p>
+
+<h3>テストに使ったコード</h3>
+<pre class="highlight scala"><code><span class="k">import</span> <span class="nn">java.util.Random</span>
+
+<span class="k">object</span> <span class="nc">Main</span><span class="o">{</span>
+
+    <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span></code></pre>
+  <a href="../../archives/2010/10/07/takezoux2.html">Read more...</a>
+  <hr/>
+
+    <p><a href="../5/">Next page</a></p>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../archives/2015/03/14/scala-android.html">Scala で作る Android ゲームアプリ</a> <span>2015-03-14</span></li>
+                  <li><a href="../../archives/2014/11/07/unity-new-ui-anim.html">Unity 4.6 UI Tip&#58 UI Animation</a> <span>2014-11-07</span></li>
+                  <li><a href="../../archives/2014/11/04/unity-new-ui-refres.html">Unity 4.6 UI Tip&#58 Canvas Scaler (formerly Reference Resolution)</a> <span>2014-11-04</span></li>
+                  <li><a href="../../archives/2014/10/30/unity-new-ui-canvas.html">Unity 4.6 UI Tip&#58 Override sorting with Canvas</a> <span>2014-10-30</span></li>
+                  <li><a href="../../archives/2014/10/03/yamauchi.html">第4回芸者東京ハンズオン勉強会</a> <span>2014-10-03</span></li>
+                  <li><a href="../../archives/2014/09/29/yamauchi.html">Dockerfile を書かなくてもできる Docker コンテナ運用</a> <span>2014-09-29</span></li>
+                  <li><a href="../../archives/2014/09/08/yamauchi.html">第3回芸者東京ハンズオン勉強会</a> <span>2014-09-08</span></li>
+                  <li><a href="../../archives/2014/07/29/takezoux2.html">Using AWS Java SDK with AWS IAM Role.</a> <span>2014-07-29</span></li>
+                  <li><a href="../../archives/2014/06/24/yamauchi.html">第2回Scalaハンズオン勉強会2014-06-21</a> <span>2014-06-24</span></li>
+                  <li><a href="../../archives/2014/06/02/presentaion-at-play-meetup.html">Presentaion at Play meetup</a> <span>2014-06-02</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../archives/2015.html">2015 (1)</a></li>
+                  <li><a href="../../archives/2014.html">2014 (13)</a></li>
+                  <li><a href="../../archives/2013.html">2013 (3)</a></li>
+                  <li><a href="../../archives/2012.html">2012 (10)</a></li>
+                  <li><a href="../../archives/2011.html">2011 (11)</a></li>
+                  <li><a href="../../archives/2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../archives/tags/java.html">Java (2)</a></li>
+                      <li><a href="../../archives/tags/jetty.html">jetty (1)</a></li>
+                      <li><a href="../../archives/tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../archives/tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../archives/tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../archives/tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../archives/tags/unity.html">unity (3)</a></li>
+                      <li><a href="../../archives/tags/unity-4-6.html">unity 4.6 (3)</a></li>
+                      <li><a href="../../archives/tags/unity-beta.html">unity beta (3)</a></li>
+                      <li><a href="../../archives/tags/ui.html">ui (3)</a></li>
+                      <li><a href="../../archives/tags/unity-new-ui.html">unity new ui (3)</a></li>
+                      <li><a href="../../archives/tags/canvas-scaler.html">canvas scaler (1)</a></li>
+                      <li><a href="../../archives/tags/reference-resolution.html">reference resolution (1)</a></li>
+                      <li><a href="../../archives/tags/resolution.html">resolution (1)</a></li>
+                      <li><a href="../../archives/tags/scaling.html">scaling (1)</a></li>
+                      <li><a href="../../archives/tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../archives/tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../archives/tags/python.html">Python (1)</a></li>
+                      <li><a href="../../archives/tags/geishastudy.html">geishastudy (3)</a></li>
+                      <li><a href="../../archives/tags/scala.html">scala (6)</a></li>
+                      <li><a href="../../archives/tags/android.html">android (2)</a></li>
+                      <li><a href="../../archives/tags/hands-on.html">hands-on (2)</a></li>
+                      <li><a href="../../archives/tags/seminar.html">seminar (2)</a></li>
+                      <li><a href="../../archives/tags/blog.html">blog (1)</a></li>
+                      <li><a href="../../archives/tags/middleman.html">middleman (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../archives/tags/github-pages.html">github pages (1)</a></li>
+                      <li><a href="../../archives/tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../archives/tags/aws.html">aws (1)</a></li>
+                      <li><a href="../../archives/tags/iam.html">IAM (1)</a></li>
+                      <li><a href="../../archives/tags/java.html">java (1)</a></li>
+                      <li><a href="../../archives/tags/scala-js.html">scala.js (1)</a></li>
+                      <li><a href="../../archives/tags/enchant-js.html">enchant.js (1)</a></li>
+                      <li><a href="../../archives/tags/android.html">Android (3)</a></li>
+                      <li><a href="../../archives/tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../archives/tags/docker.html">docker (1)</a></li>
+                      <li><a href="../../archives/tags/dokku-alt.html">dokku-alt (1)</a></li>
+                      <li><a href="../../archives/tags/git.html">git (1)</a></li>
+                      <li><a href="../../archives/tags/c.html">C# (1)</a></li>
+                      <li><a href="../../archives/tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../archives/tags/canvas.html">canvas (1)</a></li>
+                      <li><a href="../../archives/tags/sorting.html">sorting (1)</a></li>
+                      <li><a href="../../archives/tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../archives/tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../archives/tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../archives/tags/css.html">css (1)</a></li>
+                      <li><a href="../../archives/tags/animation.html">animation (1)</a></li>
+                      <li><a href="../../archives/tags/play.html">play (1)</a></li>
+                      <li><a href="../../archives/tags/dsl.html">dsl (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../archives/authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../archives/authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../archives/authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../archives/authors/marconius.html">marconius</a></li>
+                      <li><a href="../../archives/authors/yamauchi.html">yamauchi</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../archives/authors/ta2.html">ta2</a></li>
+                      <li><a href="../../archives/authors/arikui.html">arikui</a></li>
+                      <li><a href="../../archives/authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../archives/authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../archives/authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../archives/authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

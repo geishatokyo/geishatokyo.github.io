@@ -1,0 +1,755 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog - javaのExceptionのコストについて</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="https://github.com/geishatokyo/geishastudy" target="_blank">勉強会資料</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <article> 
+    <h1>javaのExceptionのコストについて </h1>
+    <span>Posted on 2012-07-30
+      by <a href="../../../authors/takezoux2.html">takezoux2</a>
+    </span>
+    <p>弊社提供サービスのおみせやさんへ負荷テストをかけていた際に、特定の条件で非常にパフォーマンスが悪くなることが発覚しました。<br/>
+調査の結果、根本原因はキャッシュに使用しているMemcachedからオブジェクトをデシリアライズする際のSerializableVersionIDの食い違いにより例外が大量に発生していることが原因でした。<br/>
+それをうけて、Javaの例外はコストが高いということは言われているので、どれほどのコストがかかるかの実験を行ないました。</p>
+
+<h2>実行環境</h2>
+
+<p>テストは私の開発機で行いました。<br/>
+実験に使用したコードは、この記事の一番下に記述しています。</p>
+
+<table>
+<tr>
+<td>OS</td>
+<td>Windows 7 Professional</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Intel Core i7 3.20GHz</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>24G</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>Java7</td>
+</tr>
+</table>
+
+<h2>実験その１.  例外を投げるコストの検証</h2>
+
+<p>例外なしのものと、例外ありのものでどれほど実行時間に差が出るかを検証しました。</p>
+
+<h3>結果</h3>
+
+<p>実行時間の単位はミリ秒</p>
+
+<table>
+<tr>
+<td>ループ回数</td>
+<td>100,000</td>
+<td>500,000</td>
+<td>1,000,000</td>
+</tr>
+<tr>
+<td>例外なし、try/catchなし</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>例外なし、try/catchあり</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>例外を握り潰す</td>
+<td>85</td>
+<td>383</td>
+<td>744</td>
+</tr>
+<tr>
+<td>例外のメッセージ(Exception#getMessage)のみを取得</td>
+<td>79</td>
+<td>361</td>
+<td>710</td>
+</tr>
+<tr>
+<td>例外のメッセージと<br/>スタックトレース(Exception#getStackTrace)を取得</td>
+<td>404</td>
+<td>1819</td>
+<td>3688</td>
+</tr>
+</table>
+
+<p>やはり、例外の処理はコストがかかることがわかります。<br/>
+特にStackTraceを取得してしまうと、ただ例外を処理するだけよりさらに５倍以上の時間がかかってしまっており、非常にパフォーマンスが悪いことがわかりました。<br/>
+例外が投げられない場合は、try/catch clauseの有無については、ほとんど影響は見られませんでした。(多少は影響があるみたいですが、実際の環境ではこんなオーバーヘッドより他の無駄な処理に気を使ったほうがはるかに生産的です。)</p>
+
+<h2>実験その２. 例外時のStackTraceの深さによる実行時間の変化の検証</h2>
+
+<p>２つ目の実験は、Methodのネスト数=StackTraceの深さを変えて実験を行なってみました。<br/>
+実験１と同様の処理を行う途中に再帰関数を使って適当な深さをプラスして、例外の処理時間の変化を検証しました。</p>
+
+<p>実行時間の単位はミリ秒</p>
+
+<table>
+<tr>
+<td>nest数</td>
+<td>例外</td>
+<td>100,000</td>
+<td>500,000</td>
+<td>1,000,000</td>
+</tr>
+<tr>
+<td rowspan="2">+1</td>
+<td>なし</td>
+<td>1</td>
+<td>3</td>
+<td>6</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>549</td>
+<td>2815</td>
+<td>5436</td>
+</tr>
+<tr>
+<td rowspan="2">+5</td>
+<td>なし</td>
+<td>1</td>
+<td>5</td>
+<td>7</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>819</td>
+<td>4164</td>
+<td>8352</td>
+</tr>
+<tr>
+<td rowspan="2">+10</td>
+<td>なし</td>
+<td>1</td>
+<td>7</td>
+<td>14</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>1195</td>
+<td>6016</td>
+<td>11988</td>
+</tr>
+<tr>
+<td rowspan="2">+20</td>
+<td>なし</td>
+<td>3</td>
+<td>11</td>
+<td>25</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>1904</td>
+<td>9380</td>
+<td>19178</td>
+</tr>
+<tr>
+<td rowspan="2">+50</td>
+<td>なし</td>
+<td>7</td>
+<td>35</td>
+<td>73</td>
+</tr>
+<tr>
+<td>あり</td>
+<td>3992</td>
+<td>19827</td>
+<td>40568</td>
+</tr>
+</table>
+
+<p>図１:例外発生時のNest数と実行時間の関係<br/>
+<img src="/static/images/2012/07/blog_134019_chart.png"/></p>
+
+<p><p/>
+<p>スタックトレースの深さに比例して、実行時間が増加していることがわかります。</p>
+<h1>教訓
+<ul>
+<li>なるべく例外を使わないプログラムを書いたほうが、パフォーマンスは良くなる</li>
+<li>特定の条件で大量に例外が投げられる場合は、StackTraceを出さないようにしておいたほうが良い</li>
+</ul>
+</h1><p>ただし、StackTraceを出力するのはデバッグや問題の調査に非常に有用であるため極力出したほうがいいです。<br/>
+パフォーマンスを気にするあまりに例外関連のログを減らしても、問題がどこで起きているかがわからなくなってしまうと本末転倒なので、例外はコストが高いということは頭の片隅に置きつつ十分にログは出力するようにしましょう。</p>
+<h1>付録</h1>
+<h3>実行結果例</h3></p>
+<pre class="highlight plaintext"><code>Each test loops 100000 times.
+
+---- Test exception cost ----
+Not throw exception: 3 msecs
+Not throw exception with try/catch: 4 msecs
+Catch exception and get nothing: 83 msecs
+Catch exception and get only message: 79 msecs
+Catch exception and get message and stacktrace: 385 msecs
+
+---- Test stack trace depth cost ---
+1 nested
+  not throw: 2 msecs
+  throw    : 561 msecs
+5 nested
+  not throw: 1 msecs
+  throw    : 813 msecs
+10 nested
+  not throw: 1 msecs
+  throw    : 1170 msecs
+20 nested
+  not throw: 3 msecs
+  throw    : 1868 msecs
+50 nested
+  not throw: 7 msecs
+  throw    : 3961 msecs
+</code></pre>
+
+<h3>検証コード</h3>
+<pre class="highlight java"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExceptionTest</span><span class="o">{</span>
+
+    <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">LoopCount</span> <span class="o">=</span> <span class="mi">500000</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"Each test loops %s times."</span><span class="o">,</span><span class="n">LoopCount</span><span class="o">));</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"---- Test exception cost ----"</span><span class="o">);</span>
+        <span class="n">testExceptionCost</span><span class="o">();</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"---- Test stack trace depth cost ---"</span><span class="o">);</span>
+        <span class="n">testStackDepthCost</span><span class="o">();</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">testExceptionCost</span><span class="o">(){</span>
+
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"Not throw exception"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="n">notThrowException</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"Not throw exception with try/catch"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">notThrowException</span><span class="o">();</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">getStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"Catch exception and get nothing"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">throwException</span><span class="o">();</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"Catch exception and get only message"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">throwException</span><span class="o">();</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"Catch exception and get message and stacktrace"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">throwException</span><span class="o">();</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">getStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">testStackDepthCost</span><span class="o">(){</span>
+        <span class="n">testNested</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">testNested</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+        <span class="n">testNested</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+        <span class="n">testNested</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+        <span class="n">testNested</span><span class="o">(</span><span class="mi">50</span><span class="o">);;</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kd">interface</span> <span class="nc">Function</span><span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">doLoop</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span> <span class="o">,</span> <span class="n">Function</span> <span class="n">func</span><span class="o">){</span>
+        <span class="kt">long</span> <span class="n">start</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">LoopCount</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+            <span class="n">func</span><span class="o">.</span><span class="na">apply</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="kt">long</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">-</span> <span class="n">start</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"%s: %s msecs"</span><span class="o">,</span><span class="n">message</span><span class="o">,</span><span class="n">delta</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">notThrowException</span><span class="o">(){</span>
+        <span class="n">someProcess</span><span class="o">();</span>
+        <span class="n">Object</span> <span class="n">o</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">throwException</span><span class="o">(){</span>
+        <span class="n">someProcess</span><span class="o">();</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">"Error"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">nestedThrowException</span><span class="o">(</span><span class="kt">int</span> <span class="n">nest</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">nest</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">someProcess</span><span class="o">();</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="o">(</span><span class="s">"Nest "</span> <span class="o">+</span> <span class="n">nest</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="n">nestedThrowException</span><span class="o">(</span><span class="n">nest</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">nestedNotThrowException</span><span class="o">(</span><span class="kt">int</span> <span class="n">nest</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">nest</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">){</span>
+            <span class="n">someProcess</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="n">nestedNotThrowException</span><span class="o">(</span><span class="n">nest</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">testNested</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">nest</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nest</span> <span class="o">+</span> <span class="s">" nested"</span><span class="o">);</span>
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"  not throw"</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">nestedNotThrowException</span><span class="o">(</span><span class="n">nest</span><span class="o">);</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">getStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">doLoop</span><span class="o">(</span><span class="s">"  throw    "</span><span class="o">,</span><span class="k">new</span> <span class="n">Function</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">(){</span>
+                <span class="k">try</span><span class="o">{</span>
+                    <span class="n">nestedThrowException</span><span class="o">(</span><span class="n">nest</span><span class="o">);</span>
+                <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+                    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">getStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">someProcess</span><span class="o">(){</span>
+        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+
+    <hr>
+    <h2>Tags</h2>
+      <a href="../../../tags/java.html">Java</a>
+    <hr>
+    <ul class="social-button">
+      <li>
+        <div class="fb-share-button" data-type="button_count"></div>
+      </li>
+      <li>
+        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+      </li>
+    </ul>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </article>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015/03/14/scala-android.html">Scala で作る Android ゲームアプリ</a> <span>2015-03-14</span></li>
+                  <li><a href="../../../2014/11/07/unity-new-ui-anim.html">Unity 4.6 UI Tip&#58 UI Animation</a> <span>2014-11-07</span></li>
+                  <li><a href="../../../2014/11/04/unity-new-ui-refres.html">Unity 4.6 UI Tip&#58 Canvas Scaler (formerly Reference Resolution)</a> <span>2014-11-04</span></li>
+                  <li><a href="../../../2014/10/30/unity-new-ui-canvas.html">Unity 4.6 UI Tip&#58 Override sorting with Canvas</a> <span>2014-10-30</span></li>
+                  <li><a href="../../../2014/10/03/yamauchi.html">第4回芸者東京ハンズオン勉強会</a> <span>2014-10-03</span></li>
+                  <li><a href="../../../2014/09/29/yamauchi.html">Dockerfile を書かなくてもできる Docker コンテナ運用</a> <span>2014-09-29</span></li>
+                  <li><a href="../../../2014/09/08/yamauchi.html">第3回芸者東京ハンズオン勉強会</a> <span>2014-09-08</span></li>
+                  <li><a href="../../../2014/07/29/takezoux2.html">Using AWS Java SDK with AWS IAM Role.</a> <span>2014-07-29</span></li>
+                  <li><a href="../../../2014/06/24/yamauchi.html">第2回Scalaハンズオン勉強会2014-06-21</a> <span>2014-06-24</span></li>
+                  <li><a href="../../../2014/06/02/presentaion-at-play-meetup.html">Presentaion at Play meetup</a> <span>2014-06-02</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015.html">2015 (1)</a></li>
+                  <li><a href="../../../2014.html">2014 (13)</a></li>
+                  <li><a href="../../../2013.html">2013 (3)</a></li>
+                  <li><a href="../../../2012.html">2012 (10)</a></li>
+                  <li><a href="../../../2011.html">2011 (11)</a></li>
+                  <li><a href="../../../2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/java.html">Java (2)</a></li>
+                      <li><a href="../../../tags/jetty.html">jetty (1)</a></li>
+                      <li><a href="../../../tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../../tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../../tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../../tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../../tags/unity.html">unity (3)</a></li>
+                      <li><a href="../../../tags/unity-4-6.html">unity 4.6 (3)</a></li>
+                      <li><a href="../../../tags/unity-beta.html">unity beta (3)</a></li>
+                      <li><a href="../../../tags/ui.html">ui (3)</a></li>
+                      <li><a href="../../../tags/unity-new-ui.html">unity new ui (3)</a></li>
+                      <li><a href="../../../tags/canvas-scaler.html">canvas scaler (1)</a></li>
+                      <li><a href="../../../tags/reference-resolution.html">reference resolution (1)</a></li>
+                      <li><a href="../../../tags/resolution.html">resolution (1)</a></li>
+                      <li><a href="../../../tags/scaling.html">scaling (1)</a></li>
+                      <li><a href="../../../tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../../tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../../tags/python.html">Python (1)</a></li>
+                      <li><a href="../../../tags/geishastudy.html">geishastudy (3)</a></li>
+                      <li><a href="../../../tags/scala.html">scala (6)</a></li>
+                      <li><a href="../../../tags/android.html">android (2)</a></li>
+                      <li><a href="../../../tags/hands-on.html">hands-on (2)</a></li>
+                      <li><a href="../../../tags/seminar.html">seminar (2)</a></li>
+                      <li><a href="../../../tags/blog.html">blog (1)</a></li>
+                      <li><a href="../../../tags/middleman.html">middleman (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/github-pages.html">github pages (1)</a></li>
+                      <li><a href="../../../tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../../tags/aws.html">aws (1)</a></li>
+                      <li><a href="../../../tags/iam.html">IAM (1)</a></li>
+                      <li><a href="../../../tags/java.html">java (1)</a></li>
+                      <li><a href="../../../tags/scala-js.html">scala.js (1)</a></li>
+                      <li><a href="../../../tags/enchant-js.html">enchant.js (1)</a></li>
+                      <li><a href="../../../tags/android.html">Android (3)</a></li>
+                      <li><a href="../../../tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../../tags/docker.html">docker (1)</a></li>
+                      <li><a href="../../../tags/dokku-alt.html">dokku-alt (1)</a></li>
+                      <li><a href="../../../tags/git.html">git (1)</a></li>
+                      <li><a href="../../../tags/c.html">C# (1)</a></li>
+                      <li><a href="../../../tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../../tags/canvas.html">canvas (1)</a></li>
+                      <li><a href="../../../tags/sorting.html">sorting (1)</a></li>
+                      <li><a href="../../../tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../../tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../../tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../../tags/css.html">css (1)</a></li>
+                      <li><a href="../../../tags/animation.html">animation (1)</a></li>
+                      <li><a href="../../../tags/play.html">play (1)</a></li>
+                      <li><a href="../../../tags/dsl.html">dsl (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../../authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../../authors/marconius.html">marconius</a></li>
+                      <li><a href="../../../authors/yamauchi.html">yamauchi</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/ta2.html">ta2</a></li>
+                      <li><a href="../../../authors/arikui.html">arikui</a></li>
+                      <li><a href="../../../authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../../authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../../authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../../authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

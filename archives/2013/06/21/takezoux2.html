@@ -1,0 +1,648 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog - UnityでWebSocketを使ってチャット -Playと一緒-</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="https://github.com/geishatokyo/geishastudy" target="_blank">勉強会資料</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <article> 
+    <h1>UnityでWebSocketを使ってチャット -Playと一緒- </h1>
+    <span>Posted on 2013-06-21
+      by <a href="../../../authors/takezoux2.html">takezoux2</a>
+    </span>
+    <p>最近は、Unityをいじっているtakezoux2こと竹下です。</p>
+
+<p>今回は、UnityでWebSocketを使ったチャットを作って動かしてみたいと思います。<br/>
+UnityはC#で実装しています。有料のAssetは使っていません。<br/>
+サーバーにはPlayを使っていますが、scalaのコードは今回全く書かなくてOKです。</p>
+<hr/>
+まず、Unityって何？WebSocketって何？Playって何？っていう人がいるので簡単に説明しておきます。<br/>
+簡単にしか説明はしないので、詳しくは各自ググってください。<br/>
+全部知ってるよって人は、ここは飛ばしてください。
+<h2>Unity</h2>
+<p>
+3Dゲームエンジン。iOS,Androidなど、各種プラットフォームのアプリをワンソースで開発することができるツールです。<br/>
+言語はC#,UnityScript(JavaScriptベース),Boo(Pythonベース)が使えます。<br/>
+3Dオブジェクトの空間配置などはGUIで可能なので、割と非プログラマやスキル不足のプログラマにも優しいです。<br/>
+各種Asset(有料のものが多い;;)で、様々な機能拡張なども可能です。</p>
+<p>無料で３０日のPro版トライアルあります。それ以降は、ライセンスの購入の必要あります。<br/>
+<a href="http://japan.unity3d.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://japan.unity3d.com']);">Unity公式ページ</a></p>
+<h2>WebSocket</h2>
+<p>
+最近流行の双方向通信規格です。同期通信を簡単に行えます。<br/>
+<a href="http://ja.wikipedia.org/wiki/WebSocket" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://ja.wikipedia.org']);">WebSocket(wiki)</a>
+</p>
+
+<h2>Play</h2>
+
+<p>
+scalaで書かれたWebサーバーです。WebSocketもNode.js並みに簡単に実装できます。今回のサーバープログラムとして使用しました。<br/>
+この辺のことについてもっと詳しく知りたい方は、弊社でやっているscala勉強会に参加すると<br/>
+ソースコードレベルまで詳しく教えてくれる人がいますw<br/>
+<a href="http://www.playframework.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.playframework.com']);">Play公式</a>
+</p>
+
+<hr/>
+
+<h2>検証環境</h2>
+
+<p>
+Mac上で検証しています。<br/>
+ただ、UnityもPlayもWindows上で動作するので、おそらくWindowsでも動作するとは思います。
+</p>
+
+<h2>手順</h2>
+
+<ol>
+<li>Unityの準備</li>
+<li>WebSocketSharpの準備</li>
+<li>クライアント実装</li>
+<li>サーバーの準備</li>
+<li>接続！</li>
+</ol>
+
+<hr/>
+
+<h2>1.Unityの準備</h2>
+
+<h3>Unityのインストール</h3>
+
+<p>
+<a href="http://japan.unity3d.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://japan.unity3d.com']);">Unity公式</a>からダウンロードをしてきてください。<br/>
+あとは、画面の指示に従ってインストールしましょう。起動すると、シリアルコードが聞かれますが、シリアルコードを持っていない人はtrialで開始してください。機能はトライアル期間はフルで使えます。</p>
+<h3>Unityプロジェクトの準備</h3>
+<p>
+file > New Projectから新しいプロジェクトを作ってください。名前はWebSocketSampleとか適当でいいです。
+</p>
+
+<hr/>
+
+<h2>2. WebSocketSharpの準備</h2>
+
+<h3>WebSocketSharpのビルド</h3>
+
+<p>
+今回は、UnityでWebSocketを使うために、<a href="https://github.com/sta/websocket-sharp" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">WebSocketSharp</a>というライブラリを使います。</p>
+<p>※2014/1/21追記<br/>
+AssetStoreで15$で販売中だそうです。ビルドが面倒だったり、使ってみて良かったらAssetStoreで購入してあげてください。</p>
+<p>まず、ソースコードをgithubからcloneしてきてください。<br/>
+次に、WebSocketTest.slnを開きます。MonoDevelopで開いてOKです。Windows環境なら、VisualStudioでも大丈夫だと思います。</p>
+<p>プロジェクトが開けたら、ビルドレベルをReleaseにしてビルドします。私の環境では、サブプロジェクトのExampleXでビルドエラーが出たので、websocket-sharpだけビルドできればOKなので、ExampleX達をソリューションから削除してビルドしました。</p>
+<p>ビルドが完了したら、websocket-sharp/bin/Release/websocket-sharp.dllが生成されているので、<br/>
+これを先ほど作ったUnityプロジェクトのAssetsディレクトリ以下にコピーしてください。(Assetsディレクトリ以下に入っていればどこでもいいのでAssets/Dllディレクトリを作ってその下に入れるなどすると、後で整理しやすいです)</p>
+<hr/>
+<h2>3. クライアントの実装</h2>
+<h3>GameObjectの準備とComponentのアタッチ</h3>
+<p>
+Unityで先ほどのプロジェクトを開いたら、<br/>
+Game Object > Create Empty<br/>
+から新しいGameObjectを作成します。<br/>
+名前は何でもいいですが、Chatぐらいにしておきましょう。<br/>
+ヒエラルキーもどこに置いておいても大丈夫なので、作成したままの場所に置いておいてください。</p>
+<p>つぎに、処理を記述するためのスクリプトを作成しChatオブジェクトにアタッチします。<br/>
+Projectペインで、Assetsディレクトリを右クリックし、Create > C# Scriptを選択してください。<br/>
+作られたファイルはChatぐらいにリネームしてください。(リネームはProjectタブ上でファイルを２回クリックすれば変更できます。ダブルクリックしてしまうとファイルを開いてしまうので注意)</p>
+<p>次に、ProjectペインのChatスクリプトをドラッグして、Hierarchyペインの先ほど作成したChatオブジェクトへドロップしてください。これで、アタッチは完了です。</p>
+<p><img src="/static/images/2013/06/unitwschat_unity_how_to.png" alt="Operation help"/></p>
+<h3>実装</h3>
+<p>
+いよいよ実装です。<br/>
+先ほど作成したChatスクリプトをダブルクリックしてください。MonoDevelopが起動するので、Chatスクリプトを編集してください。</p>
+<p>ソースコードは以下の通りです。</p>
+<pre>
+using UnityEngine;
+using System.Collections;
+using WebSocketSharp;
+using System.Collections.Generic;
+
+public class Chat : MonoBehaviour {
+
+    // Use this for initialization
+    void Start () {
+        Connect();
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+    }
+
+    /// <summary>
+    /// The message which store current input text.
+    /// </summary>
+    string message = "";
+    /// <summary>
+    /// The list of chat message.
+    /// </summary>
+    List<string> messages = new List<string>();
+
+    /// <summary>
+    /// Raises the GU event.
+    ///
+    /// </summary>
+    void OnGUI(){
+
+        // Input text
+        message = GUI.TextArea(new Rect(0,10,Screen.width * 0.7f,Screen.height / 10),message);
+
+        // Send message button
+        if(GUI.Button(new Rect(Screen.width * 0.75f,10,Screen.width * 0.2f,Screen.height / 10),"Send")){
+            SendChatMessage();
+        }
+
+        // Show chat messages
+        var l = string.Join("\n",messages.ToArray());
+        var height = Screen.height * 0.1f * messages.Count;
+        GUI.Label(
+            new Rect(0,Screen.height * 0.1f + 10,Screen.width * 0.8f,height),
+            l);
+
+    }
+
+    WebSocket ws;
+
+    void Connect(){
+        ws =  new WebSocket("ws://localhost:9000/chat/ws");
+
+        // called when websocket messages come.
+        ws.OnMessage += (sender, e) =>
+        {
+            string s = e.Data;
+            Debug.Log(string.Format( "Receive {0}",s));
+            messages.Add("> " + e.Data);
+            if(messages.Count > 10){
+                messages.RemoveAt(0);
+            }
+        };
+
+        ws.Connect();
+        Debug.Log("Connect to " + ws.Url);
+    }
+
+    void SendChatMessage(){
+        Debug.Log("Send message " + message);
+        ws.Send(message);
+        this.message = "";
+    }
+}
+</pre>
+<p>やっていることは、Connect()でWebSocketでサーバーに接続。<br/>
+SendChatMessage()で、WebSocketメッセージの送信。<br/>
+OnGUIで画面の描画を行っています。<br/>
+あまり難しいことはやっていないので、ソースコードを追ってもらえればわかるかと思います。<br/>
+わからなければ、ソースコードをコピペしてください。</p>
+<p>これで、クライアントの実装は完了です。
+</p>
+
+<hr/>
+
+<h2>4. サーバーの準備</h2>
+
+<p>
+最後にサーバーの準備です。githubに用意しているのでコードは書かなくてOKです。<br/>
+sbtで実行していますが、既にplayが入っている人はplayで実行してもらっても大丈夫です。
+</p>
+
+<h3>sbtの準備</h3>
+
+<p>
+サーバーの実行に使うので、sbtをインストールしてください。バージョンは、0.12.2以降が入って入ればOKです。<br/>
+なお、sbtはscala向けのビルドツールです。<br/>
+sbtは、<a href="http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.scala-sbt.org']);">公式サイトのここ</a>からダウンロードできます。Jarとシェルスクリプトをダウンロードしてきて、パスを通すだけです。
+</p>
+
+<h3>プログラムのcloneとサーバーの実行</h3>
+
+<p>
+サーバープログラムは<a href="https://github.com/takezoux2/play-websocket-chat" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);">こちらのgithub</a>からソースコードをcloneしてください。<br/>
+cloneしたらプロジェクトのルートディレクトリで</p>
+<pre class="highlight plaintext"><code>sbt run
+</code></pre>
+
+<p>を実行してください。<br/>
+初回の起動は、scalaのダウンロードや、playのダウンロード、ライブラリのダウンロードが発生するので、時間がかかります。<br/>
+ネットワーク環境の整っているところで実行してください。<br/>
+以下のようなメッセージが表示されると、起動完了です。</p>
+<pre class="highlight plaintext"><code>--- (Running the application from SBT, auto-reloading is enabled) ---
+
+[info] play - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+(Server started, use Ctrl+D to stop and go back to the console...)
+</code></pre>
+
+<h2>5. 接続!</h2>
+
+<p>
+Unityクライアントは、Unityの上の方にある三角の再生ボタンを押すと実行できます。<br/>
+テキストボックスに送信したいテキストを入力してボタンを押すせばメッセージを送れます。<br/>
+テキストボックスの下には、チャットで発言されたテキストが表示されます。</p>
+
+<p>１クライアントだけでやっても何も楽しくないので、<br/>
+<a href="http://localhost:9000/chat" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','']);">http://localhost:9000/chat</a>にアクセスしてください。<br/>
+ここでブラウザからチャットを使えます。</p>
+
+<p>Unityクライアントで入力した文章が、ブラウザのほうでも表示され、<br/>
+ブラウザで入力した文章がUnityクライアントでも表示されていることが確認できると思います。<br/>
+おつかれさまでした。</p>
+
+    <hr>
+    <h2>Tags</h2>
+      <a href="../../../tags/c.html">C#</a>
+      <a href="../../../tags/unity.html">Unity</a>
+      <a href="../../../tags/play-framework.html">play framework</a>
+    <hr>
+    <ul class="social-button">
+      <li>
+        <div class="fb-share-button" data-type="button_count"></div>
+      </li>
+      <li>
+        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+      </li>
+    </ul>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </article>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015/03/14/scala-android.html">Scala で作る Android ゲームアプリ</a> <span>2015-03-14</span></li>
+                  <li><a href="../../../2014/11/07/unity-new-ui-anim.html">Unity 4.6 UI Tip&#58 UI Animation</a> <span>2014-11-07</span></li>
+                  <li><a href="../../../2014/11/04/unity-new-ui-refres.html">Unity 4.6 UI Tip&#58 Canvas Scaler (formerly Reference Resolution)</a> <span>2014-11-04</span></li>
+                  <li><a href="../../../2014/10/30/unity-new-ui-canvas.html">Unity 4.6 UI Tip&#58 Override sorting with Canvas</a> <span>2014-10-30</span></li>
+                  <li><a href="../../../2014/10/03/yamauchi.html">第4回芸者東京ハンズオン勉強会</a> <span>2014-10-03</span></li>
+                  <li><a href="../../../2014/09/29/yamauchi.html">Dockerfile を書かなくてもできる Docker コンテナ運用</a> <span>2014-09-29</span></li>
+                  <li><a href="../../../2014/09/08/yamauchi.html">第3回芸者東京ハンズオン勉強会</a> <span>2014-09-08</span></li>
+                  <li><a href="../../../2014/07/29/takezoux2.html">Using AWS Java SDK with AWS IAM Role.</a> <span>2014-07-29</span></li>
+                  <li><a href="../../../2014/06/24/yamauchi.html">第2回Scalaハンズオン勉強会2014-06-21</a> <span>2014-06-24</span></li>
+                  <li><a href="../../../2014/06/02/presentaion-at-play-meetup.html">Presentaion at Play meetup</a> <span>2014-06-02</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015.html">2015 (1)</a></li>
+                  <li><a href="../../../2014.html">2014 (13)</a></li>
+                  <li><a href="../../../2013.html">2013 (3)</a></li>
+                  <li><a href="../../../2012.html">2012 (10)</a></li>
+                  <li><a href="../../../2011.html">2011 (11)</a></li>
+                  <li><a href="../../../2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/java.html">Java (2)</a></li>
+                      <li><a href="../../../tags/jetty.html">jetty (1)</a></li>
+                      <li><a href="../../../tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../../tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../../tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../../tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../../tags/unity.html">unity (3)</a></li>
+                      <li><a href="../../../tags/unity-4-6.html">unity 4.6 (3)</a></li>
+                      <li><a href="../../../tags/unity-beta.html">unity beta (3)</a></li>
+                      <li><a href="../../../tags/ui.html">ui (3)</a></li>
+                      <li><a href="../../../tags/unity-new-ui.html">unity new ui (3)</a></li>
+                      <li><a href="../../../tags/canvas-scaler.html">canvas scaler (1)</a></li>
+                      <li><a href="../../../tags/reference-resolution.html">reference resolution (1)</a></li>
+                      <li><a href="../../../tags/resolution.html">resolution (1)</a></li>
+                      <li><a href="../../../tags/scaling.html">scaling (1)</a></li>
+                      <li><a href="../../../tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../../tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../../tags/python.html">Python (1)</a></li>
+                      <li><a href="../../../tags/geishastudy.html">geishastudy (3)</a></li>
+                      <li><a href="../../../tags/scala.html">scala (6)</a></li>
+                      <li><a href="../../../tags/android.html">android (2)</a></li>
+                      <li><a href="../../../tags/hands-on.html">hands-on (2)</a></li>
+                      <li><a href="../../../tags/seminar.html">seminar (2)</a></li>
+                      <li><a href="../../../tags/blog.html">blog (1)</a></li>
+                      <li><a href="../../../tags/middleman.html">middleman (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/github-pages.html">github pages (1)</a></li>
+                      <li><a href="../../../tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../../tags/aws.html">aws (1)</a></li>
+                      <li><a href="../../../tags/iam.html">IAM (1)</a></li>
+                      <li><a href="../../../tags/java.html">java (1)</a></li>
+                      <li><a href="../../../tags/scala-js.html">scala.js (1)</a></li>
+                      <li><a href="../../../tags/enchant-js.html">enchant.js (1)</a></li>
+                      <li><a href="../../../tags/android.html">Android (3)</a></li>
+                      <li><a href="../../../tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../../tags/docker.html">docker (1)</a></li>
+                      <li><a href="../../../tags/dokku-alt.html">dokku-alt (1)</a></li>
+                      <li><a href="../../../tags/git.html">git (1)</a></li>
+                      <li><a href="../../../tags/c.html">C# (1)</a></li>
+                      <li><a href="../../../tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../../tags/canvas.html">canvas (1)</a></li>
+                      <li><a href="../../../tags/sorting.html">sorting (1)</a></li>
+                      <li><a href="../../../tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../../tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../../tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../../tags/css.html">css (1)</a></li>
+                      <li><a href="../../../tags/animation.html">animation (1)</a></li>
+                      <li><a href="../../../tags/play.html">play (1)</a></li>
+                      <li><a href="../../../tags/dsl.html">dsl (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../../authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../../authors/marconius.html">marconius</a></li>
+                      <li><a href="../../../authors/yamauchi.html">yamauchi</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/ta2.html">ta2</a></li>
+                      <li><a href="../../../authors/arikui.html">arikui</a></li>
+                      <li><a href="../../../authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../../authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../../authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../../authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

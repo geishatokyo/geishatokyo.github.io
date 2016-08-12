@@ -1,0 +1,563 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog - GTE Git branching model</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="https://github.com/geishatokyo/geishastudy" target="_blank">勉強会資料</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <article> 
+    <h1>GTE Git branching model </h1>
+    <span>Posted on 2013-01-30
+      by <a href="../../../authors/k_ryoko.html">k_ryoko</a>
+    </span>
+    <p>こんにちは、アプリ開発プログラマ ryoco と申します。<br/>
+最近 git 開発にして捗ったというスライドを読みまして、実は皆、他社の git の使いかたに興味があるのではと思い書いてみました。<br/>
+まぁ、他社の開発スタイルというのは皆知りたい所ですよね!<br/>
+という訳で、弊社のとあるwebアプリのVCSの歴史と使い方の紹介でございます。</p>
+
+<p>9ヶ月くらい前まで svn で運用していましたが、開発者が増えたのでブランチを切る事が多くなり、git に変更しました。<br/>
+ブランチ開発をする時は、svnよりgitの方がはるかに便利だからです。例えば、branchを切るのが高速、conflictが少ないなどの点で優れています。他にもありますが色々な所で見るので省略。<br/>
+因みに開発規模は現在5~6人です。<br/>
+主にプログラマが使う、html ファイルとプログラムソースファイルのプロジェクトのみで、仕様書や画像ファイルは相変わらず svn です。</p>
+
+<ul>
+</ul><ol>
+<li>svn</li>
+<li>適当な branching の git <strong>[git 第一段階]</strong></li>
+<li><a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> ベースのgit <strong>[git 第二段階]</strong> <- イマココ</li>
+</ol>
+
+<p>という風に変わっていきました。<br/>
+サブライブラリに hg を使っていた時代もありますが、省略。<br/>
+svn の時代は別に説明しても仕方がないので、git から説明していきます。</p>
+<h2>git 第一段階</h2>
+<ul>
+<li>ブランチは大きく分けて、3種類あります。</li>
+</ul><ol>
+<li><strong>master</strong> : 開発用</li>
+<li><strong>feature branch</strong> : それぞれの開発用。名前は各自適当に決める</li>
+<li><strong>release_yyMMdd</strong> : yyMMddリリースのリリースブランチ</li>
+</ol>
+
+<ul>
+<li>時系列で使い方を説明していきます。</li>
+</ul><ol>
+<li>それぞれの開発者が master から feature branch を作成し作業する。</li>
+<li>開発が完了、もしくは開発かつデバッグが完了したら master にマージ。デバッグするときは、master から fearure branch にマージしたりしてました。</li>
+<li>リリースするときに master から release 用のブランチを切って本番にリリース。</li>
+<li>リリースが完了したrelease_yyMMdd ブランチは削除していきます。</li>
+</ol>
+
+<ul>
+図にすると以下のようになります。<br/>
+<a href="/images/2013/01/old-git-flow.png"><img src="/static/images/2013/01/old-git-flow.png" alt="第一段階フロー図" title="old git flow" width="846" height="655" class="alignnone size-full wp-image-178979"/></a>
+</ul>
+
+<ul>
+<li>追記</li>
+</ul><ol>
+<li>releaseyyMMdd を切る前の master に、リリースしてはいけない機能というのがまれに混入します。<br/>
+その時は releaseyyMMdd で revert してしまいます。 releaseyyMMdd はリリース後、捨てられるので躊躇なく revert できるんですね。<br/>
+しかし、リリースしてはいけない機能は基本的に feature branch で管理していたので、revert しない事の方が多かったです。</li>
+<li>リリースする時はもちろん tag を切ります。</li>
+<li>リリースしてからバグに気がついた時は master で修正し、releaseyyMMdd に cherry-pick してました。</li>
+</ol>
+
+<h2>git 第二段階</h2>
+<ul>
+第一段階の運用方法でも手動でデプロイする分にはあんまり問題なかったんですが、システムデプロイの都合上、git の運用方法を変更する事になりました。<br/>
+自分達で考えても良い方法が思いつかなかったので、賢い人が考えたモデルに則り、慣れたら応用するか新しいモデルを考えようと思いました。<br/>
+大体 <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> の通りに運用していますが、運用上での問題点や注意点を書いていきたいので、簡易版で説明します。<a href="http://keijinsonyaban.blogspot.jp/2010/10/successful-git-branching-model.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://keijinsonyaban.blogspot.jp']);">日本語訳</a>もありますし、わざわざ説明する事も無いような気はしてますが。
+</ul>
+
+<ul>
+できれば <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> を読んでからの方が分かり易いです。
+</ul>
+
+<ul>
+<blockquote><p>ちょっと休憩<br/>
+     <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> がなんでこんな複雑で、このモデルで運用しなければならんのだ、という感じなんですが、なぜなんでしょう…。<br/>
+    自分達で git の運用を考える場合は、弊社第一段階みたいな感じか、cherry-pick職人が発生するとか、後々後悔する形になってしまうのだと思います。<br/>
+    master と develop は分離されていた方が安全ですし、コードレビューや gitlab で merge-requestを使った運用とか考えると、<strong>漏れなく master にも develop にも commit を含められる</strong>、今のところこの最強モデルなんでしょうね たぶん。</p></blockquote>
+</ul>
+
+<ul>
+<li>ブランチは大きく分けて、5種類あります。</li>
+</ul><ol>
+<li><strong>develop</strong> : 開発用</li>
+<li><strong>master</strong> : リリース用</li>
+<li><strong>release_x.x</strong> : x.x (version) リリースのリリースブランチ</li>
+<li><strong>hotfix_x.x</strong> : リリース後の修正ブランチ</li>
+<li><strong>feature branch</strong> : それぞれの開発用。名前は各自適当に決める</li>
+</ol>
+
+<ul>
+<li>同様に時系列で使い方を説明していきます。<br/>
+(日付けからversionに変わったのは、実際の運用でこうしているというだけで、深い意味はありません。)</li>
+<li>version は 1.0 から 2.0 に上がるという体で説明して行きます。</li>
+</ul><ol>
+<li>develop から開発者が feature branch を切り、開発が完了したら develop に戻します。</li>
+<li>develop からrelease_2.0 のブランチを切ります。<br/>
+このブランチで、デバッグ、修正をします。デバッグをしてくれる運営サイドの人とかが説明文などの html を修正したりもします。プログラマ以外も git ブランチくらいは使いこなすスキルが必要です。(誰でもできるよね!)</li>
+<li>release_2.0 用のデバッグか完了し、リリースができる状態になったら develop 、master にマージします。<br/>
+ここで release_2.0 の役目は終わりです。</li>
+<li>最後に master からtagを切り、本番にリリースします。</li>
+<li>本番でバグなど出た場合、master から hotfix ブランチを作成します。<br/>
+master から hotfix_2.1 という感じでマイナーバージョンを付けています。</li>
+<li>バグの修正が完了したら hotfix_2.1 を master、develop <strong>or</strong> release_3.0にマージします。<br/>
+develop <strong>or</strong> release_3.0である理由は、release_3.0 はそのうち develop にmergeされるからですね。</li>
+</ol>
+
+<ul>
+図にすると以下のようになります。<br/>
+<a href="/images/2013/01/git-flow-2.png"><img src="/static/images/2013/01/git-flow-2.png" alt="第二段階のフロー図" title="git flow" width="895" height="793" class="alignnone size-full wp-image-179107"/></a>
+</ul>
+
+<p><ul>
+<li>追記</li>
+</ul><ol>
+<li>
+非プログラマ以外への教育コスト<br/>
+がかかるように見えますが、上記モデルを完全に理解させる必要は無く、今はrelease<em>x.xだからこのブランチで作業してね、という情報共有さえできればなんとかなります。たぶん…</li>
+<li>マージ多くて面倒臭そだし忘れそう…<br/>
+という感じだと思いますが、基本的にマージをしなければいけないのは release</em>x.x と hotfix<em>x.x で、しかもこれらは両方とも同じ2箇所にマージしてしまえば良いので、慣れれば楽です。(魔法の言葉ですね)<br/>
+ただ、プロジェクトの git 管理者は立てて置いた方が良いと思います。
+</li>
+<li>破綻するパターン<br/>
+ルールに則らないと破綻します。develop から release</em>x.x を切らないとか、 release<em>x.x がいくつも切られてしまう場合などです。release</em>x.x も2個までだったらマージする人ががんばれば何とか対応ができなくないですが、辞めた方が良いです。</li>
+<li>feature branch の develop へのマージについて<br/>
+release<em>x.x 上でのデバッグ中に致命的なバグが出て、リリースにまにあわないっていう事があると思います。<br/>
+その場合、release</em>x.x からは必ず、場合によっては developからも revert 等する必要があります。<br/>
+そういう時の為に、feature branch をdevelop にマージする際は、git merge –squash を使っています。<br/>
+そうするとコミットが纏められるので revert が楽になり、release_x.x の他の機能の修正に影響を出さずにリリースできます。<br/>
+ただコミットログがブランチにしか残らないです。良い方法があったら教えて下さい。<br/>
+revertしたら feature branch に戻ってバグを潰しましょう。</li>
+</ol></p>
+
+<p>なんとなく掴めたでしょうか。<br/>
+このモデルではスケジュールの関係で無理、という所は無理だと思いますが、そもそも運営もうまく回っていないのではないでしょうか…。<br/>
+弊社プロジェクトでも少し厳しい所があり、頭を使ってミスしないようにイレギュラー対応をしています。<br/>
+イレギュラー対応について書こうかと思ったんですが、長くなるので辞めました。<br/>
+ここの説明は簡易版ですので、実際使う時は<a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">本家</a>や<a href="http://keijinsonyaban.blogspot.jp/2010/10/successful-git-branching-model.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://keijinsonyaban.blogspot.jp']);">日本語訳</a>を読んで自分のプロジェクトでも運用可能か考えて下さい。</p>
+
+<p>ここまで読んで下さったのにアレですが、開発者が少なければ git 第一段階の運用でも賄えるかと思います。半年くらい第一段階のモデルで運用していました。git の開発モデルからは外れているのですが…</p>
+
+<p>以上になります。<br/>
+ここまで読んで下さり、ありがとうございました。</p>
+
+<p>———————–キリトリ———————–</p>
+
+<p>ここからは書いてみての感想です。(読み飛ばし推奨。下らない事しかかきません)</p>
+
+<p>最初は、 <a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> を読んだ事があるとか、git での運用に興味があるので積極的に読むけど、</p>
+
+<p>・非エンジニアへの教育コストかけられないとか (エンジニアへの教育コスト? 楽になる為だったらエンジニアは積極的に最先端を学ぶよね!ブーメラン!)<br/>
+・実際これで運用できると言い張れないがために結局適当なモデルで運用せざるを得ない<br/>
+・そもそも git での運用に懐疑的な人ばかりで git にできない</p>
+
+<p>みたいな人が対象だったんですが、書いているうちに結局簡易な説明くらいはしないといかんな、という所と、<a href="http://nvie.com/posts/a-successful-git-branching-model/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://nvie.com']);">A successful Git branching model</a> 読んでなくても簡易版で説明できたらPV伸びるかも…という欲が出てきてしまい、すごい長くなってしまいました。<br/>
+なるべく減らしたりしたんですが、すみません。<br/>
+長くした癖に、結局読み手側にあるていど考えて貰わないと無理、という結論に。</p>
+
+<p>感想というか、長くなった事への言い訳でした。</p>
+                            
+
+    <hr>
+    <h2>Tags</h2>
+      <a href="../../../tags/git.html">git</a>
+    <hr>
+    <ul class="social-button">
+      <li>
+        <div class="fb-share-button" data-type="button_count"></div>
+      </li>
+      <li>
+        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+      </li>
+    </ul>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </article>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015/03/14/scala-android.html">Scala で作る Android ゲームアプリ</a> <span>2015-03-14</span></li>
+                  <li><a href="../../../2014/11/07/unity-new-ui-anim.html">Unity 4.6 UI Tip&#58 UI Animation</a> <span>2014-11-07</span></li>
+                  <li><a href="../../../2014/11/04/unity-new-ui-refres.html">Unity 4.6 UI Tip&#58 Canvas Scaler (formerly Reference Resolution)</a> <span>2014-11-04</span></li>
+                  <li><a href="../../../2014/10/30/unity-new-ui-canvas.html">Unity 4.6 UI Tip&#58 Override sorting with Canvas</a> <span>2014-10-30</span></li>
+                  <li><a href="../../../2014/10/03/yamauchi.html">第4回芸者東京ハンズオン勉強会</a> <span>2014-10-03</span></li>
+                  <li><a href="../../../2014/09/29/yamauchi.html">Dockerfile を書かなくてもできる Docker コンテナ運用</a> <span>2014-09-29</span></li>
+                  <li><a href="../../../2014/09/08/yamauchi.html">第3回芸者東京ハンズオン勉強会</a> <span>2014-09-08</span></li>
+                  <li><a href="../../../2014/07/29/takezoux2.html">Using AWS Java SDK with AWS IAM Role.</a> <span>2014-07-29</span></li>
+                  <li><a href="../../../2014/06/24/yamauchi.html">第2回Scalaハンズオン勉強会2014-06-21</a> <span>2014-06-24</span></li>
+                  <li><a href="../../../2014/06/02/presentaion-at-play-meetup.html">Presentaion at Play meetup</a> <span>2014-06-02</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015.html">2015 (1)</a></li>
+                  <li><a href="../../../2014.html">2014 (13)</a></li>
+                  <li><a href="../../../2013.html">2013 (3)</a></li>
+                  <li><a href="../../../2012.html">2012 (10)</a></li>
+                  <li><a href="../../../2011.html">2011 (11)</a></li>
+                  <li><a href="../../../2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/java.html">Java (2)</a></li>
+                      <li><a href="../../../tags/jetty.html">jetty (1)</a></li>
+                      <li><a href="../../../tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../../tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../../tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../../tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../../tags/unity.html">unity (3)</a></li>
+                      <li><a href="../../../tags/unity-4-6.html">unity 4.6 (3)</a></li>
+                      <li><a href="../../../tags/unity-beta.html">unity beta (3)</a></li>
+                      <li><a href="../../../tags/ui.html">ui (3)</a></li>
+                      <li><a href="../../../tags/unity-new-ui.html">unity new ui (3)</a></li>
+                      <li><a href="../../../tags/canvas-scaler.html">canvas scaler (1)</a></li>
+                      <li><a href="../../../tags/reference-resolution.html">reference resolution (1)</a></li>
+                      <li><a href="../../../tags/resolution.html">resolution (1)</a></li>
+                      <li><a href="../../../tags/scaling.html">scaling (1)</a></li>
+                      <li><a href="../../../tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../../tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../../tags/python.html">Python (1)</a></li>
+                      <li><a href="../../../tags/geishastudy.html">geishastudy (3)</a></li>
+                      <li><a href="../../../tags/scala.html">scala (6)</a></li>
+                      <li><a href="../../../tags/android.html">android (2)</a></li>
+                      <li><a href="../../../tags/hands-on.html">hands-on (2)</a></li>
+                      <li><a href="../../../tags/seminar.html">seminar (2)</a></li>
+                      <li><a href="../../../tags/blog.html">blog (1)</a></li>
+                      <li><a href="../../../tags/middleman.html">middleman (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/github-pages.html">github pages (1)</a></li>
+                      <li><a href="../../../tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../../tags/aws.html">aws (1)</a></li>
+                      <li><a href="../../../tags/iam.html">IAM (1)</a></li>
+                      <li><a href="../../../tags/java.html">java (1)</a></li>
+                      <li><a href="../../../tags/scala-js.html">scala.js (1)</a></li>
+                      <li><a href="../../../tags/enchant-js.html">enchant.js (1)</a></li>
+                      <li><a href="../../../tags/android.html">Android (3)</a></li>
+                      <li><a href="../../../tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../../tags/docker.html">docker (1)</a></li>
+                      <li><a href="../../../tags/dokku-alt.html">dokku-alt (1)</a></li>
+                      <li><a href="../../../tags/git.html">git (1)</a></li>
+                      <li><a href="../../../tags/c.html">C# (1)</a></li>
+                      <li><a href="../../../tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../../tags/canvas.html">canvas (1)</a></li>
+                      <li><a href="../../../tags/sorting.html">sorting (1)</a></li>
+                      <li><a href="../../../tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../../tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../../tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../../tags/css.html">css (1)</a></li>
+                      <li><a href="../../../tags/animation.html">animation (1)</a></li>
+                      <li><a href="../../../tags/play.html">play (1)</a></li>
+                      <li><a href="../../../tags/dsl.html">dsl (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../../authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../../authors/marconius.html">marconius</a></li>
+                      <li><a href="../../../authors/yamauchi.html">yamauchi</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/ta2.html">ta2</a></li>
+                      <li><a href="../../../authors/arikui.html">arikui</a></li>
+                      <li><a href="../../../authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../../authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../../authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../../authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

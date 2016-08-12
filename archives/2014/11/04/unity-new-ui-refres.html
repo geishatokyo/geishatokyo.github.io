@@ -1,0 +1,468 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog - Unity 4.6 UI Tip&#58 Canvas Scaler (formerly Reference Resolution)</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="https://github.com/geishatokyo/geishastudy" target="_blank">勉強会資料</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <article> 
+    <h1>Unity 4.6 UI Tip&#58 Canvas Scaler (formerly Reference Resolution) </h1>
+    <span>Posted on 2014-11-04
+      by <a href="../../../authors/marconius.html">marconius</a>
+    </span>
+    <p>One of the most common problems when designing user interfaces, especially on mobile platforms, is compatibility with multiple display sizes and aspect ratios. The new Unity UI does allow us to overcome this to some extent by using anchors, but this can lead to unwanted stretching and distortion of images, or simply problematic placement of UI elements when aspect ratio is drastically different. Not setting anchors to stretch, on the other hand, will mean that UI elements maintain their set pixel-size, meaning they will seem very small on a larger display (or very large on a smaller display).</p>
+
+<p><img alt="refres1" src="/static/images/2014/10/UnityUI/refres1.png" /></p>
+
+<p>This issue can be solved through the (currently undocumented) <strong>Reference Resolution</strong> component, attached to our root <em>Canvas</em>, which must be set to <em>Overlay</em> mode. In essence, this component takes <em>Width</em> and <em>Height</em> parameters, then changes the effective pixel size of the <em>Canvas</em> to match these as closely as possible. For example, if you set the parameters to be <code>800x600</code> while your actual display is <code>1600x1200</code>, in the Editor you will still see the size of the <em>Canvas</em> as <code>800x600</code> and will be able to design your UI elements accordingly. When the <em>Canvas</em> is set to <em>Overlay</em> mode, its size will follow the size of your Game screen in the editor, so we can easily test various sizes.</p>
+
+<p>This only works if the aspect ratio isn&rsquo;t changed, however. With different aspect ratios, the <strong>Canvas Scale Mode</strong> setting comes into play:</p>
+
+<ul>
+<li>When set to <strong>Expand</strong>, the <em>shorter</em> of the width/height of the Canvas&rsquo;s rectangle will be set to be equal to the appropriate parameter; the other one will <em>expand</em> to whatever is required to match the aspect ratio of the screen.</li>
+<li>When set to <strong>Shrink</strong>, the <em>longer</em> of the width/height of the Canvas&rsquo;s rectangle will be set to be equal to the appropriate parameter; the other one will <em>shrink</em> to whatever is required to match the aspect ratio of the screen.</li>
+<li>When set to <strong>MatchWidthOrHeight</strong>, there is an extra parameter, <em>Match</em>; setting this to 0 (Width) will make the width of the Canvas match the parameter and stretch or shrink the height to match the screen&rsquo;s aspect ratio; setting it to 1 (Height) will do the opposite; setting it to a value between the two will stretch or shrink both sides to some degree.</li>
+</ul>
+
+<h2>Instantiate issues</h2>
+
+<p>There is a small problem with <em>Reference Resolution</em>: because there is no method in Unity to <em>Instantiate</em> a <em>GameObject</em> from code already as a child of another object, new objects must be made first, then their <code>transform.parent</code> needs to be set. Unfortunately because of the way <em>Canvas</em> objects work, this causes the newly created object to distort, its position, scale or other parameters potentially changing.</p>
+
+<p>The best solution for this issue is to, after setting the <code>parent</code>, reset all parameters of the new object to those of its prefab:</p>
+<pre class="highlight csharp"><code><span class="k">public</span> <span class="n">RectTransform</span> <span class="nf">InstantiateUI</span> <span class="p">(</span><span class="n">RectTransform</span> <span class="n">prefab</span><span class="p">,</span> <span class="n">Transform</span> <span class="n">parent</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">GameObject</span> <span class="n">newGameObject</span> <span class="p">=</span> <span class="nf">Instantiate</span> <span class="p">(</span><span class="n">prefab</span><span class="p">)</span> <span class="k">as</span> <span class="n">GameObject</span><span class="p">;</span>
+    <span class="n">newGameObject</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">parent</span> <span class="p">=</span> <span class="n">parent</span><span class="p">;</span>
+
+    <span class="n">RectTransform</span> <span class="n">newRectTransform</span> <span class="p">=</span> <span class="n">newGameObject</span><span class="p">.</span><span class="n">transform</span> <span class="k">as</span> <span class="n">RectTransform</span><span class="p">;</span>
+    <span class="n">newRectTransform</span><span class="p">.</span><span class="n">anchoredPosition</span> <span class="p">=</span> <span class="n">prefab</span><span class="p">.</span><span class="n">anchoredPosition</span><span class="p">;</span>
+    <span class="n">newRectTransform</span><span class="p">.</span><span class="n">anchorMax</span> <span class="p">=</span> <span class="n">prefab</span><span class="p">.</span><span class="n">anchorMax</span><span class="p">;</span>
+    <span class="n">newRectTransform</span><span class="p">.</span><span class="n">anchorMin</span> <span class="p">=</span> <span class="n">prefab</span><span class="p">.</span><span class="n">anchorMin</span><span class="p">;</span>
+    <span class="n">newRectTransform</span><span class="p">.</span><span class="n">localRotation</span> <span class="p">=</span> <span class="n">prefab</span><span class="p">.</span><span class="n">localRotation</span><span class="p">;</span>
+    <span class="n">newRectTransform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="n">prefab</span><span class="p">.</span><span class="n">localScale</span><span class="p">;</span>
+    <span class="n">newRectTransform</span><span class="p">.</span><span class="n">pivot</span> <span class="p">=</span> <span class="n">prefab</span><span class="p">.</span><span class="n">pivot</span><span class="p">;</span>
+    <span class="n">newRectTransform</span><span class="p">.</span><span class="n">sizeDelta</span> <span class="p">=</span> <span class="n">prefab</span><span class="p">.</span><span class="n">sizeDelta</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">newRectTransform</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+
+<hr>
+
+<p>Created for <a href="http://unity3d.com/unity/beta/4.6">Unity 4.6</a> beta version 20.</p>
+
+<p>This post is meant for advanced users; for basic information on the new UI features, please check the <a href="http://unity3d.com/learn/tutorials/modules/beginner/ui">offical tutorial videos</a>!</p>
+
+<hr>
+
+<p><strong>Update:</strong> <a href="http://unity3d.com/unity/beta/4.6">Unity 4.6</a> beta version 21 updated the old <em>Reference Resolution</em> component and renamed it <strong>Canvas Scaler</strong>, merging its functionality with <em>Physical Resolution</em>, now providing multiple <em>Scale Mode</em>s; the functionality described above is still the same when set to <em>Scale With Screen Size</em>. The component is now properly documented as well.</p>
+
+<p>The newly added <strong>Reference Pixels Per Unit</strong> parameter is essentially a simple way to scale imported sprites and has an effect on the <em>Native Size</em> of Images.</p>
+
+    <hr>
+    <h2>Tags</h2>
+      <a href="../../../tags/unity.html">unity</a>
+      <a href="../../../tags/unity-4-6.html">unity 4.6</a>
+      <a href="../../../tags/unity-beta.html">unity beta</a>
+      <a href="../../../tags/ui.html">ui</a>
+      <a href="../../../tags/unity-new-ui.html">unity new ui</a>
+      <a href="../../../tags/canvas-scaler.html">canvas scaler</a>
+      <a href="../../../tags/reference-resolution.html">reference resolution</a>
+      <a href="../../../tags/resolution.html">resolution</a>
+      <a href="../../../tags/scaling.html">scaling</a>
+    <hr>
+    <ul class="social-button">
+      <li>
+        <div class="fb-share-button" data-type="button_count"></div>
+      </li>
+      <li>
+        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+      </li>
+    </ul>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </article>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015/03/14/scala-android.html">Scala で作る Android ゲームアプリ</a> <span>2015-03-14</span></li>
+                  <li><a href="../07/unity-new-ui-anim.html">Unity 4.6 UI Tip&#58 UI Animation</a> <span>2014-11-07</span></li>
+                  <li><a href="unity-new-ui-refres.html">Unity 4.6 UI Tip&#58 Canvas Scaler (formerly Reference Resolution)</a> <span>2014-11-04</span></li>
+                  <li><a href="../../10/30/unity-new-ui-canvas.html">Unity 4.6 UI Tip&#58 Override sorting with Canvas</a> <span>2014-10-30</span></li>
+                  <li><a href="../../10/03/yamauchi.html">第4回芸者東京ハンズオン勉強会</a> <span>2014-10-03</span></li>
+                  <li><a href="../../09/29/yamauchi.html">Dockerfile を書かなくてもできる Docker コンテナ運用</a> <span>2014-09-29</span></li>
+                  <li><a href="../../09/08/yamauchi.html">第3回芸者東京ハンズオン勉強会</a> <span>2014-09-08</span></li>
+                  <li><a href="../../07/29/takezoux2.html">Using AWS Java SDK with AWS IAM Role.</a> <span>2014-07-29</span></li>
+                  <li><a href="../../06/24/yamauchi.html">第2回Scalaハンズオン勉強会2014-06-21</a> <span>2014-06-24</span></li>
+                  <li><a href="../../06/02/presentaion-at-play-meetup.html">Presentaion at Play meetup</a> <span>2014-06-02</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015.html">2015 (1)</a></li>
+                  <li><a href="../../../2014.html">2014 (13)</a></li>
+                  <li><a href="../../../2013.html">2013 (3)</a></li>
+                  <li><a href="../../../2012.html">2012 (10)</a></li>
+                  <li><a href="../../../2011.html">2011 (11)</a></li>
+                  <li><a href="../../../2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/java.html">Java (2)</a></li>
+                      <li><a href="../../../tags/jetty.html">jetty (1)</a></li>
+                      <li><a href="../../../tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../../tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../../tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../../tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../../tags/unity.html">unity (3)</a></li>
+                      <li><a href="../../../tags/unity-4-6.html">unity 4.6 (3)</a></li>
+                      <li><a href="../../../tags/unity-beta.html">unity beta (3)</a></li>
+                      <li><a href="../../../tags/ui.html">ui (3)</a></li>
+                      <li><a href="../../../tags/unity-new-ui.html">unity new ui (3)</a></li>
+                      <li><a href="../../../tags/canvas-scaler.html">canvas scaler (1)</a></li>
+                      <li><a href="../../../tags/reference-resolution.html">reference resolution (1)</a></li>
+                      <li><a href="../../../tags/resolution.html">resolution (1)</a></li>
+                      <li><a href="../../../tags/scaling.html">scaling (1)</a></li>
+                      <li><a href="../../../tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../../tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../../tags/python.html">Python (1)</a></li>
+                      <li><a href="../../../tags/geishastudy.html">geishastudy (3)</a></li>
+                      <li><a href="../../../tags/scala.html">scala (6)</a></li>
+                      <li><a href="../../../tags/android.html">android (2)</a></li>
+                      <li><a href="../../../tags/hands-on.html">hands-on (2)</a></li>
+                      <li><a href="../../../tags/seminar.html">seminar (2)</a></li>
+                      <li><a href="../../../tags/blog.html">blog (1)</a></li>
+                      <li><a href="../../../tags/middleman.html">middleman (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/github-pages.html">github pages (1)</a></li>
+                      <li><a href="../../../tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../../tags/aws.html">aws (1)</a></li>
+                      <li><a href="../../../tags/iam.html">IAM (1)</a></li>
+                      <li><a href="../../../tags/java.html">java (1)</a></li>
+                      <li><a href="../../../tags/scala-js.html">scala.js (1)</a></li>
+                      <li><a href="../../../tags/enchant-js.html">enchant.js (1)</a></li>
+                      <li><a href="../../../tags/android.html">Android (3)</a></li>
+                      <li><a href="../../../tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../../tags/docker.html">docker (1)</a></li>
+                      <li><a href="../../../tags/dokku-alt.html">dokku-alt (1)</a></li>
+                      <li><a href="../../../tags/git.html">git (1)</a></li>
+                      <li><a href="../../../tags/c.html">C# (1)</a></li>
+                      <li><a href="../../../tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../../tags/canvas.html">canvas (1)</a></li>
+                      <li><a href="../../../tags/sorting.html">sorting (1)</a></li>
+                      <li><a href="../../../tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../../tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../../tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../../tags/css.html">css (1)</a></li>
+                      <li><a href="../../../tags/animation.html">animation (1)</a></li>
+                      <li><a href="../../../tags/play.html">play (1)</a></li>
+                      <li><a href="../../../tags/dsl.html">dsl (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../../authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../../authors/marconius.html">marconius</a></li>
+                      <li><a href="../../../authors/yamauchi.html">yamauchi</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/ta2.html">ta2</a></li>
+                      <li><a href="../../../authors/arikui.html">arikui</a></li>
+                      <li><a href="../../../authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../../authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../../authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../../authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

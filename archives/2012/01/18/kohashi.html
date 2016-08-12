@@ -1,0 +1,587 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Geisha Tokyo Engineer's Blog - CSSのベンダープリフィックスを自動で追加するテクニックまとめ</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  background-color: #f8f8f8;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div id="navigation" class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Geisha Tokyo Engineer's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../rpscala.html">Scala勉強会</a>
+            </li>
+            <li><a href="https://github.com/geishatokyo/geishastudy" target="_blank">勉強会資料</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com" target="_blank">運営会社</a>
+            </li>
+            <li><a href="http://www.geishatokyo.com/#!/recruit.html" target="_blank">採用ページ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+              <article> 
+    <h1>CSSのベンダープリフィックスを自動で追加するテクニックまとめ </h1>
+    <span>Posted on 2012-01-18
+      by <a href="../../../authors/kohashi.html">kohashi</a>
+    </span>
+    <p>こんにちわ！GTEエンジニアのkohashiです。</p>
+
+<p>みなさん、CSS3してますか？CSS3によって表現は大幅に広がりましたが、一方で対応状況はブラウザによって様々…。<br/>
+CSSでベンダープリフィックス(-mozとか、-webkitとか…)を複数記述するのはめんどくさいですよね？<br/>
+というわけで、何とかしてくれる手法をまとめてみました。</p>
+
+<h2>Prefixr</h2>
+
+<p>Prefixr : <a href="http://prefixr.com/index.php" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://prefixr.com']);">http://prefixr.com/index.php</a><br/>
+入力したCSSに、ベンダープリフィックスを付与してくれるWebサービスです。<br/>
+こういうCSSを記述すると…</p>
+<pre class="highlight css"><code><span class="nf">#test</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span><span class="m">5px</span> <span class="m">#222</span> <span class="nb">solid</span><span class="p">;</span>
+    <span class="nl">border-radius</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+    <span class="nl">transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="n">linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span>  <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+    <span class="p">}</span>
+</code></pre>
+
+<p>こんな形に変換してくれます！</p>
+<pre class="highlight css"><code><span class="nf">#test</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">5px</span> <span class="m">#222</span> <span class="nb">solid</span><span class="p">;</span>
+
+    <span class="nl">-webkit-border-radius</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+    <span class="nl">-moz-border-radius</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+    <span class="nl">border-radius</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+
+    <span class="nl">-webkit-transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+    <span class="nl">-moz-transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+    <span class="nl">-o-transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+    <span class="nl">-ms-transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+    <span class="nl">transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+
+    <span class="nl">background</span><span class="p">:</span> <span class="n">-webkit-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="n">-moz-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="n">-o-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="n">-ms-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="n">linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>また、Prefixrにはcssをワンライナーに圧縮する機能もついています。（”Compress My Code”のチェックを入れるだけ）<br/>
+Webサービスでココまでやってくれるのは嬉しいですね。</p>
+
+<p><a href="http://www.vim.org/scripts/script.php?script_id=3696" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.vim.org']);">vim用のプラグイン</a>も有るみたいなので、『CSSはvimで書く！』という人には良いですね。</p>
+
+<h2>-prefix-my css</h2>
+
+<p>-prefix-my css : <a href="http://prefixmycss.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://prefixmycss.com']);">http://prefixmycss.com/</a><br/>
+Prefixrと同じような感じの、ウェブサービス型。</p>
+<pre class="highlight css"><code><span class="nf">#test</span><span class="p">{</span>
+<span class="nl">border</span><span class="p">:</span><span class="m">5px</span> <span class="m">#222</span> <span class="nb">solid</span><span class="p">;</span>
+<span class="c">/*border-radius*/</span>
+<span class="nl">-webkit-border-radius</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+   <span class="nl">-moz-border-radius</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+        <span class="nl">border-radius</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+<span class="c">/*transform*/</span>
+<span class="nl">-webkit-transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+   <span class="nl">-moz-transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+    <span class="nl">-ms-transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+     <span class="nl">-o-transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+        <span class="nl">transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span><span class="m">5deg</span><span class="p">);</span>
+<span class="c">/*linear-gradient*/</span>
+<span class="nl">background</span><span class="p">:</span><span class="n">-webkit-gradient</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span><span class="nb">left</span> <span class="nb">top</span><span class="p">,</span><span class="nb">left</span> <span class="nb">bottom</span><span class="p">,</span><span class="n">color-stop</span><span class="p">(</span><span class="m">#e1ffff</span><span class="p">,</span><span class="m">0</span><span class="p">),</span><span class="n">color-stop</span><span class="p">(</span><span class="m">#e1ffff</span><span class="p">,</span><span class="m">0.07</span><span class="p">),</span><span class="n">color-stop</span><span class="p">(</span><span class="m">#e1ffff</span><span class="p">,</span><span class="m">0.12</span><span class="p">),</span><span class="n">color-stop</span><span class="p">(</span><span class="m">#fdffff</span><span class="p">,</span><span class="m">0.12</span><span class="p">),</span><span class="n">color-stop</span><span class="p">(</span><span class="m">#e6f8fd</span><span class="p">,</span><span class="m">0.3</span><span class="p">),</span><span class="n">color-stop</span><span class="p">(</span><span class="m">#c8eefb</span><span class="p">,</span><span class="m">0.54</span><span class="p">),</span><span class="n">color-stop</span><span class="p">(</span><span class="m">#bee4f8</span><span class="p">,</span><span class="m">0.75</span><span class="p">),</span><span class="n">color-stop</span><span class="p">(</span><span class="m">#b1d8f5</span><span class="p">,</span><span class="m">1</span><span class="p">));</span>
+<span class="nl">background</span><span class="p">:</span><span class="n">-webkit-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span>  <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+<span class="nl">background</span><span class="p">:</span>   <span class="n">-moz-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span>  <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+<span class="nl">background</span><span class="p">:</span>     <span class="n">-o-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span>  <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+<span class="nl">background</span><span class="p">:</span>        <span class="n">linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span>  <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>インデント付けてくれるのでPrefixrと比べて見やすい方をお好みで、でしょうか。<br/>
+※ background:-webkit-gradient の変換などに差異があり、-webkit-gradientのものはうまく動かないですね。</p>
+
+<h2>-prefix-free</h2>
+
+<p>-prefix-free : <a href="http://leaverou.github.com/prefixfree/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://leaverou.github.com']);">http://leaverou.github.com/prefixfree/</a><br/>
+javascriptベースでCSSを書き換えてくれます。</p>
+<pre class="highlight plaintext"><code>&lt;script src="prefixfree.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>このようにjsファイルを読み込むだけで、<style>～</style>で書いたcssや<link rel=”stylesheet” type=”text/css” />で読み込んだcss、DOMエレメントのstyle要素に記述したcssはもちろん、javascript経由で設定するcssまで適用してくれます！<br/>
+ファイルサイズは5KBと軽量なうえ、jQuery等のライブラリに依存することもありません。</p>
+
+<p>なによりすごいのは、javascript経由で設定したstyleまでベンダープリフィックスをつけた形で適用してくれること。<br/>
+・・・もっとも、この機能はchromeとoperaで正常に動作しないそうです。<br/>
+そのため、<a href="https://raw.github.com/LeaVerou/prefixfree/master/plugins/prefixfree.jquery.js" onclick="javascript:_gaq.push(['_trackEvent','download','http://raw.github.com/LeaVerou/prefixfree/master/plugins/prefixfree.jquery.js']);">-prefix-free の jQueryプラグイン</a>を導入して、<code> $('#obj').css('transform', 'rotate(30deg)') </code>などとするほうが良いようですね。</p>
+
+<h2>compass</h2>
+
+<p>compass: <a href="http://compass-style.org/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://compass-style.org']);">http://compass-style.org/</a><br/>
+これが<strong>ベンダープリフィックス追加も含めた本命</strong>になると思います。</p>
+
+<p>Rubyベースの、CSS構築フレームワークです。『CSSを生成するためのメタ記述が可能な言語』というところでしょうか。<br/>
+同じシンプルな記述からCSSを生成することで有名な<a href="http://sass-lang.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://sass-lang.com']);">Sass</a>の拡張として作られています。<br/>
+.scssというファイルに記述したCSSっぽい内容のものを、変換（コンパイル）して使います。<br/>
+導入は、Rubyが導入されていれば簡単です。（winの人は適当に導入しておきましょう）</p>
+
+<pre><code>
+$ gem update --system
+$ gem install compass
+</code></pre>
+
+<p>たったこれだけで導入完了！</p>
+
+<p>■はじめて使う</p>
+
+<pre><code>
+## 基本ファイル作成
+$ compass create
+## 変更監視して、自動コンパイル
+$ compass watch
+</code></pre>
+
+<p>■Railsプロジェクトに導入</p>
+
+<pre><code>
+$ rails new <myproject>
+$ compass init rails <myproject>
+</myproject></myproject></code></pre>
+
+<p>先ほどと同じCSSを変換してみましょう。<br/>
+<code>compass create</code> を実行して出来たファイル /sass/screen.scss を編集します。<br/>
+記述がちょっと違うので注意が必要ですね。</p>
+<pre class="highlight css"><code><span class="k">@import</span> <span class="s1">"compass/css3/"</span><span class="p">;</span>
+<span class="nf">#test</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span><span class="m">5px</span> <span class="m">#222</span> <span class="nb">solid</span><span class="p">;</span>
+    <span class="err">@include</span> <span class="err">border-radius(10px);</span> <span class="c">/* 記述がだいぶ違うので注意です */</span>
+    <span class="err">@include</span> <span class="err">skew(5deg,5deg);</span> <span class="c">/* "transform"が不要です */</span>
+    <span class="err">@include</span> <span class="err">background(linear-gradient(top,</span>  <span class="err">#e1ffff</span> <span class="err">0%,#e1ffff</span> <span class="err">7%,#e1ffff</span> <span class="err">12%,#fdffff</span> <span class="err">12%,#e6f8fd</span> <span class="err">30%,#c8eefb</span> <span class="err">54%,#bee4f8</span> <span class="err">75%,#b1d8f5</span> <span class="err">100%));</span>
+    <span class="p">}</span>
+</code></pre>
+
+<p>編集が終わったら、 <code>compass compile</code> です。</p>
+<pre class="highlight css"><code><span class="k">@charset</span> <span class="s1">"Windows-31J"</span><span class="p">;</span>
+<span class="c">/* line 3, ../sass/screen.scss */</span>
+<span class="nf">#test</span> <span class="p">{</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">5px</span> <span class="m">#222</span> <span class="nb">solid</span><span class="p">;</span>
+  <span class="nl">-moz-border-radius</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">-webkit-border-radius</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">-o-border-radius</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">-ms-border-radius</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">-khtml-border-radius</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="c">/* 記述がだいぶ違うので注意です */</span>
+  <span class="nl">-moz-transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span> <span class="m">5deg</span><span class="p">);</span>
+  <span class="nl">-webkit-transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span> <span class="m">5deg</span><span class="p">);</span>
+  <span class="nl">-o-transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span> <span class="m">5deg</span><span class="p">);</span>
+  <span class="nl">-ms-transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span> <span class="m">5deg</span><span class="p">);</span>
+  <span class="nl">transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span> <span class="m">5deg</span><span class="p">);</span>
+  <span class="c">/* "transform"が不要です */</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">-webkit-gradient</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span> <span class="m">50%</span> <span class="m">0%</span><span class="p">,</span> <span class="m">50%</span> <span class="m">100%</span><span class="p">,</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">0%</span><span class="p">,</span> <span class="m">#e1ffff</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">7%</span><span class="p">,</span> <span class="m">#e1ffff</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">12%</span><span class="p">,</span> <span class="m">#e1ffff</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">12%</span><span class="p">,</span> <span class="m">#fdffff</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">30%</span><span class="p">,</span> <span class="m">#e6f8fd</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">54%</span><span class="p">,</span> <span class="m">#c8eefb</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">75%</span><span class="p">,</span> <span class="m">#bee4f8</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">100%</span><span class="p">,</span> <span class="m">#b1d8f5</span><span class="p">));</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">-webkit-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span> <span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span> <span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span> <span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span> <span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span> <span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">-moz-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span> <span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span> <span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span> <span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span> <span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span> <span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">-o-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span> <span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span> <span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span> <span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span> <span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span> <span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">-ms-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span> <span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span> <span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span> <span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span> <span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span> <span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span> <span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span> <span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span> <span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span> <span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span> <span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>出力結果もだいぶ違いますね！<br/>
+普通にコンパイルすると、このcssは、.scssファイルの何行目か…という情報がコメントとしてついてきます。</p>
+
+<p>なお、圧縮コンパイルするには <code>compass compile -s compressed sass/*</code> を使います。</p>
+<pre class="highlight css"><code><span class="nf">#test</span><span class="p">{</span><span class="nl">border</span><span class="p">:</span><span class="m">5px</span> <span class="m">#222</span> <span class="nb">solid</span><span class="p">;</span><span class="nl">-moz-border-radius</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span><span class="nl">-webkit-border-radius</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span><span class="nl">-o-border-radius</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span><span class="nl">-ms-border-radius</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span><span class="nl">-khtml-border-radius</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span><span class="nl">border-radius</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span><span class="nl">-moz-transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span> <span class="m">5deg</span><span class="p">);</span><span class="nl">-webkit-transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span> <span class="m">5deg</span><span class="p">);</span><span class="nl">-o-transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span> <span class="m">5deg</span><span class="p">);</span><span class="nl">-ms-transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span> <span class="m">5deg</span><span class="p">);</span><span class="nl">transform</span><span class="p">:</span><span class="n">skew</span><span class="p">(</span><span class="m">5deg</span><span class="p">,</span> <span class="m">5deg</span><span class="p">);</span><span class="nl">background</span><span class="p">:</span><span class="n">-webkit-gradient</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span> <span class="m">50%</span> <span class="m">0%</span><span class="p">,</span> <span class="m">50%</span> <span class="m">100%</span><span class="p">,</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">0%</span><span class="p">,</span> <span class="m">#e1ffff</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">7%</span><span class="p">,</span> <span class="m">#e1ffff</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">12%</span><span class="p">,</span> <span class="m">#e1ffff</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">12%</span><span class="p">,</span> <span class="m">#fdffff</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">30%</span><span class="p">,</span> <span class="m">#e6f8fd</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">54%</span><span class="p">,</span> <span class="m">#c8eefb</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">75%</span><span class="p">,</span> <span class="m">#bee4f8</span><span class="p">),</span> <span class="n">color-stop</span><span class="p">(</span><span class="m">100%</span><span class="p">,</span> <span class="m">#b1d8f5</span><span class="p">));</span><span class="nl">background</span><span class="p">:</span><span class="n">-webkit-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span><span class="nl">background</span><span class="p">:</span><span class="n">-moz-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span><span class="nl">background</span><span class="p">:</span><span class="n">-o-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span><span class="nl">background</span><span class="p">:</span><span class="n">-ms-linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">);</span><span class="nl">background</span><span class="p">:</span><span class="n">linear-gradient</span><span class="p">(</span><span class="nb">top</span><span class="p">,</span> <span class="m">#e1ffff</span> <span class="m">0%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">7%</span><span class="p">,</span><span class="m">#e1ffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#fdffff</span> <span class="m">12%</span><span class="p">,</span><span class="m">#e6f8fd</span> <span class="m">30%</span><span class="p">,</span><span class="m">#c8eefb</span> <span class="m">54%</span><span class="p">,</span><span class="m">#bee4f8</span> <span class="m">75%</span><span class="p">,</span><span class="m">#b1d8f5</span> <span class="m">100%</span><span class="p">)}</span>
+</code></pre>
+
+<p>compassには、css3のレイアウトフレームワーク：Blueprintが使えたり、変数などを使ってcssを記述できるscss記法が使えたりと色々高機能ですね！<br/>
+compass watch を使えば、毎回コンパイルする必要なくファイル変更時に自動コンパイルしてくれるのも、開発効率が上がりそうで良い感じです。</p>
+
+<p>また、コマンドラインが面倒くさい！という人のために、アプリ版がオススメ。<br/>
+<a href="http://mhs.github.com/scout-app/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://mhs.github.com']);">http://mhs.github.com/scout-app/</a><br/>
+こちらはwin版/Mac版があり、Ruby実行環境も不要！<br/>
+デザイナーさん向けにはこちらが良いかもしれませんね。</p>
+
+    <hr>
+    <h2>Tags</h2>
+      <a href="../../../tags/javascript.html">JavaScript</a>
+      <a href="../../../tags/css.html">css</a>
+    <hr>
+    <ul class="social-button">
+      <li>
+        <div class="fb-share-button" data-type="button_count"></div>
+      </li>
+      <li>
+        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+      </li>
+    </ul>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </article>
+
+          </div>
+          <div class="col-lg-4">
+            <div class="well">
+              <h4>Recent Articles</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015/03/14/scala-android.html">Scala で作る Android ゲームアプリ</a> <span>2015-03-14</span></li>
+                  <li><a href="../../../2014/11/07/unity-new-ui-anim.html">Unity 4.6 UI Tip&#58 UI Animation</a> <span>2014-11-07</span></li>
+                  <li><a href="../../../2014/11/04/unity-new-ui-refres.html">Unity 4.6 UI Tip&#58 Canvas Scaler (formerly Reference Resolution)</a> <span>2014-11-04</span></li>
+                  <li><a href="../../../2014/10/30/unity-new-ui-canvas.html">Unity 4.6 UI Tip&#58 Override sorting with Canvas</a> <span>2014-10-30</span></li>
+                  <li><a href="../../../2014/10/03/yamauchi.html">第4回芸者東京ハンズオン勉強会</a> <span>2014-10-03</span></li>
+                  <li><a href="../../../2014/09/29/yamauchi.html">Dockerfile を書かなくてもできる Docker コンテナ運用</a> <span>2014-09-29</span></li>
+                  <li><a href="../../../2014/09/08/yamauchi.html">第3回芸者東京ハンズオン勉強会</a> <span>2014-09-08</span></li>
+                  <li><a href="../../../2014/07/29/takezoux2.html">Using AWS Java SDK with AWS IAM Role.</a> <span>2014-07-29</span></li>
+                  <li><a href="../../../2014/06/24/yamauchi.html">第2回Scalaハンズオン勉強会2014-06-21</a> <span>2014-06-24</span></li>
+                  <li><a href="../../../2014/06/02/presentaion-at-play-meetup.html">Presentaion at Play meetup</a> <span>2014-06-02</span></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>By Year</h4>
+              <ol class="list-unstyled">
+                  <li><a href="../../../2015.html">2015 (1)</a></li>
+                  <li><a href="../../../2014.html">2014 (13)</a></li>
+                  <li><a href="../../../2013.html">2013 (3)</a></li>
+                  <li><a href="../../../2012.html">2012 (10)</a></li>
+                  <li><a href="../../../2011.html">2011 (11)</a></li>
+                  <li><a href="../../../2010.html">2010 (3)</a></li>
+              </ol>
+            </div>
+            <div class="well">
+              <h4>Tags</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/java.html">Java (2)</a></li>
+                      <li><a href="../../../tags/jetty.html">jetty (1)</a></li>
+                      <li><a href="../../../tags/scala.html">Scala (10)</a></li>
+                      <li><a href="../../../tags/tips.html">Tips (4)</a></li>
+                      <li><a href="../../../tags/play-framework.html">play framework (3)</a></li>
+                      <li><a href="../../../tags/sbt.html">sbt (2)</a></li>
+                      <li><a href="../../../tags/unity.html">unity (3)</a></li>
+                      <li><a href="../../../tags/unity-4-6.html">unity 4.6 (3)</a></li>
+                      <li><a href="../../../tags/unity-beta.html">unity beta (3)</a></li>
+                      <li><a href="../../../tags/ui.html">ui (3)</a></li>
+                      <li><a href="../../../tags/unity-new-ui.html">unity new ui (3)</a></li>
+                      <li><a href="../../../tags/canvas-scaler.html">canvas scaler (1)</a></li>
+                      <li><a href="../../../tags/reference-resolution.html">reference resolution (1)</a></li>
+                      <li><a href="../../../tags/resolution.html">resolution (1)</a></li>
+                      <li><a href="../../../tags/scaling.html">scaling (1)</a></li>
+                      <li><a href="../../../tags/nodejs.html">nodejs (1)</a></li>
+                      <li><a href="../../../tags/lightning.html">Lightning (1)</a></li>
+                      <li><a href="../../../tags/python.html">Python (1)</a></li>
+                      <li><a href="../../../tags/geishastudy.html">geishastudy (3)</a></li>
+                      <li><a href="../../../tags/scala.html">scala (6)</a></li>
+                      <li><a href="../../../tags/android.html">android (2)</a></li>
+                      <li><a href="../../../tags/hands-on.html">hands-on (2)</a></li>
+                      <li><a href="../../../tags/seminar.html">seminar (2)</a></li>
+                      <li><a href="../../../tags/blog.html">blog (1)</a></li>
+                      <li><a href="../../../tags/middleman.html">middleman (1)</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../tags/github-pages.html">github pages (1)</a></li>
+                      <li><a href="../../../tags/uncategorized.html">Uncategorized (4)</a></li>
+                      <li><a href="../../../tags/aws.html">aws (1)</a></li>
+                      <li><a href="../../../tags/iam.html">IAM (1)</a></li>
+                      <li><a href="../../../tags/java.html">java (1)</a></li>
+                      <li><a href="../../../tags/scala-js.html">scala.js (1)</a></li>
+                      <li><a href="../../../tags/enchant-js.html">enchant.js (1)</a></li>
+                      <li><a href="../../../tags/android.html">Android (3)</a></li>
+                      <li><a href="../../../tags/maven.html">maven (4)</a></li>
+                      <li><a href="../../../tags/docker.html">docker (1)</a></li>
+                      <li><a href="../../../tags/dokku-alt.html">dokku-alt (1)</a></li>
+                      <li><a href="../../../tags/git.html">git (1)</a></li>
+                      <li><a href="../../../tags/c.html">C# (1)</a></li>
+                      <li><a href="../../../tags/unity.html">Unity (1)</a></li>
+                      <li><a href="../../../tags/canvas.html">canvas (1)</a></li>
+                      <li><a href="../../../tags/sorting.html">sorting (1)</a></li>
+                      <li><a href="../../../tags/ios.html">iOS (3)</a></li>
+                      <li><a href="../../../tags/javascript.html">JavaScript (4)</a></li>
+                      <li><a href="../../../tags/lua.html">Lua (1)</a></li>
+                      <li><a href="../../../tags/css.html">css (1)</a></li>
+                      <li><a href="../../../tags/animation.html">animation (1)</a></li>
+                      <li><a href="../../../tags/play.html">play (1)</a></li>
+                      <li><a href="../../../tags/dsl.html">dsl (1)</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="well">
+              <h4>Authors</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/yyuu.html">yyuu</a></li>
+                      <li><a href="../../../authors/y_okaya.html">y_okaya</a></li>
+                      <li><a href="../../../authors/takezoux2.html">takezoux2</a></li>
+                      <li><a href="../../../authors/marconius.html">marconius</a></li>
+                      <li><a href="../../../authors/yamauchi.html">yamauchi</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled">
+                      <li><a href="../../../authors/ta2.html">ta2</a></li>
+                      <li><a href="../../../authors/arikui.html">arikui</a></li>
+                      <li><a href="../../../authors/k_ryoko.html">k_ryoko</a></li>
+                      <li><a href="../../../authors/g_enrique.html">g_enrique</a></li>
+                      <li><a href="../../../authors/kohashi.html">kohashi</a></li>
+                      <li><a href="../../../authors/h_ninomiya.html">h_ninomiya</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Geisha Tokyo Entertainment, Inc. 2010-</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
